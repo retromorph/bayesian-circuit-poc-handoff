@@ -34,4 +34,69 @@ The prior conversation provided a high-level Gate A/B/C plan. The handoff packag
 
 ## Deviations during execution
 
-_None at handoff. Implementation and experiments have not yet been executed._
+### 2026-10-18T21:30Z — Operational specifications fixed before any confirmatory run
+
+These entries fix implementation-level choices that the protocol leaves open. They were written
+**before** any confirmatory world/seed was run (only the development world A1-90001 had been run as a
+smoke test). They do not change any gate threshold, seed list, split identity or budget.
+
+- **D-INF-1 (infrastructure).** The shared remote host already runs another project's MLflow server on
+  `127.0.0.1:5000` (tmux session `mlflow`, project `geodesic-ig-pilot`). To avoid touching it, the BCCD
+  server runs on **`127.0.0.1:5001`** (tmux `bccd-mlflow`, SQLite `mlruns/mlflow.db`, artifacts
+  `mlruns/artifacts`), loopback only. Tunnel: `ssh -N -L 127.0.0.1:5001:127.0.0.1:5001 <host>`.
+  Classification: infrastructure only; no scientific impact.
+- **D-ENV-1.** `transformer-lens` pinned to 2.15.4 (`HookedTransformer` hook API) and `transformers<5`
+  because TL 2.x is incompatible with transformers 5.x; torch 2.8.0+cu126 from an explicit uv index on Linux.
+- **D-A-1 (jitter).** "20% coefficient jitter" is implemented as an independent multiplicative factor
+  `1+U(-0.2, 0.2)` per nonzero coefficient; hidden component permutation per world.
+- **D-A-2 (candidate method).** Every gate criterion is adjudicated for `bayes_decision` (the full
+  method); `bayes_static` and `bayes_uncertainty` are reported as ablations only.
+- **D-A-3 (A-5 misfit detector, frozen rule).** Statistic: 4-fold cross-validated RMSE of posterior-mean
+  predictions on the method's *own discovery masks* at B=128 divided by the RMS of the observed responses
+  (no blind data). Flag if statistic > t. **Threshold rule (pre-declared):** run the 16 development worlds
+  (seeds 90001-90004 x A0..A3); let `c = max` statistic over the 12 development A0-A2 worlds and
+  `a = min` over the 4 development A3 worlds. If `c < a`, `t = sqrt(c*a)` (geometric midpoint); otherwise
+  t is the value among development statistics that minimises development misclassifications, ties broken
+  toward the larger t (more specific). t is written to `configs/gate_a_misfit_threshold.json` and hashed
+  before confirmatory Gate A.
+- **D-A-4 (A-3 zero-error fallback).** MAE is normalised per world by the SD of the blind truth and
+  averaged over worlds. If the pooled first-order Lasso normalised MAE is < 1e-3 ("numerically ~0"), A-3
+  passes iff the Bayesian normalised MAE <= 0.01; otherwise iff pooled raw MAE ratio <= 1.10.
+- **D-A-5 (circuits & claims).** Proposals = up to 4 circuits of the minimal cardinality at which a
+  circuit is predicted faithful (non-Bayes: R_hat<=0.10, ranked by R_hat; Bayes: P(R<=0.10|D) >= 0.5,
+  ranked by P). Gate A enumerates all circuits of size <= 3 exactly. *High-confidence claims* = every
+  enumerated circuit with P >= 0.95 (not only the proposals). Pair nonadditivity is
+  `NA_ij = f(e_i+e_j)-f(e_i)-f(e_j)+f(0)` from predicted interventions (Bayes: |posterior mean|), base mask 0.
+- **D-A-6 (A-4/A-5 coverage).** Coverage is over all blind targets (A2: two context-group targets per
+  mask) of the posterior predictive for a new observation (function + learned noise term).
+- **D-B-1 (planted models).** Gate B models are built by direct weight construction in a TransformerLens
+  `HookedTransformer` (3 layers, 8 heads, d_model=64, no LayerNorm, ReLU MLPs). Response target for
+  surrogate fitting and circuit selection is the batch mean of |d(x,m)| (matching the numerator of R);
+  proposals are the top-4 exact size-2 circuits (non-Bayes R_hat<=0.10; Bayes P>=0.5). Event time = first
+  checkpoint with >=3 of 4 planted circuits among the proposals and >=1 proposal blind-faithful; else 160
+  (censored).
+- **D-C-1 (prompts).** MIB IOI (`mib-bench/ioi`, revision e5f3468) is used: screening and discovery
+  prompts from the MIB *train* split, development baseline-preselection prompts from MIB *dev*, blind
+  prompts from MIB *test*, whose template families are disjoint from train/dev. Only prompts whose two
+  names are single GPT-2 tokens (with leading space) and whose ABC counterfactual has equal token length
+  are used; exclusions are counted.
+- **D-C-2 (EAP-IG).** Screening uses an in-repo, node-level implementation of EAP-IG (Hanna et al. 2024)
+  — integrated gradients over input embeddings from the ABC counterfactual to the clean prompt, 5 steps,
+  node score = sum over positions of (z_clean - z_corrupt) . mean_alpha dL/dz at `hook_z`
+  (equivalent to the sum of the head's outgoing EAP edge scores), metric = IO-S logit difference, ranked
+  by |mean score| over the 64 screening prompts. This is a *replica*, not the MIB package.
+- **D-C-3 (decision losses).** Gate C circuit selection minimises the posterior expected R(C) (Bayes) or
+  predicted R (non-Bayes) for each k in {8,16,24} with the shared greedy-elimination + swap search. The
+  decision-focused acquisition uses L(C)=|C|/p+10*max(R-0.1,0) per k and V(D)=mean_k min_C E[L].
+  Surrogates are fit to the batch mean of |d(x,m)| (R's numerator). C-3 calibration uses a separate
+  Bayesian model of the signed mean effect fit on the same discovery data, plus a prompt-resampling
+  variance term var_x(d)/32 + var_x(d)/128 predicted by a ridge model of per-mask discovery prompt
+  variance (discovery data only).
+- **D-C-4 (development reference baseline).** Before blind evaluation, lasso_1st, lasso_pair and gbdt are
+  run on a development discovery run (seed 31900, 32 MIB-train prompts disjoint from all others, warm
+  start + static masks to B=128) and scored on 64 MIB-dev prompts; the lowest development S is frozen as the
+  C-4 reference in `runs/gate_c/dev_reference.json`.
+- **D-C-5 (compute).** End-to-end compute at B=128 = shared screening + the method's own oracle calls +
+  all fitting / acquisition / circuit-search work needed to produce its B=128 decision (passive methods:
+  one fit + search at 128; active methods: all rounds). No cross-method oracle cache in Gates B/C.
+  The extra calibration (signed-effect) model is reported separately.

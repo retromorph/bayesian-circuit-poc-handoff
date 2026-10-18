@@ -1,0 +1,50 @@
+# Implementation-level settings for BCCD-PILOT-1.0 (NOT gate thresholds).
+# Frozen before any confirmatory run; SHA-256 is logged with every run.
+# Changes after confirmatory outcome inspection must be logged in docs/07_DECISIONS_AND_DEVIATIONS.md.
+bayes:
+  tau: 5.0            # slab sd relative to noise sd (conjugate N(0, sigma^2 tau^2))
+  a0: 1.0             # InvGamma noise prior (standardized response units)
+  b0: 1.0e-4
+  a_pi: 1.0           # Beta(1,1) beta-binomial support prior per feature group (multiplicity correction)
+  b_pi: 1.0
+  n_iter: 1500        # cold-start iterations per chain
+  burn: 500
+  n_chains: 2         # chain 1 from empty support, chain 2 from greedy MAP support
+  n_keep: 200         # posterior particles retained
+  swap_prob: 0.3
+  max_support: 64
+  warm_iter: 600      # warm-started (previous-round final state) iterations per chain
+  warm_burn: 200
+acquisition:
+  batch: 16                    # max_active_batch_masks_default
+  n_random_pool: 64            # pool = 64 random balanced-density + 64 circuit-test masks = 128
+  n_circuit_pool: 64
+  n_particles: 32              # agent_posterior_particles_default
+  n_shortlist: 20              # agent_candidate_circuits_default
+  search_particles: 64         # particles used inside Gate C k-constrained circuit search
+decision:
+  lam: 10.0                    # L(C)=|C|/p + lam*max(R(C)-0.10, 0)
+  max_props: 4                 # proposals of alternative minimal circuits
+  bayes_proposal_min_prob: 0.5
+gate_a:
+  enum_sizes: [1, 2, 3]
+  misfit_cv_folds: 4
+  # misfit threshold is set from development worlds by the pre-declared rule in
+  # docs/07_DECISIONS_AND_DEVIATIONS.md (D-A-3) and written to configs/gate_a_misfit_threshold.json
+  a3_zero_mae_fallback_lasso_normalized_mae: 1.0e-3
+  a3_zero_mae_fallback_abs_tolerance: 0.01
+  workers: 7
+gate_b:
+  enum_sizes: [1, 2]
+  propose_sizes: [2]
+  n_blind_inputs: 64
+  n_blind_masks: 128
+  n_validation_inputs: 256
+gate_c:
+  max_seq_microbatch: 512
+  eap_ig_steps: 5
+  eap_ig_corruption: abc_counterfactual
+  dev_reference_seed: 31900
+  n_dev_discovery_prompts: 32
+  n_dev_eval_prompts: 64
+  bootstrap_reps: 2000
