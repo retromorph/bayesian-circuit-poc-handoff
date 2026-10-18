@@ -185,3 +185,27 @@ seed was run**.
   (seed, method), and the sharding assignment cannot affect any decision.
 - Code is synced to the host with rsync (including `.git`). Confirmatory runs refuse a dirty worktree and a changed
   freeze record.
+
+### 2026-10-18T23:39Z — D-VIL-3: cosmetic `query_index` defect in the pilot oracle log (found after confirmatory runs)
+
+- **What:** `DiscoveryOracle.query` (pilot code, unchanged) writes `query_index = n_masks - len(masks) + i` after the
+  loop has already added earlier masks of the same batch to the seen-set. The logged index is therefore wrong (it can
+  even be negative). The pilot's logs carry the same defect.
+- **Impact:** none on any decision or criterion. Budget enforcement uses the seen-set size, which is correct; the
+  independent audit counts exactly 128 distinct masks per method × seed. Parquet rows are stored in true chronological
+  order. The audit also re-derived the discovery/verification split from ablation counts: verification = 24/32/40
+  ablated; design = 5/14/29/43.
+- **Action:** documented, not fixed, so the oracle code stays identical to what both protocols executed.
+
+### 2026-10-18T23:45Z — D-VIL-4: exploratory (post-verdict) run issues
+
+- **Context:** exploratory budget/allocation variants (`--set exploratory`, `bccd/verification-v1-exploratory`) were
+  launched only after the confirmatory H1/H2 verdicts were computed and committed (`b078735`).
+- **Issue 1:** the first launch started 8 GPU processes concurrently. Shard 0 of B128V48 hit CUDA OOM (8 × ~2 GB on
+  16 GB). Nothing was retried silently.
+- **Issue 2:** for 72 verifications, M2 requested 24 picks per k from its 16-circuit shortlist and crashed.
+- **Fix:** for exploratory budget variants, M2's shortlist size is set to twice the per-k picks, the preregistered
+  8-from-16 ratio. All partial V48/V72 outputs (both shards, including one still running with the old shortlist size)
+  were moved to `runs/verification_v1/_aborted_exploratory/` and their logs to `logs/aborted_exploratory/`. Both
+  variants were re-run from scratch, one process each.
+- **Classification:** exploratory only; no confirmatory or bridge artifact is affected.

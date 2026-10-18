@@ -146,3 +146,43 @@ Each `run_gate.sh` call writes `logs/<cmd>.log`, `logs/<cmd>.status.json` (state
 `runs/<gate>/.../status.json`; re-running a command skips completed units. Confirmatory commands refuse a dirty
 git worktree and shortened world/seed lists (`--max-worlds`, `--max-seeds`, `--dry-run` are exploratory only and
 log to `bccd/dev-smoke`).
+
+---
+
+## Follow-up: BCCD-VIL-1.0 — verification-in-the-loop (added by the executing agent)
+
+**Question.** Does spending part of a fixed real-intervention budget on *verifying proposed circuits during
+discovery* fix the surrogate optimism (winner's curse) found in the pilot (H1)? Does Bayesian inference add anything
+on top (H2)?
+
+**Verdict: H1 PASS · H2 FAIL → GO for verification-in-the-loop circuit optimisation *without* Bayesian inference.**
+
+| (20 confirmatory seeds, 128 blind prompts, B = 128 masks each) | pooled S (lower is better) |
+|---|---:|
+| M0 `lasso_static_128` (pilot's best method) | 0.438 |
+| M1 `lasso_density_matched` (best non-verified) | 0.419 |
+| M5 `bayes_static_128` | 0.443 |
+| M2 `lasso_random_verify` (104 + 24 random verifications) | 0.378 |
+| **M3 `lasso_vil`** (104 + 24 active verifications, H1 candidate) | **0.342** (ratio 0.818 vs M1; CIs > 0 vs M0, M1 and M5; 16/20 seeds) |
+| M4 `bayes_vil` (H2 candidate) | 0.339 (ratio 0.990 vs M3; CI [−0.017, +0.023]) |
+
+No circuit from any method reaches the absolute faithfulness level R ≤ 0.10 (best 0.19).
+
+- Protocol: [`docs/08_VERIFICATION_PROTOCOL.md`](docs/08_VERIFICATION_PROTOCOL.md). Methods:
+  [`docs/09_VERIFICATION_METHODS.md`](docs/09_VERIFICATION_METHODS.md). Configs:
+  `configs/preregistration_verification_v1.yaml`, `configs/verification_implementation_v1.yaml`.
+- Freeze record (hashes before confirmatory runs): `reports/verification_v1/preregistration_hashes.json` (commit
+  `9e2f365`). Deviations D-VIL-0…4: `docs/07_DECISIONS_AND_DEVIATIONS.md`.
+- Report: [`reports/verification_v1/final_report.md`](reports/verification_v1/final_report.md). Machine-readable:
+  `reports/verification_v1/decision.json` and `run_manifest.json` (MLflow run IDs). Audit archive:
+  `reports/verification_v1/audit/vil_runs_artifacts.tgz`.
+- MLflow (loopback `127.0.0.1:5001` on the GPU host): `bccd/verification-v1` (confirmatory + aggregate),
+  `bccd/verification-v1-dev`, `bccd/verification-v1-bridge`, `bccd/verification-v1-exploratory`.
+
+```bash
+uv sync --frozen && bash scripts/start_mlflow.sh && export MLFLOW_TRACKING_URI=http://127.0.0.1:5001
+uv run python -m bayescircuits.cli vil-prepare                       # needs the pilot's runs/gate_c/frozen/
+for i in 0 1 2 3; do tmux new-session -d -s vil-conf-$i "bash scripts/run_vil.sh vil-confirmatory-$i vil-run --set confirmatory --shard $i --n-shards 4"; done
+bash scripts/run_vil.sh vil-bridge vil-run --set bridge              # pilot seeds; secondary
+uv run python -m bayescircuits.cli vil-report --mlflow               # recompute criteria -> reports/verification_v1/
+```
