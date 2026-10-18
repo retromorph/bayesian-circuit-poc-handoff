@@ -50,6 +50,16 @@ def render_report(cfg: dict, decision: dict, A: dict, B: dict, C: dict, manifest
     out.append(f"**Host / GPU / driver / torch:** {prov.get('platform')} / {prov.get('nvidia_smi')} / torch {prov.get('torch_version')} (CUDA build {prov.get('torch_cuda_build')})  ")
     out.append(f"**Overall verdict:** **{decision['overall_verdict']}** (Gate A {decision['gates']['A']['verdict']}, Gate B {decision['gates']['B']['verdict']}, Gate C {decision['gates']['C']['verdict']})  ")
     out.append(f"**MLflow tracking:** remote `http://127.0.0.1:5001` via SSH tunnel; parent runs {json.dumps(rid)}\n")
+    out.append("\n**Run-time provenance per gate** (each gate's summary records the code revision it actually ran with):\n")
+    out.append("| Gate | git SHA at run | dirty | impl-config SHA-256 | uv.lock SHA-256 | parent MLflow run |")
+    out.append("|---|---|---|---|---|---|")
+    for g in ("gate_a", "gate_b", "gate_c"):
+        sp = PROJECT_ROOT / "runs" / g / "summary.json"
+        if sp.exists():
+            pv = json.loads(sp.read_text()).get("provenance", {})
+            out.append(f"| {g[-1].upper()} | `{pv.get('git_sha')}` | {pv.get('git_dirty')} | `{str(pv.get('impl_config_sha256'))[:16]}…` | "
+                       f"`{str(pv.get('uv_lock_sha256'))[:16]}…` | `{json.loads(sp.read_text()).get('parent_run_id')}` |")
+    out.append("")
     if NARRATIVE.exists():
         out.append(NARRATIVE.read_text())
     # ---- Gate A tables
