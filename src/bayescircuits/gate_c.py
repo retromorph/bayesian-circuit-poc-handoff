@@ -186,10 +186,10 @@ def eap_ig_head_scores(model, ps: PromptSet, steps: int, chunk: int = 16) -> tup
             alpha = k / steps
             store: dict = {}
 
-            def emb_hook(e, hook, alpha=alpha):
-                return e_corr + alpha * (e_clean - e_corr)
+            def emb_hook(e, hook, alpha=alpha, ec=e_corr, el=e_clean):
+                return ec + alpha * (el - ec)
 
-            def z_hook(z, hook):
+            def z_hook(z, hook, store=store):
                 z.retain_grad()
                 store[hook.name] = z
                 return z
@@ -205,7 +205,7 @@ def eap_ig_head_scores(model, ps: PromptSet, steps: int, chunk: int = 16) -> tup
             for i, z in enumerate(zname):
                 grads[i] += store[z].grad.detach() / steps
             model.zero_grad(set_to_none=True)
-            del logits, store
+            del logits
         for i, z in enumerate(zname):
             dz = cc[z] - cr[z]  # (b, pos, h, d)
             scores[i] += (dz * grads[i]).sum(dim=(0, 1, 3))
