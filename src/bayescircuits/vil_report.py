@@ -312,6 +312,16 @@ def _figs(data: dict, crit: dict, tag: str) -> list[str]:
 
 
 # ----------------------------------------------------------------------------- main
+def _md_table(df: pd.DataFrame, index: bool = True) -> str:
+    """Minimal GitHub-markdown table (avoids an extra dependency on `tabulate`)."""
+    d = df.reset_index() if index else df
+    cols = [str(c) for c in d.columns]
+    lines = ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
+    for _, r in d.iterrows():
+        lines.append("| " + " | ".join(str(v) for v in r.tolist()) + " |")
+    return "\n".join(lines)
+
+
 def _fmt(x, nd=4):
     return "—" if x is None or (isinstance(x, float) and not np.isfinite(x)) else f"{x:.{nd}f}"
 
@@ -409,8 +419,8 @@ def build_vil_report(args) -> int:
             md.append(f"- {key}: ratio {b['ratio']:.3f}; 90% CI of S_ref - S_cand [{b['bootstrap']['ci90'][0]:+.4f}, {b['bootstrap']['ci90'][1]:+.4f}]; seed wins {b['wins']}/{crit['n_seeds']}")
         hb = crit["H1_secondary_bayes_vil"]
         md.append(f"- H1 criteria applied to bayes_vil (secondary, not adjudicated): {hb['verdict']} — {hb['V-1']['observed']}; {hb['V-2']['observed']}; {hb['V-3']['observed']}")
-        md += ["", "Optimism (winner's curse) by method and role:", "", opt.round(4).to_markdown(index=False), "",
-               f"Bayesian circuit-level calibration: {json.dumps(cal)}", "", "Mean costs per method and seed:", "", cs[cost_cols].round(3).to_markdown(), ""]
+        md += ["", "Optimism (winner's curse) by method and role:", "", _md_table(opt.round(4), index=False), "",
+               f"Bayesian circuit-level calibration: {json.dumps(cal)}", "", "Mean costs per method and seed:", "", _md_table(cs[cost_cols].round(3)), ""]
         md += [f"![{n}](figures/{n})" for n in figs]
     # ---- bridge (secondary)
     br = load_set("bridge")
