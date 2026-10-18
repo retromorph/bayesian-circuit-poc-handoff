@@ -169,11 +169,12 @@ def _local_search(obj, p: int, init, max_iters: int) -> tuple[tuple[int, ...], f
     return C, cur, pool
 
 
-def generate_candidates(obj, spec: VILSpec, rng: np.random.Generator, n_random_starts: int) -> dict:
+def generate_candidates(obj, spec: VILSpec, rng: np.random.Generator, n_random_starts: int, keep_pool: bool = False) -> dict:
     """Shared candidate generator: the shared greedy-elimination + swap search (BCCD-PILOT-1.0)
     plus ``n_random_starts`` random-start best-improvement swap searches per k.
 
-    Returns {k: {"cands": {circuit: obj}, "optima": [circuits], "search_top": circuit, "search_top_val": v}}."""
+    Returns {k: {"cands": {circuit: obj}, "optima": [circuits], "search_top": circuit, "search_top_val": v}};
+    with ``keep_pool`` also "pool": every circuit scored during the k-specific searches (used by M2's shortlist)."""
     p = spec.p
     res = search_fixed_k(obj, p, list(spec.ks), spec.max_swap_iters, spec.n_alternatives)
     out = {}
@@ -182,6 +183,7 @@ def generate_candidates(obj, spec: VILSpec, rng: np.random.Generator, n_random_s
         for c, v in res[k]:
             cands[tuple(c)] = float(v)
         optima = [tuple(res[k][0][0])]
+        explored: dict[tuple[int, ...], float] = dict(cands)
         for _ in range(n_random_starts):
             init = rng.choice(p, size=k, replace=False)
             C, v, pool = _local_search(obj, p, init, spec.rs_max_iters)
@@ -189,7 +191,12 @@ def generate_candidates(obj, spec: VILSpec, rng: np.random.Generator, n_random_s
             cands[C] = v
             for c, vv in sorted(pool.items(), key=lambda t: t[1])[: spec.n_alternatives]:
                 cands.setdefault(c, vv)
+            if keep_pool:
+                for c, vv in pool.items():
+                    explored.setdefault(c, vv)
         out[k] = {"cands": cands, "optima": optima, "search_top": tuple(res[k][0][0]), "search_top_val": float(res[k][0][1])}
+        if keep_pool:
+            out[k]["pool"] = explored
     return out
 
 
@@ -378,20 +385,23 @@ def run_vil_method(
             fit(sur)
             with clock.timed("search"):
                 obj = make_obj(sur)
-                gen = generate_candidates(obj, spec, rng, spec.shortlist_starts)
+                gen = generate_candidates(obj, spec, rng, spec.shortlist_starts, keep_pool=True)
             out["surrogate_at_104"] = {str(k): {**_circuit_record(sur, p, gen[k]["search_top"], gen[k]["search_top_val"]), "source": "surrogate"} for k in spec.ks}
             batch, recs = [], []
             per_k = spec.n_verify // len(spec.ks)
             out["shortlists"] = {}
             with clock.timed("acquisition"):
                 for k in spec.ks:
-                    sl = [c for c in diverse_shortlist(gen[k]["cands"], spec.shortlist_size, spec.shortlist_min_symdiff) if available(c)]
-                    sl = _top_up(sl, gen[k]["cands"], spec.shortlist_size, available, rng, p, k, out)
+                    # diverse shortlist over every circuit the surrogate scored during the k-specific searches
+                    # (D-VIL-1: the 6-per-start candidate set alone held < 16 diverse circuits for small k)
+                    pool = {c: v for c, v in gen[k]["pool"].items() if available(c)}
+                    sl = diverse_shortlist(pool, spec.shortlist_size, spec.shortlist_min_symdiff)
+                    sl = _top_up(sl, pool, spec.shortlist_size, available, rng, p, k, out)
                     out["shortlists"][str(k)] = [list(c) for c in sl]
                     pick = rng.choice(len(sl), size=per_k, replace=False)
                     for i in sorted(pick.tolist()):
                         batch.append((k, sl[i]))
-                        recs.append(_circuit_record(sur, p, sl[i], gen[k]["cands"].get(sl[i])))
+                        recs.append(_circuit_record(sur, p, sl[i], pool.get(sl[i])))
             verify(batch, recs, 0)
         else:
             per = spec.per_round

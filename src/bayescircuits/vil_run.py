@@ -318,14 +318,15 @@ def run_set(args) -> int:
         raise SystemExit("vil_splits.json hash mismatch")
     rounds_override = None
     if variant:
-        if not variant.startswith("rounds"):
+        if variant.startswith("rounds"):
+            rounds_override = int(variant[len("rounds"):])
+        elif not variant.startswith("rerun-"):  # rerun-<tag>: development re-execution after a fix, no overrides
             raise SystemExit(f"unknown variant {variant}")
-        rounds_override = int(variant[len("rounds"):])
     spec = spec_from_cfg(cfg, rounds_override)
     methods = args.methods.split(",") if args.methods else list(METHODS_VIL)
     if confirmatory and methods != list(METHODS_VIL):
         raise SystemExit("confirmatory runs execute every preregistered method")
-    if variant:
+    if variant and variant.startswith("rounds"):
         methods = [m for m in methods if m in ("lasso_vil", "bayes_vil")]
     seeds = {"dev": cfg["seeds"]["development"], "confirmatory": cfg["seeds"]["confirmatory"], "bridge": cfg["seeds"]["bridge"]}[set_name]
     seeds = [s for i, s in enumerate(seeds) if i % args.n_shards == args.shard]
