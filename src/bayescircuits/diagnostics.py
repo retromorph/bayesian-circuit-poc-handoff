@@ -114,7 +114,44 @@ def replicate(cfg: dict) -> dict:
     new = pd.read_csv(Path(st["dir"]) / "rows.csv").sort_values(["method", "budget"]).reset_index(drop=True)
     old = pd.read_csv(PROJECT_ROOT / "runs" / "gate_b" / "model-20000" / "rows.csv").sort_values(["method", "budget"]).reset_index(drop=True)
     out["B:20000"] = _compare(old, new, ["circuits_recovered", "success", "event_time", "test_mae", "n_high_conf_claims", "proposals"])
+    if torch.cuda.is_available():
+        out["C:31001"] = replicate_c(cfg, 31001)
     return out
+
+
+def replicate_c(cfg: dict, seed: int) -> dict:
+    """Re-run Gate C discovery for one seed and compare sealed circuit decisions (no blind data used)."""
+    import torch
+
+    from . import gate_c as G
+    from .discovery import METHODS, run_method
+    from .masks import mask_key
+    from .oracle.base import DiscoveryOracle
+
+    model, _ = G.load_model("cuda")
+    ps, _ = G.build_splits(model, cfg, "cuda")
+    cand = json.loads((G.FROZEN / "candidate_heads.json").read_text())
+    bm = np.load(G.FROZEN / "blind_masks.npy")
+    reserved = frozenset(mask_key(m) for m in bm)
+    n = cfg["gate_c"]["discovery"]["n_prompts_per_mask"]
+    si = cfg["seeds"]["gate_c_discovery"].index(seed)
+    dps = G.to_promptset(f"disc-{seed}", ps["discovery"].items[si * n : (si + 1) * n], "cuda")
+    runner = G.make_runner(model, cand["heads"], dps, cfg["_impl"])
+    warm, static = G.unit_designs(seed, cfg, set(reserved))
+    prob = G.make_problem(f"C-{seed}", warm, static, cfg, reserved)
+    sealed = json.loads((PROJECT_ROOT / "runs" / "gate_c" / f"seed-{seed}" / "decisions_sealed.json").read_text())
+    res = {}
+    for method in METHODS:
+        orc = DiscoveryOracle(fn=G.oracle_fn(runner), p=48, budget=max(prob.checkpoints), method=method, unit_id=prob.unit_id,
+                              prompt_batch_id="replication", reserved_keys=reserved, n_prompts_per_mask=n)
+        snaps = run_method(prob, method, orc, seed, G.bayes_cfg(cfg["_impl"]))
+        for sn in snaps:
+            old = sealed[f"{method}@{sn.budget}"]["decision"]
+            same = all(sorted(old["selected"][k]) == sorted(sn.decision["selected"][k]) for k in old["selected"])
+            dpred = max(abs(old["selected_pred_R"][k] - sn.decision["selected_pred_R"][k]) for k in old["selected"])
+            res[f"{method}@{sn.budget}"] = {"same_circuits": bool(same), "max_pred_R_diff": float(dpred)}
+    torch.cuda.empty_cache()
+    return res
 
 
 def _compare(old, new, keys) -> dict:
