@@ -15,8 +15,6 @@ third_party/
 *.safetensors
 *.pt
 *.pth
-reports/figures/
-reports/tables/
 .DS_Store
 runs/
 runs_exploratory/

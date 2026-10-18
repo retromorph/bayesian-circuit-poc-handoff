@@ -133,7 +133,7 @@ def build_gate_b(cfg: dict, tables: Path, figs: Path) -> dict:
                          "min_singleton_acc": min(s["accuracy"] for s in a["singleton"].values()),
                          "pairA_acc": a["pair"]["A"]["accuracy"], "pairB_acc": a["pair"]["B"]["accuracy"],
                          "max_singleton_pair_ratio": a["max_singleton_to_pair_ratio"], "true_circuit_R_max": max(a["true_circuit_R"]),
-                         "min_other_size2_R": a.get("max_R_other_size2"), "n_faithful_size_le2": len(a["faithful_size_le2"]),
+                         "max_R_nonplanted_size2": a.get("max_R_other_size2"), "n_faithful_size_le2": len(a["faithful_size_le2"]),
                          "model_sha256": a["model_sha256"]} for a in log["attempts"]])
     val.to_csv(tables / "gate_b_construction.csv", index=False)
     ev = rows.groupby(["method", "model_seed"]).agg(event_time=("event_time", "first"), censored=("censored", "first")).reset_index()
@@ -284,7 +284,8 @@ def build_report(cfg: dict) -> int:
         "gate_c": {"frozen": C.get("manifest"), "seed_status": {p.parent.name: _read_json(p) for p in sorted((RUNS / "gate_c").glob("seed-*/status.json"))}},
         "external": {"mib_ioi_dataset": "mib-bench/ioi@e5f3468f3af4c0883be35cd3bced8c711c95d286", "shapiq": prov.get("shapiq_version"),
                      "transformer_lens": prov.get("transformer_lens_version"), "third_party_git_repos": "none vendored or cloned"},
-        "artifact_sha256": {str(p.relative_to(PROJECT_ROOT)): sha256_file(p) for p in sorted(tables.glob("*.csv"))},
+        "artifact_sha256": {str(p.relative_to(PROJECT_ROOT)): sha256_file(p)
+                            for p in sorted(list(tables.glob("*.csv")) + list((REP / "audit").glob("*.tgz")))},
     }
     write_json(REP / "run_manifest.json", manifest)
     full = {"A": A, "B": Bg, "C": {k: v for k, v in C.items() if k != "manifest"}}

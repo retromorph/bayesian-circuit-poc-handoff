@@ -1,0 +1,15 @@
+criterion,threshold,observed,status,run_ids
+A-1,>=16/20 A1 worlds: top-2 predicted nonadditivity pairs = planted pairs (B=128),20/20 A1 worlds with top-2 nonadditivity pairs = planted pairs,PASS,d6ebe797a95d48c0ba72674736cdfb36
+A-2,>=16/20 A1 worlds recover >=3/4 exact size-3 minimal circuits; 0 invalid P>=0.95 claims,20/20 worlds recover >=3/4 minimal circuits; invalid high-confidence claims at B=128: 0 (all checkpoints: 0),PASS,d6ebe797a95d48c0ba72674736cdfb36
+A-3,A0 Bayes MAE <= 1.10 x first-order Lasso (zero-error fallback: normalised MAE <= 0.01),A0 MAE bayes=0.00093 lasso_1st=0.00018 ratio=5.162; normalised 0.00143 vs 0.00028; rule: zero-error fallback (normalised MAE <= 0.01),PASS,d6ebe797a95d48c0ba72674736cdfb36
+A-4,"pooled A0-A2 90% predictive coverage in [0.85, 0.95]","pooled A0-A2 coverage 1.0000; per regime A0=1.000, A1=1.000, A2=1.000, A3=0.857",FAIL,d6ebe797a95d48c0ba72674736cdfb36
+A-5,"A3 coverage in [0.85,0.95] OR misfit flags >=16/20 with <=12/60 A0-A2 false positives","A3 coverage 0.8568; detector flags A3 20/20, false positives 0/60 (t=0.01622)",PASS,d6ebe797a95d48c0ba72674736cdfb36
+B-1,>=8/10 valid models: >=3/4 planted size-2 circuits + a blind-faithful proposal by B=128,1/10 models recovered >=3/4 planted size-2 circuits with a blind-faithful proposal by B=128,FAIL,221e31a4735542b6bdf8320d6a947b7f
+B-2,median masks-to-recovery <= 0.75 x best non-Bayesian median (censored at 160),"median event time bayes_decision=160.0 vs best non-Bayes lasso_1st=160.0 (ratio 1.000); censored counts {'bayes_decision': 9, 'bayes_static': 8, 'bayes_uncertainty': 7, 'gbdt': 9, 'lasso_1st': 10, 'lasso_pair': 9}",FAIL,221e31a4735542b6bdf8320d6a947b7f
+B-3,median masks-to-recovery <= 0.80 x bayes_static median,median bayes_decision=160.0 vs bayes_static=160.0 (ratio 1.000),FAIL,221e31a4735542b6bdf8320d6a947b7f
+B-4,0 invalid high-confidence (P>=0.95) circuit claims,78 invalid of 84 high-confidence (P>=0.95) claims across all checkpoints/models,FAIL,221e31a4735542b6bdf8320d6a947b7f
+C-1,S_Bayes(128) <= 0.85 x best non-Bayes S(128) pooled AND >=15% gain in >=4/5 seeds,"S_bayes(128)=0.5108, best non-Bayes lasso_pair S(128)=0.3848, ratio=1.327 (need <=0.85); seeds with >=15% gain: 0/5",FAIL,c8c20c5ea1804702a85b57b49552c364
+C-2,S_Bayes(128) <= best non-Bayes S(256),S_bayes(128)=0.5108 vs best non-Bayes S(256)=0.3628 (lasso_pair),FAIL,c8c20c5ea1804702a85b57b49552c364
+C-3,"90% predictive coverage of blind mean intervention effects in [0.85, 0.95]","coverage 0.809 (mean width 2.584; CRPS 0.5579); by #ablated: 2:0.88/w=2.02, 10:0.72/w=2.41, 24:0.79/w=2.91, 43:0.86/w=3.00",FAIL,c8c20c5ea1804702a85b57b49552c364
+C-4,paired hierarchical bootstrap 90% CI lower bound > 0 vs dev-preselected baseline,"reference=lasso_pair (dev-preselected); paired 90% CI of S_ref-S_bayes = [-0.1701, -0.0758]",FAIL,c8c20c5ea1804702a85b57b49552c364
+C-5,end-to-end elapsed at B=128 <= 2 x strongest non-Bayesian baseline,end-to-end wall at B=128 (incl. 1.5s screening): bayes_decision 14.4s vs lasso_pair 6.5s (ratio 2.20),FAIL,c8c20c5ea1804702a85b57b49552c364
