@@ -1,0 +1,56 @@
+[project]
+name = "bayescircuits"
+version = "0.1.0"
+description = "Bayesian Causal Circuit Discovery (BCCD) Go/No-Go pilot, protocol BCCD-PILOT-1.0"
+readme = "README.md"
+requires-python = "==3.11.*"
+dependencies = [
+    "numpy>=1.26,<2.3",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "pyarrow>=15",
+    "pyyaml>=6",
+    "scikit-learn>=1.4",
+    "lightgbm>=4.3",
+    "shapiq>=1.3",
+    "mlflow>=3.1",
+    "torch>=2.7,<2.9",
+    "transformer-lens>=2.15,<3",
+    "transformers>=4.45,<5",
+    "matplotlib>=3.8",
+    "psutil>=5.9",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu126", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bayescircuits"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+extend-exclude = ["third_party", "mlruns", "cache", "runs"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "B905", "B008", "UP038"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,197 @@
+# PRE-REGISTRATION: BCCD-PILOT-1.0
+# This file contains proposed settings/thresholds, NOT results.
+# Freeze SHA256 and do not modify after first confirmatory outcome inspection.
+protocol:
+  id: BCCD-PILOT-1.0
+  drafted_utc_date: "2026-10-18"
+  scientific_status: not_executed
+  definition_reference: docs/01_PROTOCOL.md
+  threshold_mutation_after_blind: forbidden
+  overall_go_rule: all_three_gates_pass
+
+hardware:
+  requested_gpu: "NVIDIA RTX A4000"
+  vram_gib: 16
+  gpu_count: 1
+  remote_connection_env: REMOTE_SSH
+  remote_project_env: REMOTE_PROJECT_DIR
+  mlflow_tracking_uri: http://127.0.0.1:5000
+  mlflow_backend: sqlite:///mlruns/mlflow.db
+  mlflow_artifacts_directory: mlruns/artifacts
+
+shared:
+  ablation_mask_one_means: ablated
+  ablation_mask_zero_means: retained
+  head_hook_semantics: post_attention_head_z_at_all_positions
+  retained_circuit: ablate_complement_within_fixed_candidate_pool
+  faithful_R_max: 0.10
+  high_confidence_posterior_min: 0.95
+  interval_nominal_coverage: 0.90
+  accepted_coverage_interval: [0.85, 0.95]
+  intervention_density_mixture: [0.10, 0.30, 0.60, 0.90]
+  initial_warm_start_masks: 32
+  methods:
+    non_bayesian_required:
+      - lasso_1st
+      - lasso_pair
+      - gbdt
+    bayesian_required:
+      - bayes_static
+      - bayes_uncertainty
+      - bayes_decision
+    additional_diagnostic:
+      - proxyspex
+      - bair_compressed_sensing_if_comparable
+  agent_candidate_mask_pool_default: 128
+  agent_posterior_particles_default: 32
+  agent_candidate_circuits_default: 20
+  max_active_batch_masks_default: 16
+  confirmatory_smoke_shortcuts_disallowed: true
+
+seeds:
+  gate_a_development_worlds: [90001, 90002, 90003, 90004]
+  gate_a_confirmatory:
+    A0: [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020]
+    A1: [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+    A2: [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011, 3012, 3013, 3014, 3015, 3016, 3017, 3018, 3019, 3020]
+    A3: [4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011, 4012, 4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020]
+  gate_b_candidate_model_seed_start: 20000
+  gate_b_candidate_model_seed_limit: 20200
+  gate_b_discovery_seed_offset: 25000
+  gate_c_screening: 31500
+  gate_c_split: 31777
+  gate_c_blind_masks: 31999
+  gate_c_discovery: [31001, 31002, 31003, 31004, 31005]
+
+gate_a:
+  name: controlled_causal_oracle
+  device: cpu
+  p: 32
+  regimes: [A0, A1, A2, A3]
+  n_confirmatory_worlds_per_regime: 20
+  nonzero_coefficient_relative_jitter: 0.20
+  context_batch_per_mask: 16
+  n_blind_masks_per_world: 256
+  duplicate_contexts_are_one_effective_observation_in: [A0, A1, A3]
+  checkpoints_mask_count: [32, 64, 96, 128]
+  base_mechanisms:
+    A0: "1.0*m0+0.8*m1-0.7*m2"
+    A1: "1.0*m0+0.9*m1*m2+0.8*m3*m4"
+    A2: "m0+(1-g)*m1*m2+g*m3*m4"
+    A3: "1.0*m0+0.9*m1*m2*m3+0.8*m4*m5"
+  A1_true_minimal_retained_circuits:
+    - [0, 1, 3]
+    - [0, 1, 4]
+    - [0, 2, 3]
+    - [0, 2, 4]
+  criteria:
+    A-1:
+      required_successful_A1_worlds: 16
+      total_A1_worlds: 20
+      top_pairwise_interactions: 2
+      checkpoint_masks: 128
+    A-2:
+      required_successful_A1_worlds: 16
+      total_A1_worlds: 20
+      min_true_alternative_circuits: 3
+      circuit_cardinality: 3
+      max_invalid_high_confidence_claims: 0
+    A-3:
+      additive_mae_max_ratio_to_first_order_lasso: 1.10
+      if_baseline_mae_approximately_zero_absolute_tolerance: 0.01
+    A-4:
+      pooled_regimes: [A0, A1, A2]
+      coverage_interval: [0.85, 0.95]
+    A-5:
+      cubic_regime: A3
+      coverage_interval: [0.85, 0.95]
+      alternative_min_detector_success_worlds: 16
+      max_misfit_false_positive_worlds_on_A0_to_A2: 12
+      control_worlds_for_false_positive_check: 60
+      total_worlds: 20
+
+gate_b:
+  name: planted_xor_transformer
+  n_valid_models: 10
+  candidate_model_attempt_limit: 200
+  architecture:
+    layers: 3
+    attention_heads_per_layer: 8
+    d_model: 64
+    task: XOR(A,B)
+    relevant_heads: 4
+    head_groups: [A1_A2, B1_B2]
+  candidate_units: 24
+  discovery_contexts_per_mask: 16
+  checkpoints_mask_count: [32, 64, 96, 128]
+  construction_validity:
+    clean_accuracy_min: 0.95
+    singleton_relevant_head_ablated_accuracy_min: 0.90
+    full_A_pair_ablated_accuracy_max: 0.60
+    full_B_pair_ablated_accuracy_max: 0.60
+    singleton_to_corresponding_pair_effect_ratio_max: 0.10
+    exact_minimal_alternative_circuits: 4
+    exact_minimal_circuit_size: 2
+  censored_event_time_masks: 160
+  criteria:
+    B-1:
+      min_successful_models: 8
+      total_valid_models: 10
+      true_alternatives_required_each_success: 3
+      max_budget_masks: 128
+    B-2:
+      median_budget_ratio_max_vs_best_non_bayesian: 0.75
+    B-3:
+      median_budget_ratio_max_vs_bayes_static: 0.80
+    B-4:
+      max_invalid_high_confidence_circuits: 0
+
+gate_c:
+  name: pretrained_gpt2_small_ioi
+  model_id: gpt2
+  task: ioi
+  total_heads: 144
+  screening:
+    method: eap_ig
+    n_prompts: 64
+    best_attribution_heads: 32
+    extra_random_heads: 16
+    total_candidate_heads: 48
+    frozen_screening_seed: 31500
+    min_abs_all_pool_ablation_logit_margin_change: 0.5
+  discovery:
+    n_prompts_per_mask: 32
+    n_seeds: 5
+    warm_start_masks: 32
+    budget_mask_checkpoints: [64, 128, 256]
+    retained_circuit_sizes: [8, 16, 24]
+  blind:
+    n_prompts: 128
+    n_masks: 128
+    densities: [0.05, 0.20, 0.50, 0.90]
+    masks_per_density: 32
+    disjoint_templates_when_feasible: true
+  criterion_checkpoint_masks: 128
+  criteria:
+    C-1:
+      max_score_ratio_to_best_non_bayesian_at_128: 0.85
+      min_seedwise_relative_gain_fraction: 0.15
+      min_successful_seedwise_comparisons: 4
+      total_seeds: 5
+    C-2:
+      bayesian_128_score_must_be_lte_best_non_bayesian_256: true
+    C-3:
+      coverage_interval: [0.85, 0.95]
+    C-4:
+      paired_hierarchical_bootstrap_confidence: 0.90
+      improvement_lower_bound_strictly_positive: true
+      reference_baseline_selected_on_development: true
+    C-5:
+      end_to_end_elapsed_ratio_max_vs_best_non_bayesian_at_128: 2.0
+
+report:
+  final_report_path: reports/final_report.md
+  final_decision_path: reports/decision.json
+  manifest_path: reports/run_manifest.json
+  statuses: [PASS, FAIL, INCONCLUSIVE, BLOCKED, NOT_RUN]
+  never_fill_missing_values_with_zero: true
