@@ -39,7 +39,8 @@ VIL_FROZEN = VIL_ROOT / "frozen"
 PILOT_FROZEN = PROJECT_ROOT / "runs" / "gate_c" / "frozen"
 REPORT_DIR = PROJECT_ROOT / "reports" / "verification_v1"
 FREEZE_RECORD = REPORT_DIR / "preregistration_hashes.json"
-EXPERIMENTS = {"confirmatory": "bccd/verification-v1", "dev": "bccd/verification-v1-dev", "bridge": "bccd/verification-v1-bridge"}
+EXPERIMENTS = {"confirmatory": "bccd/verification-v1", "dev": "bccd/verification-v1-dev", "bridge": "bccd/verification-v1-bridge",
+               "exploratory": "bccd/verification-v1-exploratory"}
 LOGS = PROJECT_ROOT / "logs"
 
 
@@ -64,10 +65,13 @@ def vil_provenance(cfg: dict) -> dict:
             "hashes": cfg["_hashes"], **git_info(), **lock_info(), **env_info()}
 
 
-def spec_from_cfg(cfg: dict, rounds_override: int | None = None) -> VILSpec:
+def spec_from_cfg(cfg: dict, rounds_override: int | None = None, budget_override: tuple[int, int] | None = None) -> VILSpec:
     d = dict(cfg["_impl"]["vil"])
     if rounds_override is not None:
         d["rounds"] = rounds_override
+    if budget_override is not None:  # exploratory only: (budget, n_verify); n_discovery = budget - n_verify
+        d["budget"], d["n_verify"] = budget_override
+        d["n_discovery"] = d["budget"] - d["n_verify"]
     return VILSpec.from_dict(d)
 
 
@@ -316,19 +320,26 @@ def run_set(args) -> int:
     fman = json.loads(fz.read_text())
     if sha256_file(VIL_FROZEN / "vil_splits.json") != fman["vil_splits_sha256"]:
         raise SystemExit("vil_splits.json hash mismatch")
-    rounds_override = None
+    rounds_override = budget_override = None
+    exploratory = set_name == "exploratory"
+    if exploratory and not (variant and variant.startswith("B")):
+        raise SystemExit("exploratory runs need a budget variant such as B256V0 or B128V48")
     if variant:
         if variant.startswith("rounds"):
             rounds_override = int(variant[len("rounds"):])
+        elif variant.startswith("B") and exploratory:  # post-verdict exploratory budget/allocation variants
+            b, v = variant[1:].split("V")
+            budget_override = (int(b), int(v))
         elif not variant.startswith("rerun-"):  # rerun-<tag>: development re-execution after a fix, no overrides
             raise SystemExit(f"unknown variant {variant}")
-    spec = spec_from_cfg(cfg, rounds_override)
+    spec = spec_from_cfg(cfg, rounds_override, budget_override)
     methods = args.methods.split(",") if args.methods else list(METHODS_VIL)
     if confirmatory and methods != list(METHODS_VIL):
         raise SystemExit("confirmatory runs execute every preregistered method")
     if variant and variant.startswith("rounds"):
         methods = [m for m in methods if m in ("lasso_vil", "bayes_vil")]
-    seeds = {"dev": cfg["seeds"]["development"], "confirmatory": cfg["seeds"]["confirmatory"], "bridge": cfg["seeds"]["bridge"]}[set_name]
+    seeds = {"dev": cfg["seeds"]["development"], "confirmatory": cfg["seeds"]["confirmatory"], "bridge": cfg["seeds"]["bridge"],
+             "exploratory": cfg["seeds"]["confirmatory"]}[set_name]
     seeds = [s for i, s in enumerate(seeds) if i % args.n_shards == args.shard]
     out = VIL_ROOT / (set_name if not variant else f"{set_name}_{variant}")
     out.mkdir(parents=True, exist_ok=True)
@@ -382,9 +393,12 @@ def run_set(args) -> int:
             dps = to_promptset(f"disc-{seed}", items, "cuda")
             runner = make_runner(model, heads, dps, cfg)
             designs = seed_designs(seed, set(reserved), spec, dens)
-            for k_, v in designs.items():
-                if masks_sha256(v) != fman["design_sha256"][str(seed)][k_]:
-                    raise SystemExit(f"design {k_} hash mismatch for seed {seed}")
+            if not exploratory:  # exploratory budgets use other prefixes of the same frozen seeded streams
+                for k_, v in designs.items():
+                    if masks_sha256(v) != fman["design_sha256"][str(seed)][k_]:
+                        raise SystemExit(f"design {k_} hash mismatch for seed {seed}")
+            elif not np.array_equal(designs["warm"], seed_designs(seed, set(reserved), spec_from_cfg(cfg), dens)["warm"]):
+                raise SystemExit("exploratory warm start differs from the frozen design")
             cache: dict = {}
             decisions, queries = {}, []
             t_seed = time.perf_counter()

@@ -110,6 +110,8 @@ def seed_designs(seed: int, reserved: set, spec: VILSpec, densities: list[float]
     rng = np.random.default_rng([seed, 44])
     used = set(reserved) | {mask_key(m) for m in d104}
     per_k = spec.n_verify // len(spec.ks)
+    if per_k == 0:  # exploratory static-only budgets (n_verify = 0)
+        return {"warm": warm, "d104": d104, "d128": d128, "density_matched": np.zeros((0, p), np.uint8)}
     dm = []
     for k in spec.ks:
         got = 0
