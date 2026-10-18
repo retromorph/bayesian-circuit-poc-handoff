@@ -438,7 +438,11 @@ def build_vil_report(args) -> int:
         md += ["", "## Bridge (pilot seeds 31001-31005; secondary)", "", "| method | pooled S |", "|---|---:|"] + [f"| {m} | {Sb[m].mean():.4f} |" for m in METHODS_VIL if m in Sb]
         md += ["", f"lasso_static_128 reproduces pilot lasso_pair@128 circuits: {rep}"]
     # ---- manifest
-    manifest = {"protocol": PROTOCOL_ID, "freeze_record": freeze, "current_hashes": protocol_hashes(),
+    parents = {}
+    for stf in sorted((PROJECT_ROOT / "logs").glob("vil-*-shard*.status.json")):
+        st = json.loads(stf.read_text())
+        parents[stf.name.replace(".status.json", "")] = {"parent_run_id": st.get("parent_run_id"), "state": st.get("state"), "seeds": st.get("seeds")}
+    manifest = {"protocol": PROTOCOL_ID, "freeze_record": freeze, "current_hashes": protocol_hashes(), "mlflow_parent_runs": parents,
                 "vil_frozen_manifest_sha256": sha256_file(VIL_FROZEN / "vil_frozen_manifest.json") if (VIL_FROZEN / "vil_frozen_manifest.json").exists() else None,
                 "mlflow": {name: {str(s): st["mlflow_runs"] for s, st in d["status"].items()} for name, d in (("confirmatory", conf), ("bridge", br), ("dev", dev))},
                 "seed_status": {name: {str(s): {k: st.get(k) for k in ("decisions_sealed_sha256", "git_sha", "git_dirty", "completed_utc", "seed_wall_seconds")}
