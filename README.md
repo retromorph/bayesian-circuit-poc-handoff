@@ -78,3 +78,55 @@ Open the repo in the coding agent and paste the complete contents of `CODING_AGE
 - `uv.lock`, production code, unit/integration tests and invocation instructions.
 
 A negative final verdict is an acceptable and valuable outcome.
+
+---
+
+## Execution record and exact reproduction (added by the executing agent)
+
+**Status:** all three gates were implemented and executed on the remote RTX A4000 host. The formal verdict,
+per-criterion adjudication and MLflow run IDs are in [`reports/final_report.md`](reports/final_report.md),
+[`reports/decision.json`](reports/decision.json) and [`reports/run_manifest.json`](reports/run_manifest.json).
+Deviations and operational specifications are logged (append-only) in
+[`docs/07_DECISIONS_AND_DEVIATIONS.md`](docs/07_DECISIONS_AND_DEVIATIONS.md).
+
+### Package layout (as built)
+
+```text
+src/bayescircuits/
+  cli.py               doctor | prepare | gate-a | gate-b | gate-c | diagnostics | report
+  config.py provenance.py tracking.py          configuration hashes, provenance, MLflow helpers
+  masks.py                                     mask semantics (1 = ablate), designs, feature dictionary
+  oracle/{base,synthetic,transformer}.py       budget-accounted oracle, Gate A worlds, TL hook_z head ablation
+  planted.py                                   Gate B direct-weight planted XOR transformers + validation
+  models/{bayes,surrogates,proxyspex}.py       spike-and-slab sampler, Lasso/pair-Lasso/LightGBM, shapiq ProxySPEX
+  acquisition.py circuits.py discovery.py      pools, uncertainty & decision-focused acquisition, shared circuit search, loop
+  evaluate.py criteria.py criteria_c.py        held-out metrics, gate adjudication, hierarchical bootstrap
+  gate_a.py gate_b.py gate_c.py diagnostics.py gate runners
+  report.py report_md.py                       recomputation of all criteria from saved artifacts
+```
+
+### Reproduce on a fresh host (single NVIDIA GPU, Linux, uv)
+
+```bash
+git clone <this repo> bayesian-circuit-poc && cd bayesian-circuit-poc
+uv sync --frozen                                   # Python 3.11, torch 2.8.0+cu126 on Linux (explicit index)
+bash scripts/start_mlflow.sh                       # tmux bccd-mlflow, sqlite + local artifacts, 127.0.0.1:5001
+export MLFLOW_TRACKING_URI=http://127.0.0.1:5001
+uv run python -m bayescircuits.cli doctor          # GPU/driver/torch + MLflow artifact round trip
+uv run pytest -q && uv run ruff check .
+# Gate A development worlds -> frozen misfit threshold (configs/gate_a_misfit_threshold.json is committed)
+tmux new-session -d -s bccd-prep-a 'bash scripts/run_gate.sh prepare --stage a'
+tmux new-session -d -s bccd-a 'bash scripts/run_gate.sh gate-a'          # CPU, 80 worlds x 6 methods
+tmux new-session -d -s bccd-b 'bash scripts/run_gate.sh gate-b'          # GPU, construction + 10 models
+tmux new-session -d -s bccd-prep-c 'bash scripts/run_gate.sh prepare --stage c'  # EAP-IG screening, frozen pool/splits/dev reference
+tmux new-session -d -s bccd-c 'bash scripts/run_gate.sh gate-c'          # GPU, 5 seeds x 6 methods x B in {64,128,256}
+bash scripts/run_gate.sh diagnostics                                      # ProxySPEX diagnostics (not a gate criterion)
+bash scripts/run_gate.sh report                                           # recompute criteria -> reports/
+# MLflow UI from a laptop: ssh -N -L 127.0.0.1:5001:127.0.0.1:5001 <host>  then open http://127.0.0.1:5001
+```
+
+Each `run_gate.sh` call writes `logs/<cmd>.log`, `logs/<cmd>.status.json` (state, parent MLflow run ID) and
+`logs/<cmd>.exit.json` (exit code, UTC times). Units (worlds / planted models / seeds) are checkpointed in
+`runs/<gate>/.../status.json`; re-running a command skips completed units. Confirmatory commands refuse a dirty
+git worktree and shortened world/seed lists (`--max-worlds`, `--max-seeds`, `--dry-run` are exploratory only and
+log to `bccd/dev-smoke`).
