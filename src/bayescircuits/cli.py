@@ -307,6 +307,7 @@ def main(argv: list[str] | None = None) -> int:
     vr.add_argument("--allow-dirty", action="store_true")
     vrep = sub.add_parser("vil-report", help="recompute VIL criteria from sealed artifacts; write reports/verification_v1")
     vrep.add_argument("--dev-only", action="store_true")
+    vrep.add_argument("--mlflow", action="store_true", help="log an aggregate run with the generated report to bccd/verification-v1")
     for name in ["doctor", "prepare", "gate-a", "gate-b", "gate-c", "diagnostics", "report"]:
         sp = sub.add_parser(name)
         sp.add_argument("--config", default=str(PROJECT_ROOT / "configs" / "preregistration.yaml"))

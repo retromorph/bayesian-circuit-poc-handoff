@@ -72,6 +72,8 @@ def spec_from_cfg(cfg: dict, rounds_override: int | None = None, budget_override
     if budget_override is not None:  # exploratory only: (budget, n_verify); n_discovery = budget - n_verify
         d["budget"], d["n_verify"] = budget_override
         d["n_discovery"] = d["budget"] - d["n_verify"]
+        # M2 keeps its preregistered ratio: random picks from a shortlist twice the per-k verification count
+        d["shortlist_size"] = max(d["shortlist_size"], 2 * (d["n_verify"] // len(d["ks"])))
     return VILSpec.from_dict(d)
 
 

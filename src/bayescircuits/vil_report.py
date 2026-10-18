@@ -246,7 +246,7 @@ def _figs(data: dict, crit: dict, tag: str) -> list[str]:
     order = METHODS_VIL
     fig, ax = plt.subplots(1, 2, figsize=(13, 4.5))
     vals = [S[S.method == m].S.values for m in order]
-    ax[0].boxplot(vals, tick_labels=[f"{METHOD_CODE[m]}\n{m}" for m in order], showmeans=True)
+    ax[0].boxplot(vals, tick_labels=[f"{METHOD_CODE[m]}\n" + m.replace("lasso_", "lasso\n").replace("bayes_", "bayes\n") for m in order], showmeans=True)
     for i, v in enumerate(vals):
         ax[0].scatter(np.full(len(v), i + 1) + np.random.default_rng(i).uniform(-0.12, 0.12, len(v)), v, s=10, alpha=0.6)
     ax[0].set_ylabel("S = mean_k R(C_k) (blind; lower is better)" if tag == "confirmatory" else f"S ({tag})")
@@ -310,6 +310,137 @@ def _figs(data: dict, crit: dict, tag: str) -> list[str]:
     names.append(n)
     return names
 
+
+# ----------------------------------------------------------------------------- exploratory (post-verdict)
+EXPLORATORY_LABELS = [
+    # (label, set dir, method, budget, n_verify)
+    ("static Lasso, B=64", "exploratory_B64V24", "lasso_static_128", 64, 0),
+    ("static Lasso, B=128 (M0)", "confirmatory", "lasso_static_128", 128, 0),
+    ("static Lasso, B=256", "exploratory_B256V0", "lasso_static_128", 256, 0),
+    ("Lasso VIL, B=64 (40+24)", "exploratory_B64V24", "lasso_vil", 64, 24),
+    ("Lasso VIL, B=128 (104+24) (M3)", "confirmatory", "lasso_vil", 128, 24),
+    ("Lasso VIL, B=128 (80+48)", "exploratory_B128V48", "lasso_vil", 128, 48),
+    ("Lasso VIL, B=128 (56+72)", "exploratory_B128V72", "lasso_vil", 128, 72),
+    ("random verify, B=128 (104+24) (M2)", "confirmatory", "lasso_random_verify", 128, 24),
+    ("random verify, B=128 (80+48)", "exploratory_B128V48", "lasso_random_verify", 128, 48),
+    ("random verify, B=128 (56+72)", "exploratory_B128V72", "lasso_random_verify", 128, 72),
+]
+EXPLORATORY_PAIRS = [
+    ("Lasso VIL, B=64 (40+24)", "static Lasso, B=128 (M0)"),
+    ("Lasso VIL, B=128 (104+24) (M3)", "static Lasso, B=256"),
+    ("static Lasso, B=256", "static Lasso, B=128 (M0)"),
+    ("Lasso VIL, B=128 (80+48)", "Lasso VIL, B=128 (104+24) (M3)"),
+    ("Lasso VIL, B=128 (56+72)", "Lasso VIL, B=128 (104+24) (M3)"),
+    ("Lasso VIL, B=128 (56+72)", "random verify, B=128 (56+72)"),
+]
+
+
+def exploratory_section(cfg: dict) -> tuple[list[str], dict]:
+    """Post-verdict EXPLORATORY budget/allocation analysis on the confirmatory seeds (blind prompts).
+    Never part of any preregistered criterion."""
+    sets = {}
+    for _, d, _, _, _ in EXPLORATORY_LABELS:
+        if d not in sets:
+            sets[d] = load_set(d)
+    ks = cfg["circuits"]["sizes"]
+    rows, merged = [], {}
+    for lab, d, m, b, v in EXPLORATORY_LABELS:
+        data = sets[d]
+        if data["faith"].empty:
+            continue
+        f = data["faith"]
+        g = f[(f.method == m) & (f.role == "final")]
+        if g.empty:
+            continue
+        S = g.groupby("seed").R.mean()
+        rows.append({"config": lab, "method": m, "budget": b, "n_verify": v, "n_seeds": int(S.size), "pooled_S": float(S.mean()),
+                     "R_k8": float(g[g.k == 8].R.mean()), "R_k16": float(g[g.k == 16].R.mean()), "R_k24": float(g[g.k == 24].R.mean()),
+                     "n_R_le_0.10": int((g.R <= 0.10).sum())})
+        for s_, ppd in data["pp"].items():
+            mm = merged.setdefault(s_, {"__denominator__": ppd["__denominator__"]})
+            if not np.allclose(mm["__denominator__"], ppd["__denominator__"], rtol=1e-4, atol=1e-4):
+                raise SystemExit("denominator mismatch across sets")
+            for k in ks:
+                mm[f"{lab}__{k}"] = ppd[f"final__{m}__{k}"]
+    out = {"status": "EXPLORATORY (post-verdict; not preregistered; never overrides H1/H2)", "configs": rows, "pairs": []}
+    if not rows:
+        return [], out
+    seeds = sorted(s_ for s_, mm in merged.items() if all(f"{r['config']}__{ks[0]}" in mm for r in rows))
+    fam = families("blind")
+    have = {r["config"] for r in rows}
+    reps, rseed = cfg["criteria"]["bootstrap"]["reps"], cfg["criteria"]["bootstrap"]["rng_seed"]
+    for a, b in EXPLORATORY_PAIRS:
+        if a in have and b in have and seeds:
+            bt = paired_bootstrap(merged, seeds, fam, a, b, ks, reps, rseed)
+            Sa = np.array([np.mean([merged[s_][f"{a}__{k}"].mean() / merged[s_]["__denominator__"].mean() for k in ks]) for s_ in seeds])
+            Sb = np.array([np.mean([merged[s_][f"{b}__{k}"].mean() / merged[s_]["__denominator__"].mean() for k in ks]) for s_ in seeds])
+            out["pairs"].append({"candidate": a, "reference": b, "S_candidate": float(Sa.mean()), "S_reference": float(Sb.mean()),
+                                 "ratio": float(Sa.mean() / Sb.mean()), "ci90_S_ref_minus_S_cand": bt["ci90"], "wins": int((Sa < Sb).sum()),
+                                 "n_seeds": len(seeds)})
+    md = ["", "## EXPLORATORY (post-verdict): budget and allocation variants on the confirmatory seeds", "",
+          "Run after the H1/H2 verdicts were computed and committed; not preregistered; never overrides the primary analysis.", "",
+          _md_table(pd.DataFrame(rows).round(4), index=False), "",
+          "Paired comparisons (same seeds, blind prompts; 90% hierarchical bootstrap CI of S_ref - S_cand):", ""]
+    for pr in out["pairs"]:
+        md.append(f"- {pr['candidate']} vs {pr['reference']}: S {pr['S_candidate']:.4f} vs {pr['S_reference']:.4f} (ratio {pr['ratio']:.3f}); "
+                  f"CI [{pr['ci90_S_ref_minus_S_cand'][0]:+.4f}, {pr['ci90_S_ref_minus_S_cand'][1]:+.4f}]; wins {pr['wins']}/{pr['n_seeds']}")
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    df = pd.DataFrame(rows)
+    fig, ax = plt.subplots(1, 2, figsize=(12, 4.2))
+    curves = (("static Lasso", df[df.config.str.startswith("static")]),
+              ("Lasso VIL (24 verifications)", df[df.config.str.startswith("Lasso VIL") & (df.n_verify == 24)]))
+    for name, sub in curves:
+        sub = sub.sort_values("budget")
+        ax[0].plot(sub.budget, sub.pooled_S, marker="o", label=name)
+    ax[0].set_xscale("log", base=2)
+    ax[0].set_xlabel("intervention masks B")
+    ax[0].set_ylabel("pooled blind S")
+    ax[0].set_title("Budget curve (exploratory)")
+    ax[0].legend()
+    for name, pre in (("Lasso VIL (active)", "Lasso VIL, B=128"), ("random verification", "random verify, B=128")):
+        sub = df[df.config.str.startswith(pre)].sort_values("n_verify")
+        ax[1].plot(sub.n_verify, sub.pooled_S, marker="o", label=name)
+    ax[1].set_xlabel("verification masks out of B=128")
+    ax[1].set_ylabel("pooled blind S")
+    ax[1].set_title("Allocation at B=128 (exploratory)")
+    ax[1].legend()
+    fig.tight_layout()
+    FIGS.mkdir(parents=True, exist_ok=True)
+    fig.savefig(FIGS / "vil_exploratory_budget_allocation.png", dpi=130)
+    plt.close(fig)
+    md += ["", "![exploratory](figures/vil_exploratory_budget_allocation.png)"]
+    pd.DataFrame(rows).to_csv(TABLES / "vil_exploratory_configs.csv", index=False)
+    pd.DataFrame(out["pairs"]).to_csv(TABLES / "vil_exploratory_pairs.csv", index=False)
+    return md, out
+
+
+def log_aggregate_mlflow(result: dict) -> str | None:
+    """One aggregate run in bccd/verification-v1 holding the decision and generated report files."""
+    try:
+        import mlflow
+
+        from . import tracking
+
+        h = protocol_hashes()
+        tags = tracking.base_tags({"protocol_version": PROTOCOL_ID, "protocol_doc_sha256": h["08_VERIFICATION_PROTOCOL.md"],
+                                   "config_sha256": h["preregistration_yaml"], "impl_config_sha256": h["implementation_yaml"],
+                                   "uv_lock_sha256": h["uv_lock"]}, "VIL", True, role="aggregate", recommendation=result.get("recommendation"))
+        with tracking.run("bccd/verification-v1", "vil-aggregate-report", tags) as r:
+            for f in ("decision.json", "run_manifest.json", "generated_results.md", "exploratory_summary.json"):
+                if (REPORT_DIR / f).exists():
+                    mlflow.log_artifact(str(REPORT_DIR / f))
+            for f in sorted(TABLES.glob("vil_*.csv")):
+                mlflow.log_artifact(str(f), artifact_path="tables")
+            for f in sorted(FIGS.glob("vil_*.png")):
+                mlflow.log_artifact(str(f), artifact_path="figures")
+            return r.info.run_id
+    except Exception as e:  # tracking server unavailable (e.g. local rebuild)
+        print(f"MLflow aggregate logging skipped: {e!r}")
+        return None
 
 # ----------------------------------------------------------------------------- main
 def _md_table(df: pd.DataFrame, index: bool = True) -> str:
@@ -437,6 +568,11 @@ def build_vil_report(args) -> int:
         result["bridge"] = {"S_pooled": Sb.mean().to_dict(), "lasso_static_128_reproduces_pilot_lasso_pair_128": rep}
         md += ["", "## Bridge (pilot seeds 31001-31005; secondary)", "", "| method | pooled S |", "|---|---:|"] + [f"| {m} | {Sb[m].mean():.4f} |" for m in METHODS_VIL if m in Sb]
         md += ["", f"lasso_static_128 reproduces pilot lasso_pair@128 circuits: {rep}"]
+    # ---- exploratory (post-verdict)
+    emd, eres = exploratory_section(cfg)
+    if eres.get("configs"):
+        md += emd
+        write_json(REPORT_DIR / "exploratory_summary.json", eres)
     # ---- manifest
     parents = {}
     for stf in sorted((PROJECT_ROOT / "logs").glob("vil-*-shard*.status.json")):
@@ -450,5 +586,10 @@ def build_vil_report(args) -> int:
     write_json(REPORT_DIR / "run_manifest.json", manifest)
     write_json(REPORT_DIR / "decision.json", result)
     (REPORT_DIR / "generated_results.md").write_text("\n".join(md) + "\n")
-    print("\n".join(md[:80]))
+    if getattr(args, "mlflow", False):
+        rid = log_aggregate_mlflow(result)
+        if rid:
+            manifest["mlflow_aggregate_run"] = rid
+            write_json(REPORT_DIR / "run_manifest.json", manifest)
+    print("\n".join(md))
     return 0
