@@ -1,6 +1,6 @@
 {
   "protocol": "BCCD-PILOT-1.0",
-  "generated_utc": "2026-10-18T22:14:57Z",
+  "generated_utc": "2026-10-18T22:33:38Z",
   "overall_verdict": "NO_GO",
   "overall_rule": "GO iff Gate A, B and C all PASS",
   "gates": {

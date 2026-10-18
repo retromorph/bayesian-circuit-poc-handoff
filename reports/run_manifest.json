@@ -1,13 +1,13 @@
 {
   "provenance": {
-    "utc": "2026-10-18T22:14:57Z",
+    "utc": "2026-10-18T22:33:38Z",
     "protocol_version": "BCCD-PILOT-1.0",
     "config_sha256": "c2102e71fc7e1cfe2b922103bb5e4c35f643dc2e6b5b1a6a48132453782890ec",
     "impl_config_sha256": "177e80fcf1f24483ffa081c972b9417c28fe6246c2476adf60261c7cf47b785a",
     "protocol_doc_sha256": "fe2a3d4f77aaa69f2684267c54980119524e99c8f9a04db456f4d325f9d57986",
-    "git_sha": "3ebde28f7fe62e5684063a1cd1c7d1b9dc73ae31",
-    "git_dirty": false,
-    "git_status": "",
+    "git_sha": "f1efd9912521e4a86f89898511b5096e1cdeea85",
+    "git_dirty": true,
+    "git_status": "M reports/decision.json\n M reports/figures/gate_c_overview.png\n M reports/tables/gate_b_construction.csv",
     "uv_lock_sha256": "f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759",
     "python": "3.11.13",
     "platform": "Linux-7.0.0-15-generic-x86_64-with-glibc2.43",
@@ -41,6 +41,14 @@
     "gate_a_dev_parent": "3c2a5918fca143269f369ee682219ab2"
   },
   "status_files": {
+    "diagnostics-replicate.status.json": {
+      "parent_run_id": "b55eed3821b44d569221f0e649ad8420",
+      "updated_utc": "2026-10-18T22:20:20Z"
+    },
+    "diagnostics-transfer.status.json": {
+      "parent_run_id": "6ff16facba4d471ba59cafa6b4683741",
+      "updated_utc": "2026-10-18T22:16:13Z"
+    },
     "diagnostics.status.json": {
       "parent_run_id": "fdb531ee26884cbf9c00dacefe554dea",
       "updated_utc": "2026-10-18T22:13:38Z"
@@ -1349,11 +1357,12 @@
     "third_party_git_repos": "none vendored or cloned"
   },
   "artifact_sha256": {
+    "reports/audit/runs_artifacts.tgz": "0e8e02eb1158f049d59ceb55d4e3d847010ce4fdf78aab36699bf3422d1a4d19",
     "reports/tables/costs_gate_c.csv": "91f35507b8544447fb00b1620730333174c4a2de1fb9ecbf9c5632cc22ce3534",
     "reports/tables/gate_a_A1_by_budget.csv": "46b7bd1d4f9cd17964ffbe5b8b79ddbedf430276ea122004e49b677fc4b04ac2",
     "reports/tables/gate_a_summary_B128.csv": "04b6769b4dc0dbd204281fff3994adde64df6340b3582a8cbd574f893dbf140e",
     "reports/tables/gate_a_worlds.csv": "0fe2a0f46a11c8669b21e44f45b73a655168661acb5cb928c9fc0263a6bd3074",
-    "reports/tables/gate_b_construction.csv": "a20670d4ba9bf011f9d38b0347e47cb923da5eb2519dabe8672277c7bddfa3b1",
+    "reports/tables/gate_b_construction.csv": "e8e7ed3c1c0c9c2e854acc7b16b06d16b57d84380eb200c1191ba54a89231cca",
     "reports/tables/gate_b_instances.csv": "26d56cc2f3d1bcbf4d4460d1a212b6a0522e33a70c7af043098540f064b1b9d0",
     "reports/tables/gate_c_faithfulness.csv": "91e3194d031a143345469c744ac498dd049c6c9e9a3aaeabd241e4e160d5932b",
     "reports/tables/gate_c_prediction.csv": "544d117b067df56489c23d9bc025e83fcb598543c027c7f3146ac89f3fb04f30",

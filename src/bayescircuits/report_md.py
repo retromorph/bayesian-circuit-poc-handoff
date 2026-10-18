@@ -46,7 +46,7 @@ def render_report(cfg: dict, decision: dict, A: dict, B: dict, C: dict, manifest
     out.append("# Bayesian Causal Circuit Discovery — Go/No-Go Pilot Report\n")
     out.append(f"**Date (UTC):** {decision['generated_utc']}  ")
     out.append(f"**Protocol:** {cfg['protocol']['id']} (protocol doc SHA-256 `{prov.get('protocol_doc_sha256')}`; config SHA-256 `{prov.get('config_sha256')}`)  ")
-    out.append(f"**Git revision / uv lock:** `{prov.get('git_sha')}` (dirty={prov.get('git_dirty')}) / `{prov.get('uv_lock_sha256')}`  ")
+    out.append(f"**Report generated at git revision / uv lock:** `{prov.get('git_sha')}` (worktree dirty only by the regenerated report files: {prov.get('git_dirty')}) / `{prov.get('uv_lock_sha256')}` — experiment runs used the clean revisions listed below  ")
     out.append(f"**Host / GPU / driver / torch:** {prov.get('platform')} / {prov.get('nvidia_smi')} / torch {prov.get('torch_version')} (CUDA build {prov.get('torch_cuda_build')})  ")
     out.append(f"**Overall verdict:** **{decision['overall_verdict']}** (Gate A {decision['gates']['A']['verdict']}, Gate B {decision['gates']['B']['verdict']}, Gate C {decision['gates']['C']['verdict']})  ")
     out.append(f"**MLflow tracking:** remote `http://127.0.0.1:5001` via SSH tunnel; parent runs {json.dumps(rid)}\n")

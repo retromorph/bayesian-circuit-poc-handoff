@@ -89,6 +89,22 @@ per-criterion adjudication and MLflow run IDs are in [`reports/final_report.md`]
 Deviations and operational specifications are logged (append-only) in
 [`docs/07_DECISIONS_AND_DEVIATIONS.md`](docs/07_DECISIONS_AND_DEVIATIONS.md).
 
+### Final verdict: **NO_GO** (Gate A FAIL · Gate B FAIL · Gate C FAIL)
+
+| Gate | Failing criteria | Key numbers | Run-time git | MLflow parent run |
+|---|---|---|---|---|
+| A (80 synthetic worlds, CPU) | A-4 | pooled A0–A2 90% coverage 1.000 (over-conservative); A-1/A-2 20/20; A-5 detector 20/20, 0/60 FP | `1658055` | `d6ebe797a95d48c0ba72674736cdfb36` (exp `bccd/gate-a`) |
+| B (10 valid planted XOR models, GPU) | B-1, B-2, B-3, B-4 | 1/10 recovered by B=128; medians censored (160); 78/84 high-confidence claims invalid | `f8b232f` | `221e31a4735542b6bdf8320d6a947b7f` (exp `bccd/gate-b`) |
+| C (GPT-2 Small IOI, 5 seeds, GPU) | C-1 … C-5 | S(128) Bayes 0.511 vs lasso_pair 0.385; bootstrap CI of improvement [−0.170, −0.076]; coverage 0.809; compute 2.20× | `6b43b7f` | `c8c20c5ea1804702a85b57b49552c364` (exp `bccd/gate-c`); freeze `69acae6453904987aa681553f90bf9fc` |
+
+Other runs: Gate A development/threshold `3c2a5918fca143269f369ee682219ab2`; diagnostics (ProxySPEX
+`fdb531ee26884cbf9c00dacefe554dea`, discovery-vs-blind transfer `6ff16facba4d471ba59cafa6b4683741`,
+deterministic replication `b55eed3821b44d569221f0e649ad8420`); pre-run artifact round trip
+`e9ce02a4bd0f42e7a4f307badbd55a19`. Per-world / per-model / per-seed child run IDs are listed in
+`reports/run_manifest.json`. Note **D-PROV-1**: `src/bayescircuits/models/` was untracked during the runs
+(a `.gitignore` pattern); it is now committed, and the replication audit reproduces the confirmatory outputs
+exactly from the committed code.
+
 ### Package layout (as built)
 
 ```text

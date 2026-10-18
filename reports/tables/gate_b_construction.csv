@@ -1,4 +1,4 @@
-seed,valid,clean_acc,min_singleton_acc,pairA_acc,pairB_acc,max_singleton_pair_ratio,true_circuit_R_max,min_other_size2_R,n_faithful_size_le2,model_sha256
+seed,valid,clean_acc,min_singleton_acc,pairA_acc,pairB_acc,max_singleton_pair_ratio,true_circuit_R_max,max_R_nonplanted_size2,n_faithful_size_le2,model_sha256
 20000,True,1.0,1.0,0.5,0.5,0.0,0.01530318520963192,1.0009280443191528,4,378d307510b8d299be1e58b71aad27179bd1a44326cda2444179f7da186e1afa
 20001,True,1.0,1.0,0.5,0.5,0.0,0.023583978414535522,1.0041934251785278,4,488c46905115f6384ee3348edf9dbabe78b03f110020eaab82096e05812e1b52
 20002,True,1.0,1.0,0.5,0.5,0.0,0.04225664585828781,1.002529263496399,4,a57fbc3519d9fe072e3da9b496c642811f85689754f0e2858af459b85642b1aa
