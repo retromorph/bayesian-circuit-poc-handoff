@@ -254,6 +254,12 @@ def cmd_gate_c(args) -> int:
     return run(args, load_config(args.config))
 
 
+def cmd_diagnostics(args) -> int:
+    from .diagnostics import run_diagnostics
+
+    return run_diagnostics(load_config(args.config))
+
+
 def cmd_report(args) -> int:
     from .report import build_report
 
@@ -263,7 +269,7 @@ def cmd_report(args) -> int:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="bayescircuits")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ["doctor", "prepare", "gate-a", "gate-b", "gate-c", "report"]:
+    for name in ["doctor", "prepare", "gate-a", "gate-b", "gate-c", "diagnostics", "report"]:
         sp = sub.add_parser(name)
         sp.add_argument("--config", default=str(PROJECT_ROOT / "configs" / "preregistration.yaml"))
         sp.add_argument("--dry-run", action="store_true", help="exploratory smoke run (never confirmatory)")
@@ -276,7 +282,7 @@ def main(argv: list[str] | None = None) -> int:
             sp.add_argument("--max-seeds", type=int, default=None, help="exploratory: number of units")
     args = ap.parse_args(argv)
     fn = {"doctor": cmd_doctor, "prepare": cmd_prepare, "gate-a": cmd_gate_a, "gate-b": cmd_gate_b,
-          "gate-c": cmd_gate_c, "report": cmd_report}[args.cmd]
+          "gate-c": cmd_gate_c, "diagnostics": cmd_diagnostics, "report": cmd_report}[args.cmd]
     return fn(args)
 
 

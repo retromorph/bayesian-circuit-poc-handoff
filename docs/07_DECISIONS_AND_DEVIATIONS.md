@@ -100,3 +100,18 @@ smoke test). They do not change any gate threshold, seed list, split identity or
   all fitting / acquisition / circuit-search work needed to produce its B=128 decision (passive methods:
   one fit + search at 128; active methods: all rounds). No cross-method oracle cache in Gates B/C.
   The extra calibration (signed-effect) model is reported separately.
+
+
+### 2026-10-18T21:55Z — D-C-6: Lasso solver tolerance for Gate C (before any Gate C run)
+
+- **Affected experiment / criterion:** Gate C baselines `lasso_1st`, `lasso_pair` (and therefore C-1, C-2, C-4, C-5 comparators).
+- **What changed:** LassoCV coordinate-descent tolerance for Gate C is sklearn's default `tol=1e-4`
+  (`max_iter=10000`) instead of the `1e-7`/50000 used in Gates A/B. Regularisation path, CV folds,
+  feature dictionary and scaling are unchanged.
+- **Reason:** on a local CPU smoke test (48 masks, 1176 features, GPT-2 effects; no blind data) a single
+  pairwise LassoCV fit at tol=1e-7 took ~56 s and >3 min on a 256x1176 synthetic benchmark. This is a
+  solver-precision setting chosen for noiseless synthetic targets; on noisy GPT-2 targets it would
+  inflate the comparator's compute and bias C-5 *toward* the Bayesian method.
+- **When relative to blind-outcome inspection:** before any Gate C screening, discovery or blind run.
+- **Statistical classification:** confirmatory (implementation setting, no threshold change).
+- **Impact on verdict:** none by construction; Gates A/B results unaffected.

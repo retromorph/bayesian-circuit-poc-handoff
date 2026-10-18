@@ -75,7 +75,7 @@ def build_gate_a(cfg: dict, tables: Path, figs: Path) -> dict:
     rows = pd.read_csv(p).assign(split="confirmatory")
     th = json.loads((PROJECT_ROOT / "configs" / "gate_a_misfit_threshold.json").read_text())
     crit = gate_a_criteria(rows, cfg, th["threshold"])
-    rows["misfit_flag"] = rows.misfit_stat > th["threshold"]
+    rows["misfit_flag"] = np.where(rows.misfit_stat.notna(), rows.misfit_stat > th["threshold"], np.nan)
     cols = ["regime", "world_seed", "method", "budget", "top2_pairs_correct", "true_pair_ranks", "circuits_recovered", "n_proposals", "proposal_size",
             "n_high_conf_claims", "invalid_high_conf_claims", "test_mae", "test_rmse", "test_mae_normalized", "coverage_90", "interval_width_90", "crps",
             "misfit_stat", "misfit_flag", "discovery_masks", "discovery_context_evals", "cost_wall_e2e", "cost_cpu_e2e"]
@@ -84,7 +84,8 @@ def build_gate_a(cfg: dict, tables: Path, figs: Path) -> dict:
     agg = b.groupby(["regime", "method"]).agg(
         n=("world_seed", "nunique"), mae=("test_mae", "mean"), nmae=("test_mae_normalized", "mean"), coverage=("coverage_90", "mean"),
         width=("interval_width_90", "mean"), top2=("top2_pairs_correct", "mean"), rec3=("circuits_recovered", lambda x: (x >= 3).sum()),
-        invalid=("invalid_high_conf_claims", "sum"), misfit_flags=("misfit_flag", "sum"), cpu=("cost_cpu_e2e", "mean")).reset_index()
+        invalid=("invalid_high_conf_claims", lambda x: x.sum(min_count=1)), misfit_flags=("misfit_flag", lambda x: x.astype(float).sum(min_count=1)),
+        cpu=("cost_cpu_e2e", "mean")).reset_index()
     agg.to_csv(tables / "gate_a_summary_B128.csv", index=False)
     # recovery curves by budget (A1)
     a1 = rows[rows.regime == "A1"].groupby(["method", "budget"]).agg(top2=("top2_pairs_correct", "sum"),

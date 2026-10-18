@@ -69,6 +69,7 @@ class Problem:
     acq: AcqSpec
     reserved_keys: frozenset
     extra_targets: list[str] = field(default_factory=list)
+    solver: dict = field(default_factory=dict)  # Lasso solver settings (tol, max_iter)
 
 
 @dataclass
@@ -225,7 +226,7 @@ def run_method(
     rng = np.random.default_rng([seed, zlib.crc32(method.encode())])
     p = problem.p
     clock = _Clock()
-    sur = make_surrogate(method, p, problem.contexts, seed, bayes_cfg)
+    sur = make_surrogate(method, p, problem.contexts, seed, bayes_cfg, problem.solver)
     masks_list: list[np.ndarray] = []
     Y: dict[str, list] = {}
     PP: list = []

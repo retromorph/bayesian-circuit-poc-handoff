@@ -41,6 +41,10 @@ gate_b:
   n_blind_masks: 128
   n_validation_inputs: 256
 gate_c:
+  # LassoCV coordinate-descent tolerance for Gate C (sklearn default). Gates A/B used 1e-7 /
+  # 50000 iterations (noiseless synthetic targets); see D-C-6.
+  lasso_tol: 1.0e-4
+  lasso_max_iter: 10000
   max_seq_microbatch: 512
   eap_ig_steps: 5
   eap_ig_corruption: abc_counterfactual

@@ -273,6 +273,7 @@ def make_problem(unit: str, warm, static, cfg: dict, reserved: frozenset, checkp
         decision=DecisionSpec(mode="fixed", fixed_sizes=list(gc["discovery"]["retained_circuit_sizes"]), rmax=cfg["shared"]["faithful_R_max"],
                               lam=impl["decision"]["lam"], compute_pairs=False),
         acq=acq_spec(impl), reserved_keys=reserved,
+        solver={"tol": impl["gate_c"]["lasso_tol"], "max_iter": impl["gate_c"]["lasso_max_iter"]},
     )
 
 
@@ -292,7 +293,8 @@ def effect_hook_factory(method: str, cfg: dict):
     bcfg = bayes_cfg(cfg["_impl"])
 
     def hook(M, Y, PP, seed):
-        sur = make_surrogate(method, 48, [None], seed + 101, bcfg)
+        solver = {"tol": cfg["_impl"]["gate_c"]["lasso_tol"], "max_iter": cfg["_impl"]["gate_c"]["lasso_max_iter"]}
+        sur = make_surrogate(method, 48, [None], seed + 101, bcfg, solver)
         if method.startswith("bayes"):
             sur.fit(M, Y["effect"], warm=False)
         else:
@@ -457,9 +459,7 @@ def cmd_gate_c(args, cfg: dict) -> int:
         d_all = blind.effects(np.ones((1, 48), np.uint8))[0]
         den = float(np.mean(np.abs(d_all)))
         bt_path = out / "blind_mask_targets.npy"
-        bmask_eff = blind.effects(bm)  # evaluation only
-        np.save(bt_path, bmask_eff.astype(np.float32))
-        bmask_targets = bmask_eff.mean(1)
+        bmask_targets = None  # computed by the evaluator only after the first seed's decisions are sealed
         n_disc = cfg["gate_c"]["discovery"]["n_prompts_per_mask"]
         bcfg = bayes_cfg(impl)
         status_all = []
@@ -498,6 +498,10 @@ def cmd_gate_c(args, cfg: dict) -> int:
             # seal decisions before any blind evaluation of this seed
             write_json(udir / "decisions_sealed.json", decisions)
             sealed_sha = sha256_file(udir / "decisions_sealed.json")
+            if bmask_targets is None:
+                bmask_eff = blind.effects(bm)  # evaluation only; never passed to discovery
+                np.save(bt_path, bmask_eff.astype(np.float32))
+                bmask_targets = bmask_eff.mean(1)
             faith, preds, pp = evaluate_unit(seed, snaps_by_method, blind, bm, bmask_targets, den, np.abs(d_all), cfg)
             pd.DataFrame(faith).to_csv(udir / "faithfulness.csv", index=False)
             pd.DataFrame(preds).to_parquet(udir / "blind_predictions.parquet", index=False)
