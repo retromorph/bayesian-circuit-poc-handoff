@@ -115,3 +115,22 @@ smoke test). They do not change any gate threshold, seed list, split identity or
 - **When relative to blind-outcome inspection:** before any Gate C screening, discovery or blind run.
 - **Statistical classification:** confirmatory (implementation setting, no threshold change).
 - **Impact on verdict:** none by construction; Gates A/B results unaffected.
+
+### 2026-10-18T22:25Z — D-PROV-1: `src/bayescircuits/models/` was missing from git (found after all gates ran)
+
+- **Affected experiment / criterion:** provenance of Gates A, B, C (no criterion value).
+- **What happened:** the handoff `.gitignore` contained the unanchored pattern `models/` (intended for model
+  checkpoint caches). It also matched `src/bayescircuits/models/` (`bayes.py`, `surrogates.py`,
+  `proxyspex.py`, `__init__.py`), so these files were never committed. Code was deployed to the GPU host with
+  rsync (which ignores `.gitignore`), so the runs executed the files, but the git SHAs recorded at run time
+  (A `1658055`, B `f8b232f`, C `6b43b7f`) do not contain them, and `git_dirty=False` could not detect it.
+- **Executed versions (from remote file mtimes, UTC):** `bayes.py` last modified 21:18 (before Gate A started at
+  21:33; unchanged since); `proxyspex.py` 21:34 (before Gate B; unchanged since); `surrogates.py` modified at
+  21:52 only to expose the Lasso `tol`/`max_iter` as parameters whose defaults (1e-7 / 50000) equal the values
+  previously hard-coded (D-C-6) — Gate B had already imported the earlier version; Gate C used the new one.
+  SHA-256 of the committed files: bayes.py `de541aa4…`, surrogates.py `e55eae8c…`, proxyspex.py `4398f9ce…`.
+- **Fix:** pattern anchored to `/models/`; package committed. A deterministic re-execution of one Gate A world
+  per regime family and one Gate B model from the committed code is compared with the sealed confirmatory
+  outputs in `runs/diagnostics/replication.json` (see final report).
+- **Statistical classification:** provenance defect; no change to any data, rule or result.
+- **Impact on verdict:** none.

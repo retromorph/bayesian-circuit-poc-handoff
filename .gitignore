@@ -9,7 +9,7 @@ __pycache__/
 mlruns/
 logs/
 cache/
-models/
+/models/
 third_party/
 *.ckpt
 *.safetensors

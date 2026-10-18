@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import time
+from pathlib import Path
 
 import numpy as np
 
@@ -90,6 +91,47 @@ def discovery_vs_blind_R(cfg: dict) -> dict:
             "corr_disc_blind": float(np.corrcoef(df.R_discovery_prompts, df.R_blind)[0, 1])}
 
 
+def replicate(cfg: dict) -> dict:
+    """Deterministic re-execution of one unit per gate from the committed code; compares with the
+    sealed confirmatory outputs (exploratory audit; written to runs_exploratory/replication)."""
+    import pandas as pd
+    import torch
+
+    from .gate_a import run_world
+    from .gate_b import run_model
+
+    base = PROJECT_ROOT / "runs_exploratory" / "replication"
+    out: dict = {}
+    keys_a = ["test_mae", "coverage_90", "interval_width_90", "circuits_recovered", "top2_pairs_correct", "misfit_stat",
+              "invalid_high_conf_claims", "proposal_true_R"]
+    for reg, seed in (("A1", 2001), ("A3", 4001), ("A0", 1001)):
+        st = run_world(reg, seed, cfg, str(base / "gate_a"), "confirmatory")
+        new = pd.read_csv(Path(st["dir"]) / "rows.csv").sort_values(["method", "budget"]).reset_index(drop=True)
+        old = pd.read_csv(PROJECT_ROOT / "runs" / "gate_a" / "confirmatory" / f"{reg}-{seed}" / "rows.csv").sort_values(["method", "budget"]).reset_index(drop=True)
+        out[f"A:{reg}-{seed}"] = _compare(old, new, keys_a)
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    st = run_model(20000, cfg, base / "gate_b", dev)
+    new = pd.read_csv(Path(st["dir"]) / "rows.csv").sort_values(["method", "budget"]).reset_index(drop=True)
+    old = pd.read_csv(PROJECT_ROOT / "runs" / "gate_b" / "model-20000" / "rows.csv").sort_values(["method", "budget"]).reset_index(drop=True)
+    out["B:20000"] = _compare(old, new, ["circuits_recovered", "success", "event_time", "test_mae", "n_high_conf_claims", "proposals"])
+    return out
+
+
+def _compare(old, new, keys) -> dict:
+    res = {"n_rows": [len(old), len(new)]}
+    for k in keys:
+        if k not in old or k not in new:
+            continue
+        a, b = old[k], new[k]
+        if a.dtype.kind in "fi" and b.dtype.kind in "fi":
+            d = (a.astype(float) - b.astype(float)).abs()
+            res[k] = {"max_abs_diff": float(d.max()) if d.notna().any() else 0.0,
+                      "both_nan": int((a.isna() & b.isna()).sum())}
+        else:
+            res[k] = {"n_mismatch": int((a.astype(str) != b.astype(str)).sum())}
+    return res
+
+
 def run_diagnostics(cfg: dict, which: str = "all") -> int:
     from . import tracking
     from .cli import _finish_parent, _gate_parent
@@ -107,6 +149,11 @@ def run_diagnostics(cfg: dict, which: str = "all") -> int:
         write_json(OUT / "proxyspex.json", res)
         _finish_parent(pid, "FINISHED", {"proxyspex.json": res}, metrics={"proxyspex_A1_top2_correct": res["proxyspex_A1"]["n_top2_correct"]})
         print(json.dumps({"A1_top2_correct": f"{res['proxyspex_A1']['n_top2_correct']}/{res['proxyspex_A1']['n']}"}))
+    if which == "replicate":
+        rep = replicate(cfg)
+        write_json(OUT / "replication.json", rep)
+        _finish_parent(pid, "FINISHED", {"replication.json": rep})
+        print(json.dumps(rep, indent=1))
     if which in ("all", "transfer"):
         tr = discovery_vs_blind_R(cfg)
         write_json(OUT / "gate_c_transfer.json", tr)

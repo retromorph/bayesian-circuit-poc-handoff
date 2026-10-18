@@ -279,7 +279,7 @@ def main(argv: list[str] | None = None) -> int:
         if name == "gate-a":
             sp.add_argument("--max-worlds", type=int, default=None, help="exploratory: worlds per regime")
         if name == "diagnostics":
-            sp.add_argument("--which", default="all", choices=["all", "proxyspex", "transfer"])
+            sp.add_argument("--which", default="all", choices=["all", "proxyspex", "transfer", "replicate"])
         if name in ("gate-b", "gate-c"):
             sp.add_argument("--max-seeds", type=int, default=None, help="exploratory: number of units")
     args = ap.parse_args(argv)
