@@ -299,7 +299,7 @@ def main(argv: list[str] | None = None) -> int:
     vf = sub.add_parser("vil-freeze", help="record protocol/config/source hashes before confirmatory runs")
     vf.add_argument("--force", action="store_true")
     vr = sub.add_parser("vil-run", help="run one VIL set (dev | confirmatory | bridge)")
-    vr.add_argument("--set", required=True, choices=["dev", "confirmatory", "bridge"])
+    vr.add_argument("--set", required=True, choices=["dev", "confirmatory", "bridge", "exploratory"])
     vr.add_argument("--shard", type=int, default=0)
     vr.add_argument("--n-shards", type=int, default=1)
     vr.add_argument("--methods", default=None, help="development only: comma-separated subset")
