@@ -209,3 +209,10 @@ seed was run**.
   were moved to `runs/verification_v1/_aborted_exploratory/` and their logs to `logs/aborted_exploratory/`. Both
   variants were re-run from scratch, one process each.
 - **Classification:** exploratory only; no confirmatory or bridge artifact is affected.
+
+### 2026-10-18T23:48Z — D-VIL-4 addendum: exploratory re-sharding
+
+- To finish sooner, the single-process V48/V72 exploratory runs were stopped after seed 41001 and relaunched as 3
+  shards each. Seed 41001 was kept as complete; seeds without a completed `status.json` are re-run from scratch.
+  The stopped processes' MLflow parent runs in `bccd/verification-v1-exploratory` stay un-terminated (killed) and
+  contain no seed results beyond 41001. Exploratory only.
