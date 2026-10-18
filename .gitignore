@@ -21,3 +21,4 @@ reports/tables/
 runs/
 runs_exploratory/
 *.egg-info/
+reports/doctor.json
