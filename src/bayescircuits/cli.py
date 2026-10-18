@@ -266,9 +266,47 @@ def cmd_report(args) -> int:
     return build_report(load_config(args.config))
 
 
+def cmd_vil_prepare(args) -> int:
+    from .vil_run import cmd_vil_prepare as run
+
+    return run(args)
+
+
+def cmd_vil_freeze(args) -> int:
+    from .vil_run import cmd_vil_freeze as run
+
+    return run(args)
+
+
+def cmd_vil_run(args) -> int:
+    from .vil_run import run_set
+
+    return run_set(args)
+
+
+def cmd_vil_report(args) -> int:
+    from .vil_report import build_vil_report
+
+    return build_vil_report(args)
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="bayescircuits")
     sub = ap.add_subparsers(dest="cmd", required=True)
+    # BCCD-VIL-1.0 (verification-in-the-loop follow-up; configs/preregistration_verification_v1.yaml)
+    vp = sub.add_parser("vil-prepare", help="freeze VIL prompt batches, evaluation sets and mask designs")
+    vp.add_argument("--config", default=None)
+    vf = sub.add_parser("vil-freeze", help="record protocol/config/source hashes before confirmatory runs")
+    vf.add_argument("--force", action="store_true")
+    vr = sub.add_parser("vil-run", help="run one VIL set (dev | confirmatory | bridge)")
+    vr.add_argument("--set", required=True, choices=["dev", "confirmatory", "bridge"])
+    vr.add_argument("--shard", type=int, default=0)
+    vr.add_argument("--n-shards", type=int, default=1)
+    vr.add_argument("--methods", default=None, help="development only: comma-separated subset")
+    vr.add_argument("--variant", default=None, help="development only: e.g. rounds4")
+    vr.add_argument("--allow-dirty", action="store_true")
+    vrep = sub.add_parser("vil-report", help="recompute VIL criteria from sealed artifacts; write reports/verification_v1")
+    vrep.add_argument("--dev-only", action="store_true")
     for name in ["doctor", "prepare", "gate-a", "gate-b", "gate-c", "diagnostics", "report"]:
         sp = sub.add_parser(name)
         sp.add_argument("--config", default=str(PROJECT_ROOT / "configs" / "preregistration.yaml"))
@@ -284,7 +322,8 @@ def main(argv: list[str] | None = None) -> int:
             sp.add_argument("--max-seeds", type=int, default=None, help="exploratory: number of units")
     args = ap.parse_args(argv)
     fn = {"doctor": cmd_doctor, "prepare": cmd_prepare, "gate-a": cmd_gate_a, "gate-b": cmd_gate_b,
-          "gate-c": cmd_gate_c, "diagnostics": cmd_diagnostics, "report": cmd_report}[args.cmd]
+          "gate-c": cmd_gate_c, "diagnostics": cmd_diagnostics, "report": cmd_report,
+          "vil-prepare": cmd_vil_prepare, "vil-freeze": cmd_vil_freeze, "vil-run": cmd_vil_run, "vil-report": cmd_vil_report}[args.cmd]
     return fn(args)
 
 

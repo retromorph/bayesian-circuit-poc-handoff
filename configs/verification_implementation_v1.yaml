@@ -1,0 +1,39 @@
+# Implementation-level settings for BCCD-VIL-1.0 (NOT acceptance thresholds).
+# Frozen (hash recorded in reports/verification_v1/preregistration_hashes.json) before any confirmatory seed.
+vil:
+  p: 48
+  ks: [8, 16, 24]
+  budget: 128
+  n_warm: 32
+  n_discovery: 104
+  n_verify: 24
+  rounds: 8                  # development-dependent (prereg decision.development_dependent_setting): 8 or 4
+  max_swap_iters: 12         # shared greedy-elimination + swap search, unchanged from BCCD-PILOT-1.0
+  n_alternatives: 6
+  n_random_starts: 6         # candidate generator for lasso_vil / bayes_vil: random-start swap searches per k
+  rs_max_iters: 30
+  shortlist_starts: 16       # lasso_random_verify: random starts for its diverse shortlist
+  shortlist_size: 16
+  shortlist_min_symdiff: 4   # shortlist circuits differ by more than one swap
+  n_thompson: 4              # bayes_vil: single-particle (Thompson) searches added to candidates per round
+  search_particles: 64       # Bayes: particles in the circuit-search objective (as in BCCD-PILOT-1.0)
+bayes:                       # identical to BCCD-PILOT-1.0 configs/implementation.yaml
+  tau: 5.0
+  a0: 1.0
+  b0: 1.0e-4
+  a_pi: 1.0
+  b_pi: 1.0
+  n_iter: 1500
+  burn: 500
+  n_chains: 2
+  n_keep: 200
+  swap_prob: 0.3
+  max_support: 64
+  warm_iter: 600
+  warm_burn: 200
+lasso:                       # pairwise LassoCV, identical to BCCD-PILOT-1.0 Gate C (D-C-6)
+  tol: 1.0e-4
+  max_iter: 10000
+runtime:
+  max_seq_microbatch: 512    # execution microbatch only; never changes prompts/masks/budget
+  n_shards: 4                # parallel processes (seeds partitioned by index modulo n_shards)
