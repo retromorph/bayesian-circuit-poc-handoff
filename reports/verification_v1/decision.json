@@ -1,0 +1,749 @@
+{
+  "protocol": "BCCD-VIL-1.0",
+  "generated_utc": "2026-10-18T23:36:35Z",
+  "development": {
+    "S_mean": {
+      "bayes_static_128": 0.43121896780194957,
+      "bayes_vil": 0.3877330196216507,
+      "lasso_density_matched": 0.4257859560638255,
+      "lasso_random_verify": 0.41275978808443226,
+      "lasso_static_128": 0.4468527914024352,
+      "lasso_vil": 0.37393848343856034
+    },
+    "schedule_selection": {
+      "rounds8_lasso_vil": 0.37393848343856034,
+      "rounds4_lasso_vil": 0.39322416088372925,
+      "rounds4_bayes_vil": 0.382240048364548,
+      "rounds8_bayes_vil": 0.3877330196216507,
+      "rule_choice": 8
+    },
+    "n_seeds": 6
+  },
+  "confirmatory": {
+    "S_pooled": {
+      "bayes_static_128": 0.4426779038913374,
+      "bayes_vil": 0.33917019655892605,
+      "lasso_density_matched": 0.41876933677802575,
+      "lasso_random_verify": 0.3780693903230653,
+      "lasso_static_128": 0.4378349311677425,
+      "lasso_vil": 0.3424419179309031
+    },
+    "S_by_seed": [
+      {
+        "seed": 41001,
+        "bayes_static_128": 0.46313955559285186,
+        "bayes_vil": 0.3037086467860979,
+        "lasso_density_matched": 0.3569728331741609,
+        "lasso_random_verify": 0.3576753872712675,
+        "lasso_static_128": 0.4264138238587612,
+        "lasso_vil": 0.34738795190415933
+      },
+      {
+        "seed": 41002,
+        "bayes_static_128": 0.6206538442143449,
+        "bayes_vil": 0.42947145188407837,
+        "lasso_density_matched": 0.5109301073633861,
+        "lasso_random_verify": 0.5456492473989981,
+        "lasso_static_128": 0.6669457796487532,
+        "lasso_vil": 0.349476415353992
+      },
+      {
+        "seed": 41003,
+        "bayes_static_128": 0.42218035901737344,
+        "bayes_vil": 0.3610301241852281,
+        "lasso_density_matched": 0.35170530140801765,
+        "lasso_random_verify": 0.3829061935943811,
+        "lasso_static_128": 0.3774826973047456,
+        "lasso_vil": 0.3636276777171156
+      },
+      {
+        "seed": 41004,
+        "bayes_static_128": 0.4370056258219253,
+        "bayes_vil": 0.32413375212149603,
+        "lasso_density_matched": 0.376411940864617,
+        "lasso_random_verify": 0.3919898840550365,
+        "lasso_static_128": 0.4745191756809799,
+        "lasso_vil": 0.36188290881599255
+      },
+      {
+        "seed": 41005,
+        "bayes_static_128": 0.39766328606665174,
+        "bayes_vil": 0.35689256533604735,
+        "lasso_density_matched": 0.424339803647658,
+        "lasso_random_verify": 0.4057960083475343,
+        "lasso_static_128": 0.43145440992096046,
+        "lasso_vil": 0.3461709827330399
+      },
+      {
+        "seed": 41006,
+        "bayes_static_128": 0.4308168864861841,
+        "bayes_vil": 0.35704806472469985,
+        "lasso_density_matched": 0.42916750230546485,
+        "lasso_random_verify": 0.4558285501432679,
+        "lasso_static_128": 0.45838439391134006,
+        "lasso_vil": 0.3310688965423352
+      },
+      {
+        "seed": 41007,
+        "bayes_static_128": 0.3454999054332753,
+        "bayes_vil": 0.3826977410100983,
+        "lasso_density_matched": 0.4230813492605767,
+        "lasso_random_verify": 0.3541111472098517,
+        "lasso_static_128": 0.37116099356137894,
+        "lasso_vil": 0.3618753704237628
+      },
+      {
+        "seed": 41008,
+        "bayes_static_128": 0.5105247182918863,
+        "bayes_vil": 0.3200657549895495,
+        "lasso_density_matched": 0.3119941097248596,
+        "lasso_random_verify": 0.3405457702947312,
+        "lasso_static_128": 0.3718472358608311,
+        "lasso_vil": 0.3111803001858358
+      },
+      {
+        "seed": 41009,
+        "bayes_static_128": 0.4200934433438177,
+        "bayes_vil": 0.38574439024928536,
+        "lasso_density_matched": 0.4523054023390701,
+        "lasso_random_verify": 0.37661732997461067,
+        "lasso_static_128": 0.4810476318605945,
+        "lasso_vil": 0.3645114980690809
+      },
+      {
+        "seed": 41010,
+        "bayes_static_128": 0.35079311585039674,
+        "bayes_vil": 0.2946206738770907,
+        "lasso_density_matched": 0.3940823332292714,
+        "lasso_random_verify": 0.3504471036470549,
+        "lasso_static_128": 0.43365770553923627,
+        "lasso_vil": 0.37008196894849626
+      },
+      {
+        "seed": 41011,
+        "bayes_static_128": 0.45147062163442864,
+        "bayes_vil": 0.37343920796711183,
+        "lasso_density_matched": 0.4244042969990527,
+        "lasso_random_verify": 0.3797942169689145,
+        "lasso_static_128": 0.3889695470125576,
+        "lasso_vil": 0.36756703298761945
+      },
+      {
+        "seed": 41012,
+        "bayes_static_128": 0.53859085828477,
+        "bayes_vil": 0.3537441317626275,
+        "lasso_density_matched": 0.4884214866505017,
+        "lasso_random_verify": 0.3998514006461075,
+        "lasso_static_128": 0.41319940721932896,
+        "lasso_vil": 0.4410551057755119
+      },
+      {
+        "seed": 41013,
+        "bayes_static_128": 0.3497918088535754,
+        "bayes_vil": 0.27155162983889397,
+        "lasso_density_matched": 0.4065105436765464,
+        "lasso_random_verify": 0.2778644719616077,
+        "lasso_static_128": 0.5532797523660608,
+        "lasso_vil": 0.3220967502279802
+      },
+      {
+        "seed": 41014,
+        "bayes_static_128": 0.41534308538246084,
+        "bayes_vil": 0.30172187945527,
+        "lasso_density_matched": 0.3556279198438584,
+        "lasso_random_verify": 0.35129405805319064,
+        "lasso_static_128": 0.3486597107515694,
+        "lasso_vil": 0.29899774509045357
+      },
+      {
+        "seed": 41015,
+        "bayes_static_128": 0.43134869599928854,
+        "bayes_vil": 0.31274972127195705,
+        "lasso_density_matched": 0.45287700493966776,
+        "lasso_random_verify": 0.39153867920182606,
+        "lasso_static_128": 0.4556629621403337,
+        "lasso_vil": 0.34126882240304957
+      },
+      {
+        "seed": 41016,
+        "bayes_static_128": 0.4757389998176671,
+        "bayes_vil": 0.36446347690666475,
+        "lasso_density_matched": 0.4296082576639145,
+        "lasso_random_verify": 0.4135381777543905,
+        "lasso_static_128": 0.4437370171242759,
+        "lasso_vil": 0.29898881931327104
+      },
+      {
+        "seed": 41017,
+        "bayes_static_128": 0.49615780979359686,
+        "bayes_vil": 0.3463489850244545,
+        "lasso_density_matched": 0.5471034674166309,
+        "lasso_random_verify": 0.32670755169829385,
+        "lasso_static_128": 0.36750869866306773,
+        "lasso_vil": 0.3513228001784578
+      },
+      {
+        "seed": 41018,
+        "bayes_static_128": 0.48194251921391823,
+        "bayes_vil": 0.37775875483210936,
+        "lasso_density_matched": 0.4418466930965906,
+        "lasso_random_verify": 0.41635611698506914,
+        "lasso_static_128": 0.49541801283104925,
+        "lasso_vil": 0.2842662911713301
+      },
+      {
+        "seed": 41019,
+        "bayes_static_128": 0.3924926226406596,
+        "bayes_vil": 0.2785249634339859,
+        "lasso_density_matched": 0.42110734105957587,
+        "lasso_random_verify": 0.3368588068117297,
+        "lasso_static_128": 0.40470259663288566,
+        "lasso_vil": 0.34584726492373896
+      },
+      {
+        "seed": 41020,
+        "bayes_static_128": 0.42231031608767317,
+        "bayes_vil": 0.2876880155217741,
+        "lasso_density_matched": 0.376889040897093,
+        "lasso_random_verify": 0.30601770444344273,
+        "lasso_static_128": 0.39264707146613964,
+        "lasso_vil": 0.29016375585283977
+      }
+    ],
+    "n_seeds": 20,
+    "denominator_eval_mean": 4.954934597015381,
+    "H1": {
+      "V-1": {
+        "status": "PASS",
+        "observed": "pooled S(lasso_vil)=0.3424 vs best non-verified lasso_density_matched 0.4188; ratio 0.818 (need <= 0.85)",
+        "ratio": 0.8177339834994151,
+        "best_comparator": "lasso_density_matched",
+        "comparator_S": {
+          "lasso_static_128": 0.4378349311677425,
+          "lasso_density_matched": 0.41876933677802575,
+          "bayes_static_128": 0.4426779038913374
+        }
+      },
+      "V-2": {
+        "status": "PASS",
+        "observed": "vs lasso_static_128: 90% CI of S_c - S_cand [+0.0659, +0.1292]; vs lasso_density_matched: 90% CI of S_c - S_cand [+0.0545, +0.1000]; vs bayes_static_128: 90% CI of S_c - S_cand [+0.0719, +0.1307]",
+        "bootstrap": {
+          "lasso_static_128": {
+            "reps": 2000,
+            "rng_seed": 4242,
+            "diff_mean": 0.09558201891556382,
+            "ci90": [
+              0.06588412970304489,
+              0.1292004756629467
+            ],
+            "relative_improvement_ci90": [
+              0.15661381781101227,
+              0.276784685254097
+            ],
+            "n_seeds": 20,
+            "n_families": 9,
+            "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+          },
+          "lasso_density_matched": {
+            "reps": 2000,
+            "rng_seed": 4242,
+            "diff_mean": 0.0762812512665987,
+            "ci90": [
+              0.054528169333934784,
+              0.10000623054802417
+            ],
+            "relative_improvement_ci90": [
+              0.1347668170928955,
+              0.22833260893821716
+            ],
+            "n_seeds": 20,
+            "n_families": 9,
+            "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+          },
+          "bayes_static_128": {
+            "reps": 2000,
+            "rng_seed": 4242,
+            "diff_mean": 0.10004333315603435,
+            "ci90": [
+              0.07192982658743859,
+              0.13072360157966614
+            ],
+            "relative_improvement_ci90": [
+              0.17058704495429994,
+              0.28036147356033325
+            ],
+            "n_seeds": 20,
+            "n_families": 9,
+            "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+          }
+        }
+      },
+      "V-3": {
+        "status": "PASS",
+        "observed": "lasso_vil beats the seed-wise best non-verified method in 16/20 seeds (need >= 15)",
+        "wins": 16
+      },
+      "V-4": {
+        "status": "PASS",
+        "observed": "all methods x seeds: 128 logical masks (verifying 104+24), 0 reserved-mask queries, decisions sealed before evaluation",
+        "n_seeds": 20,
+        "problems": []
+      },
+      "verdict": "PASS"
+    },
+    "H1_secondary_bayes_vil": {
+      "V-1": {
+        "status": "PASS",
+        "observed": "pooled S(bayes_vil)=0.3392 vs best non-verified lasso_density_matched 0.4188; ratio 0.810 (need <= 0.85)",
+        "ratio": 0.8099212783067441,
+        "best_comparator": "lasso_density_matched",
+        "comparator_S": {
+          "lasso_static_128": 0.4378349311677425,
+          "lasso_density_matched": 0.41876933677802575,
+          "bayes_static_128": 0.4426779038913374
+        }
+      },
+      "V-2": {
+        "status": "PASS",
+        "observed": "vs lasso_static_128: 90% CI of S_c - S_cand [+0.0721, +0.1277]; vs lasso_density_matched: 90% CI of S_c - S_cand [+0.0583, +0.1007]; vs bayes_static_128: 90% CI of S_c - S_cand [+0.0809, +0.1258]",
+        "bootstrap": {
+          "lasso_static_128": {
+            "reps": 2000,
+            "rng_seed": 4242,
+            "diff_mean": 0.09881040198914706,
+            "ci90": [
+              0.07206376492977143,
+              0.12771181166172024
+            ],
+            "relative_improvement_ci90": [
+              0.17166995108127595,
+              0.27599150538444517
+            ],
+            "n_seeds": 20,
+            "n_families": 9,
+            "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+          },
+          "lasso_density_matched": {
+            "reps": 2000,
+            "rng_seed": 4242,
+            "diff_mean": 0.07950963437929749,
+            "ci90": [
+              0.05825425516813994,
+              0.10067890770733355
+            ],
+            "relative_improvement_ci90": [
+              0.14337269365787506,
+              0.23164436221122742
+            ],
+            "n_seeds": 20,
+            "n_families": 9,
+            "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+          },
+          "bayes_static_128": {
+            "reps": 2000,
+            "rng_seed": 4242,
+            "diff_mean": 0.10327171616442501,
+            "ci90": [
+              0.0808873288333416,
+              0.12583405002951623
+            ],
+            "relative_improvement_ci90": [
+              0.1894582211971283,
+              0.27236418426036835
+            ],
+            "n_seeds": 20,
+            "n_families": 9,
+            "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+          }
+        }
+      },
+      "V-3": {
+        "status": "PASS",
+        "observed": "bayes_vil beats the seed-wise best non-verified method in 17/20 seeds (need >= 15)",
+        "wins": 17
+      },
+      "V-4": {
+        "status": "PASS",
+        "observed": "all methods x seeds: 128 logical masks (verifying 104+24), 0 reserved-mask queries, decisions sealed before evaluation",
+        "n_seeds": 20,
+        "problems": []
+      },
+      "verdict": "PASS"
+    },
+    "H2": {
+      "H2-1": {
+        "status": "FAIL",
+        "observed": "pooled S(bayes_vil)=0.3392 vs S(lasso_vil)=0.3424; ratio 0.990 (need <= 0.9)",
+        "ratio": 0.9904459086324904
+      },
+      "H2-2": {
+        "status": "FAIL",
+        "observed": "90% CI of S_lasso_vil - S_bayes_vil [-0.0169, +0.0232]",
+        "bootstrap": {
+          "reps": 2000,
+          "rng_seed": 4242,
+          "diff_mean": 0.003228383269371449,
+          "ci90": [
+            -0.016936130449175833,
+            0.023155803233385085
+          ],
+          "relative_improvement_ci90": [
+            -0.05045349597930908,
+            0.06492294073104857
+          ],
+          "n_seeds": 20,
+          "n_families": 9,
+          "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+        }
+      },
+      "H2-3": {
+        "status": "FAIL",
+        "observed": "bayes_vil < lasso_vil in 10/20 seeds (need >= 13)",
+        "wins": 10
+      },
+      "verdict": "FAIL"
+    },
+    "secondary_M3_vs_M2": {
+      "ratio": 0.9057647265182774,
+      "bootstrap": {
+        "reps": 2000,
+        "rng_seed": 4242,
+        "diff_mean": 0.03548541258599107,
+        "ci90": [
+          0.012295737490057945,
+          0.06048885807394981
+        ],
+        "relative_improvement_ci90": [
+          0.033711376786232,
+          0.15367397367954252
+        ],
+        "n_seeds": 20,
+        "n_families": 9,
+        "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+      },
+      "wins": 14,
+      "n_seeds": 20
+    },
+    "secondary_M4_vs_M2": {
+      "ratio": 0.8971109675636545,
+      "bootstrap": {
+        "reps": 2000,
+        "rng_seed": 4242,
+        "diff_mean": 0.03871379584306851,
+        "ci90": [
+          0.023570111114531757,
+          0.054422969743609426
+        ],
+        "relative_improvement_ci90": [
+          0.06326391398906708,
+          0.13849252462387085
+        ],
+        "n_seeds": 20,
+        "n_families": 9,
+        "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+      },
+      "wins": 17
+    },
+    "secondary_M2_vs_M0": {
+      "ratio": 0.863497549897909,
+      "bootstrap": {
+        "reps": 2000,
+        "rng_seed": 4242,
+        "diff_mean": 0.06009660611394793,
+        "ci90": [
+          0.03709254935383797,
+          0.08700844533741474
+        ],
+        "relative_improvement_ci90": [
+          0.0873040348291397,
+          0.18923226594924925
+        ],
+        "n_seeds": 20,
+        "n_families": 9,
+        "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+      },
+      "wins": 18
+    },
+    "secondary_M1_vs_M0": {
+      "ratio": 0.9564548348418267,
+      "bootstrap": {
+        "reps": 2000,
+        "rng_seed": 4242,
+        "diff_mean": 0.01930076751232309,
+        "ci90": [
+          -0.010186271648854018,
+          0.04662412535399198
+        ],
+        "relative_improvement_ci90": [
+          -0.02415410280227661,
+          0.10221345424652098
+        ],
+        "n_seeds": 20,
+        "n_families": 9,
+        "estimator": "mean over resampled seeds of S_ref - S_cand (families, then prompts within family, resampled within seed)"
+      },
+      "wins": 14
+    },
+    "diagnostic_S_pooled": {
+      "surrogate_at_104": {
+        "bayes_vil": 0.4552947064671963,
+        "lasso_random_verify": 0.44837145185520794,
+        "lasso_vil": 0.44837145185520794
+      },
+      "refit_128": {
+        "bayes_vil": 0.41435583869008275,
+        "lasso_random_verify": 0.4271887320860534,
+        "lasso_vil": 0.4097269446774396
+      }
+    },
+    "absolute_faithful_R_le_0.10": {
+      "lasso_static_128": 0,
+      "lasso_density_matched": 0,
+      "lasso_random_verify": 0,
+      "lasso_vil": 0,
+      "bayes_vil": 0,
+      "bayes_static_128": 0
+    },
+    "absolute_faithful_total_circuits_per_method": 60,
+    "min_R_any_final": 0.1939350041746654,
+    "R_by_k": {
+      "8": {
+        "bayes_static_128": 0.5817055538639617,
+        "bayes_vil": 0.4392095148881001,
+        "lasso_density_matched": 0.5292208376334246,
+        "lasso_random_verify": 0.4969466480073816,
+        "lasso_static_128": 0.5733982752992614,
+        "lasso_vil": 0.4592609882331792
+      },
+      "16": {
+        "bayes_static_128": 0.42325390145480063,
+        "bayes_vil": 0.32525573193682533,
+        "lasso_density_matched": 0.4028104686037833,
+        "lasso_random_verify": 0.35623624443907237,
+        "lasso_static_128": 0.40935515518245535,
+        "lasso_vil": 0.30941276133039597
+      },
+      "24": {
+        "bayes_static_128": 0.32307425635524956,
+        "bayes_vil": 0.25304534285185265,
+        "lasso_density_matched": 0.32427670409686915,
+        "lasso_random_verify": 0.28102527852274195,
+        "lasso_static_128": 0.33075136302151076,
+        "lasso_vil": 0.25865200422913426
+      }
+    }
+  },
+  "bayes_circuit_calibration": {
+    "bayes_vil": {
+      "n_circuits": 660,
+      "coverage90_discovery_u": 0.47878787878787876,
+      "by_role": {
+        "final": 0.7666666666666667,
+        "surrogate_at_104": 0.11666666666666667,
+        "refit_128": 0.7333333333333333,
+        "verified": 0.45625
+      },
+      "mean_P_faithful": 0.4164242424242425,
+      "n_claims_P_ge_0.95": 12,
+      "n_invalid_claims_blind": 12,
+      "frac_measured_above_hi90": 0.5212121212121212
+    },
+    "bayes_static_128": {
+      "n_circuits": 60,
+      "coverage90_discovery_u": 0.08333333333333333,
+      "by_role": {
+        "final": 0.08333333333333333
+      },
+      "mean_P_faithful": 0.6519999999999999,
+      "n_claims_P_ge_0.95": 13,
+      "n_invalid_claims_blind": 13,
+      "frac_measured_above_hi90": 0.9166666666666666
+    }
+  },
+  "costs_by_method_mean": {
+    "bayes_static_128": {
+      "n_masks": 128.0,
+      "n_discovery_masks": 128.0,
+      "n_verification_masks": 0.0,
+      "logical_prompt_evals": 4096.0,
+      "physical_mask_evals": 0.0,
+      "cache_hits": 128.0,
+      "logical_oracle_seconds": 11.041891332999878,
+      "wall_fit": 1.6660310746003233,
+      "wall_search": 0.05107634265004886,
+      "wall_acquisition": NaN,
+      "cpu_fit": 1.666010371100009,
+      "cpu_search": 0.05108125414999941,
+      "cpu_acquisition": NaN,
+      "wall_e2e_logical": 12.75899875025025,
+      "wall_e2e_measured": 1.718506491250082,
+      "wall_total_method": 1.719895794650256,
+      "wall_diagnostic": NaN,
+      "peak_vram_mb": 643.8601806640625
+    },
+    "bayes_vil": {
+      "n_masks": 128.0,
+      "n_discovery_masks": 104.0,
+      "n_verification_masks": 24.0,
+      "logical_prompt_evals": 4096.0,
+      "physical_mask_evals": 23.8,
+      "cache_hits": 104.2,
+      "logical_oracle_seconds": 10.156161140800503,
+      "wall_fit": 6.585003624099227,
+      "wall_search": 11.47126475965033,
+      "wall_acquisition": 0.060794622849789405,
+      "cpu_fit": 6.584482086749991,
+      "cpu_search": 11.469712403099988,
+      "cpu_acquisition": 0.06079968059997678,
+      "wall_e2e_logical": 28.27322414739985,
+      "wall_e2e_measured": 19.29858675689975,
+      "wall_total_method": 21.05745246100014,
+      "wall_diagnostic": 1.7506428873000914,
+      "peak_vram_mb": 773.1056640625
+    },
+    "lasso_density_matched": {
+      "n_masks": 128.0,
+      "n_discovery_masks": 128.0,
+      "n_verification_masks": 0.0,
+      "logical_prompt_evals": 4096.0,
+      "physical_mask_evals": 24.0,
+      "cache_hits": 104.0,
+      "logical_oracle_seconds": 10.791512396362146,
+      "wall_fit": 2.0257304096498046,
+      "wall_search": 0.038817030499922064,
+      "wall_acquisition": NaN,
+      "cpu_fit": 2.0253866619000056,
+      "cpu_search": 0.038812067500007034,
+      "cpu_acquisition": NaN,
+      "wall_e2e_logical": 12.856059836511871,
+      "wall_e2e_measured": 3.885991219199968,
+      "wall_total_method": 3.8870251675498366,
+      "wall_diagnostic": NaN,
+      "peak_vram_mb": 1333.0976806640624
+    },
+    "lasso_random_verify": {
+      "n_masks": 128.0,
+      "n_discovery_masks": 104.0,
+      "n_verification_masks": 24.0,
+      "logical_prompt_evals": 4096.0,
+      "physical_mask_evals": 24.0,
+      "cache_hits": 104.0,
+      "logical_oracle_seconds": 10.29201286166228,
+      "wall_fit": 1.5271500513006686,
+      "wall_search": 2.1651594925999236,
+      "wall_acquisition": 1.0157288754495313,
+      "cpu_fit": 1.5269704838499991,
+      "cpu_search": 2.1645468531999983,
+      "cpu_acquisition": 1.0153534647499984,
+      "wall_e2e_logical": 15.000051281012404,
+      "wall_e2e_measured": 6.029974328899698,
+      "wall_total_method": 8.288641781799925,
+      "wall_diagnostic": 2.2446540255998118,
+      "peak_vram_mb": 1333.0976806640624
+    },
+    "lasso_static_128": {
+      "n_masks": 128.0,
+      "n_discovery_masks": 128.0,
+      "n_verification_masks": 0.0,
+      "logical_prompt_evals": 4096.0,
+      "physical_mask_evals": 128.0,
+      "cache_hits": 0.0,
+      "logical_oracle_seconds": 11.041891332999878,
+      "wall_fit": 2.1589008508506593,
+      "wall_search": 0.03973195650014528,
+      "wall_acquisition": NaN,
+      "cpu_fit": 2.1598385628000027,
+      "cpu_search": 0.03973361704999793,
+      "cpu_acquisition": NaN,
+      "wall_e2e_logical": 13.240524140350681,
+      "wall_e2e_measured": 13.24221394515116,
+      "wall_total_method": 13.24325022669982,
+      "wall_diagnostic": NaN,
+      "peak_vram_mb": 1336.2551025390626
+    },
+    "lasso_vil": {
+      "n_masks": 128.0,
+      "n_discovery_masks": 104.0,
+      "n_verification_masks": 24.0,
+      "logical_prompt_evals": 4096.0,
+      "physical_mask_evals": 23.0,
+      "cache_hits": 105.0,
+      "logical_oracle_seconds": 9.997955843700302,
+      "wall_fit": 16.278898250498788,
+      "wall_search": 7.388253442749374,
+      "wall_acquisition": 0.00514328180015577,
+      "cpu_fit": 16.278726484450033,
+      "cpu_search": 7.387653501950007,
+      "cpu_acquisition": 0.005147755700023945,
+      "wall_e2e_logical": 33.67025081874862,
+      "wall_e2e_measured": 24.653598152649828,
+      "wall_total_method": 27.03385353925005,
+      "wall_diagnostic": 2.3765148589494856,
+      "peak_vram_mb": 773.1056640625
+    }
+  },
+  "H1": {
+    "verdict": "PASS",
+    "V-1": {
+      "status": "PASS",
+      "observed": "pooled S(lasso_vil)=0.3424 vs best non-verified lasso_density_matched 0.4188; ratio 0.818 (need <= 0.85)",
+      "ratio": 0.8177339834994151,
+      "best_comparator": "lasso_density_matched",
+      "comparator_S": {
+        "lasso_static_128": 0.4378349311677425,
+        "lasso_density_matched": 0.41876933677802575,
+        "bayes_static_128": 0.4426779038913374
+      }
+    },
+    "V-2": {
+      "status": "PASS",
+      "observed": "vs lasso_static_128: 90% CI of S_c - S_cand [+0.0659, +0.1292]; vs lasso_density_matched: 90% CI of S_c - S_cand [+0.0545, +0.1000]; vs bayes_static_128: 90% CI of S_c - S_cand [+0.0719, +0.1307]"
+    },
+    "V-3": {
+      "status": "PASS",
+      "observed": "lasso_vil beats the seed-wise best non-verified method in 16/20 seeds (need >= 15)",
+      "wins": 16
+    },
+    "V-4": {
+      "status": "PASS",
+      "observed": "all methods x seeds: 128 logical masks (verifying 104+24), 0 reserved-mask queries, decisions sealed before evaluation",
+      "n_seeds": 20,
+      "problems": []
+    }
+  },
+  "H2": {
+    "verdict": "FAIL",
+    "H2-1": {
+      "status": "FAIL",
+      "observed": "pooled S(bayes_vil)=0.3392 vs S(lasso_vil)=0.3424; ratio 0.990 (need <= 0.9)",
+      "ratio": 0.9904459086324904
+    },
+    "H2-2": {
+      "status": "FAIL",
+      "observed": "90% CI of S_lasso_vil - S_bayes_vil [-0.0169, +0.0232]"
+    },
+    "H2-3": {
+      "status": "FAIL",
+      "observed": "bayes_vil < lasso_vil in 10/20 seeds (need >= 13)",
+      "wins": 10
+    }
+  },
+  "recommendation": "GO_VIL_WITHOUT_BAYES",
+  "bridge": {
+    "S_pooled": {
+      "bayes_static_128": 0.3674391481732262,
+      "bayes_vil": 0.3663482706414972,
+      "lasso_density_matched": 0.41520938959039777,
+      "lasso_random_verify": 0.3823912267742135,
+      "lasso_static_128": 0.38482213051260167,
+      "lasso_vil": 0.33463449832609193
+    },
+    "lasso_static_128_reproduces_pilot_lasso_pair_128": {
+      "31001": true,
+      "31002": true,
+      "31003": true,
+      "31004": true,
+      "31005": true
+    }
+  }
+}

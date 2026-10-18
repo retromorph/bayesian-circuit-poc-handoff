@@ -1,0 +1,680 @@
+{
+  "protocol": "BCCD-VIL-1.0",
+  "freeze_record": {
+    "protocol": "BCCD-VIL-1.0",
+    "frozen_utc": "2026-10-18T23:24:43Z",
+    "source_git_sha": "a553a70bbc04247c7d43913832beda844cebd1d4",
+    "hashes": {
+      "preregistration_yaml": "1bf810167211ac329321242a39f896b1804531c189032eb815b2431a8d3fa881",
+      "implementation_yaml": "565d085be4fad2527f7fe590bb8b73092f148d0774e0f8c37b66c6563f4793d3",
+      "08_VERIFICATION_PROTOCOL.md": "3c938257e568db67d7f037c1bedb73837f43dbf0e9772060c75538a81aeadf42",
+      "09_VERIFICATION_METHODS.md": "845aacbc485701a5bb203268c7e31af2d4531d04355715fd23a3feb74e559a00",
+      "uv_lock": "f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759"
+    },
+    "vil_frozen_manifest_sha256": "f0a0ed333480c4224383567063809e2bf2d16567c20fbfbd97a50c8037333152",
+    "vil_splits_sha256": "be67343800198ca3e0452130fc7b7c61fa8dea9b95bdfaf7cc1814bd526e2eaa",
+    "pilot_frozen_files_sha256": {
+      "blind_masks.npy": "09d13a8f9074aa3c7297b1921fa383f8f5bcadcb94195aca88c51465e2c45acd",
+      "candidate_heads.json": "71c61ae0b921e3bd3d29938273f992a55178607b9847c1ad5a216c0e0cc2ba30",
+      "dev_reference.json": "96a4eb8fcfb55235385baf3467587b41d9c9e916b4fc1b7d030b8e13e8035e6f",
+      "splits.json": "6bdee60411d242d1c979c531334fc0a15ae2ce39d802ea1fe4dbdb49447d18f3"
+    },
+    "confirmatory_seeds": [
+      41001,
+      41002,
+      41003,
+      41004,
+      41005,
+      41006,
+      41007,
+      41008,
+      41009,
+      41010,
+      41011,
+      41012,
+      41013,
+      41014,
+      41015,
+      41016,
+      41017,
+      41018,
+      41019,
+      41020
+    ],
+    "implementation_vil": {
+      "p": 48,
+      "ks": [
+        8,
+        16,
+        24
+      ],
+      "budget": 128,
+      "n_warm": 32,
+      "n_discovery": 104,
+      "n_verify": 24,
+      "rounds": 8,
+      "max_swap_iters": 12,
+      "n_alternatives": 6,
+      "n_random_starts": 6,
+      "rs_max_iters": 30,
+      "shortlist_starts": 16,
+      "shortlist_size": 16,
+      "shortlist_min_symdiff": 4,
+      "n_thompson": 4,
+      "search_particles": 64
+    },
+    "statement": "Recorded before any confirmatory BCCD-VIL-1.0 seed was run or any confirmatory outcome inspected."
+  },
+  "current_hashes": {
+    "preregistration_yaml": "1bf810167211ac329321242a39f896b1804531c189032eb815b2431a8d3fa881",
+    "implementation_yaml": "565d085be4fad2527f7fe590bb8b73092f148d0774e0f8c37b66c6563f4793d3",
+    "08_VERIFICATION_PROTOCOL.md": "3c938257e568db67d7f037c1bedb73837f43dbf0e9772060c75538a81aeadf42",
+    "09_VERIFICATION_METHODS.md": "845aacbc485701a5bb203268c7e31af2d4531d04355715fd23a3feb74e559a00",
+    "uv_lock": "f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759"
+  },
+  "mlflow_parent_runs": {
+    "vil-bridge-shard0of1": {
+      "parent_run_id": "f6e8bc161663426490b00de5255ecdd6",
+      "state": "complete",
+      "seeds": [
+        31001,
+        31002,
+        31003,
+        31004,
+        31005
+      ]
+    },
+    "vil-confirmatory-shard0of4": {
+      "parent_run_id": "798565ab26f246ceb9aeeec1e6fed9c4",
+      "state": "complete",
+      "seeds": [
+        41001,
+        41005,
+        41009,
+        41013,
+        41017
+      ]
+    },
+    "vil-confirmatory-shard1of4": {
+      "parent_run_id": "2e3a300bf50f4a8ba652f13957276085",
+      "state": "complete",
+      "seeds": [
+        41002,
+        41006,
+        41010,
+        41014,
+        41018
+      ]
+    },
+    "vil-confirmatory-shard2of4": {
+      "parent_run_id": "2b6a1154e3354e0d9a87b3312d3ebc82",
+      "state": "complete",
+      "seeds": [
+        41003,
+        41007,
+        41011,
+        41015,
+        41019
+      ]
+    },
+    "vil-confirmatory-shard3of4": {
+      "parent_run_id": "2015380686934ead965067f087fcc407",
+      "state": "complete",
+      "seeds": [
+        41004,
+        41008,
+        41012,
+        41016,
+        41020
+      ]
+    },
+    "vil-dev-rerun-m2fix-shard0of2": {
+      "parent_run_id": "6ed44d8cf89344eb8308f4b8db7504b5",
+      "state": "complete",
+      "seeds": [
+        49001,
+        49003,
+        49005
+      ]
+    },
+    "vil-dev-rerun-m2fix-shard1of2": {
+      "parent_run_id": "741c8aa1b161449b9f739a63249ad5f2",
+      "state": "complete",
+      "seeds": [
+        49002,
+        49004,
+        49006
+      ]
+    },
+    "vil-dev-rounds4-shard0of2": {
+      "parent_run_id": "f42d3e3509e341e48e8fb66d42b7aabe",
+      "state": "complete",
+      "seeds": [
+        49001,
+        49003,
+        49005
+      ]
+    },
+    "vil-dev-rounds4-shard1of2": {
+      "parent_run_id": "a2fbdfb731654ec1ba7f9ea482b97658",
+      "state": "complete",
+      "seeds": [
+        49002,
+        49004,
+        49006
+      ]
+    },
+    "vil-dev-shard0of4": {
+      "parent_run_id": "4641a89512b745798fb32dfae43c05bc",
+      "state": "complete",
+      "seeds": [
+        49001,
+        49005
+      ]
+    },
+    "vil-dev-shard1of4": {
+      "parent_run_id": "2aa66f49cf5d450a9d7788ca77f937d3",
+      "state": "complete",
+      "seeds": [
+        49002,
+        49006
+      ]
+    },
+    "vil-dev-shard2of4": {
+      "parent_run_id": "1153ea1d59124c679e88ddb45f61871f",
+      "state": "complete",
+      "seeds": [
+        49003
+      ]
+    },
+    "vil-dev-shard3of4": {
+      "parent_run_id": "016f92c44c0a481cbdde4a2f6aba297f",
+      "state": "complete",
+      "seeds": [
+        49004
+      ]
+    }
+  },
+  "vil_frozen_manifest_sha256": "f0a0ed333480c4224383567063809e2bf2d16567c20fbfbd97a50c8037333152",
+  "mlflow": {
+    "confirmatory": {
+      "41001": {
+        "lasso_static_128": "8afc278a87ac46188069afd8c351d215",
+        "lasso_density_matched": "323159ed20764d1ea5550a021b93d9e0",
+        "lasso_random_verify": "41518c02aaca46e0857492e585876e6c",
+        "lasso_vil": "25ffc1019840454c8dd4bc69fd54e3e2",
+        "bayes_vil": "15f6673ee447431c91e7091e64d19a9f",
+        "bayes_static_128": "be4ebfcbcb5a4a2f87a9307cf2338e56"
+      },
+      "41002": {
+        "lasso_static_128": "3720c6a8df764cc3b83701fee7503501",
+        "lasso_density_matched": "a487de536430472b87de74ad3f3d2d16",
+        "lasso_random_verify": "d59be767391b4b4c9a86b576c1880d71",
+        "lasso_vil": "fa9478ae5d5d40ecae9840a57d32033c",
+        "bayes_vil": "0d3e66047f9248caa9cb05267f4a650a",
+        "bayes_static_128": "d7febc53be494a3bae4a13f8910a3146"
+      },
+      "41003": {
+        "lasso_static_128": "611e946c9329422e8a78f04f0ef3d0b9",
+        "lasso_density_matched": "e7d2f8f857754b49a719568453a6bcea",
+        "lasso_random_verify": "d16ea2ddb17c410a938b808e9bb035b2",
+        "lasso_vil": "0dda9caba12548df99ef5e6fb1865fe0",
+        "bayes_vil": "8884c9e9508f41a28c8644937ebc5c54",
+        "bayes_static_128": "815368255e134b88ba406cc918a241f0"
+      },
+      "41004": {
+        "lasso_static_128": "25e0220797e241f1ab9cb93aa071dbe1",
+        "lasso_density_matched": "9a7628e0444840d5add927539295d82b",
+        "lasso_random_verify": "81e539413a2c4c8887f154c998c36ac0",
+        "lasso_vil": "b5e94ce662034dde8594be42dff5d336",
+        "bayes_vil": "26c3c4036ce54a3aaa77c7d8304a5162",
+        "bayes_static_128": "1ff31c3a08774ce19b8f776c702ce9ef"
+      },
+      "41005": {
+        "lasso_static_128": "339b2489f8bb44e691c90d9b1261727e",
+        "lasso_density_matched": "b4e1046f7bec4367847b82eb219ac196",
+        "lasso_random_verify": "a10855b8d4a049ca9d503ad42f1ab0c8",
+        "lasso_vil": "3b469e7dd6104aa18ad1fa9f5650da89",
+        "bayes_vil": "46fc8b9719be47abb19e7ff96094de75",
+        "bayes_static_128": "1be6a162e2514256a2d94721dcfc6a42"
+      },
+      "41006": {
+        "lasso_static_128": "78b142f6cb7e462fa9a6cf4c98e66713",
+        "lasso_density_matched": "ddf0070f8aca47f1a311d0af78c55ba5",
+        "lasso_random_verify": "21d79a4850e74250b0465be1b9dcb20e",
+        "lasso_vil": "081df77d7e72441994c9d0d769053dee",
+        "bayes_vil": "f06e81dc91d943fb92ec4afa7f175888",
+        "bayes_static_128": "e07c80991020473c9afdeeee4e746d2d"
+      },
+      "41007": {
+        "lasso_static_128": "e4a37ee960fc4c599a8b6f3d0940b191",
+        "lasso_density_matched": "1db9a87b05f84c82affcf3dd174ed8a9",
+        "lasso_random_verify": "633614e3f8494bec90ea2d7450365f2c",
+        "lasso_vil": "cba0bece3b484f0e91094c5c21e17666",
+        "bayes_vil": "3f93f667b3f44d72858ed9aea06063b0",
+        "bayes_static_128": "637f645c361e4448913b31e88ebfd9a5"
+      },
+      "41008": {
+        "lasso_static_128": "73aaa067332b4339ba31a60afde9ddcf",
+        "lasso_density_matched": "48ccd444ceda4e4fbd3ef9aeef834b9c",
+        "lasso_random_verify": "aef831e0823042c2ace5754c6f98c178",
+        "lasso_vil": "d41615d576054395b0e73447c52f974c",
+        "bayes_vil": "f439e2bfbeeb4a82b21474d08776d273",
+        "bayes_static_128": "42dfe0a8e7144527b9483c05d7c714eb"
+      },
+      "41009": {
+        "lasso_static_128": "dcbc95ed83d147af8a146339b7479a71",
+        "lasso_density_matched": "24c6dd0f5bfa48d98da414aff2c33383",
+        "lasso_random_verify": "b7c8eff13b784194ac7445f2e94c1d6b",
+        "lasso_vil": "f363b1abe42e49249f0ed8d78a8448b0",
+        "bayes_vil": "70d7824020c04d86a04d7fdcf598ac7d",
+        "bayes_static_128": "c93a822374ea4e1b9b97a982fb912a2e"
+      },
+      "41010": {
+        "lasso_static_128": "d1e553c0cdd542b58d0e687d4eac5924",
+        "lasso_density_matched": "6561e897bfca4bbbbcac306315f3fe60",
+        "lasso_random_verify": "18d81b63863640b4beb375f78c0c4e6f",
+        "lasso_vil": "399f94a2f2e3455b9daf57870b7637c1",
+        "bayes_vil": "9592c82510084d7d8d343f3fb0d0947b",
+        "bayes_static_128": "3dc78d86c52e44bc8575de03abb591ec"
+      },
+      "41011": {
+        "lasso_static_128": "c8d323b24fa64262a872017404ebbfd4",
+        "lasso_density_matched": "bd145ca490ea487a97a342d31734ebf3",
+        "lasso_random_verify": "287dae31042b44e4bec72acc85663ec5",
+        "lasso_vil": "87a6b047c639416d8344c7ddf39058ed",
+        "bayes_vil": "b288103865704d219688598896245b21",
+        "bayes_static_128": "d32cabfedfa0476b84461c2b7bdf8804"
+      },
+      "41012": {
+        "lasso_static_128": "7afce1fde69840868b31682e49d4f8dc",
+        "lasso_density_matched": "c7c23067a4bc46f3931e998b7a58be8c",
+        "lasso_random_verify": "4b96b2c258f94844bf797c736d6042cc",
+        "lasso_vil": "c0100bd523f74687adcf07080bf6ec83",
+        "bayes_vil": "822073363acd45e098a505753974aa2d",
+        "bayes_static_128": "96713acfa7e7453486a1bd9e585b824c"
+      },
+      "41013": {
+        "lasso_static_128": "9927d391abb74359b70971240b504895",
+        "lasso_density_matched": "62b4a77cf5b44876bb6ed3fcf7778547",
+        "lasso_random_verify": "c6390ba9393246da866e8fa4d3255920",
+        "lasso_vil": "6ed95b0679264e78be49a6445695056e",
+        "bayes_vil": "b0f21368422d4600833af51ea819a796",
+        "bayes_static_128": "8aff5f3895ca4fca893d8b7c285d9a48"
+      },
+      "41014": {
+        "lasso_static_128": "d57c7a5ba2e8464699d8c6d1828c492d",
+        "lasso_density_matched": "d028fa58734c4b09b9fd0cc6cb8c20d7",
+        "lasso_random_verify": "cb5881d4cc804a988c5a8ffe16fe8eb7",
+        "lasso_vil": "eb03c93e6a494bd9a4e040752e414264",
+        "bayes_vil": "b7f4552112ae47b3a322a1001e2b9c5c",
+        "bayes_static_128": "b5465259f14e4ed4bdb60ebf7fd09a05"
+      },
+      "41015": {
+        "lasso_static_128": "38ae2783033643b89feda587527c799a",
+        "lasso_density_matched": "2ed103ac827b46bca3ee0cbb623f0287",
+        "lasso_random_verify": "0c12ab8bfb0844008fead05600eb77e2",
+        "lasso_vil": "d7d51cb3cd3f443e9548f54ce0d23ec6",
+        "bayes_vil": "dd7fc590bf9141ce80384daafc789983",
+        "bayes_static_128": "0beabb2017734fe189e604329ad6153b"
+      },
+      "41016": {
+        "lasso_static_128": "fa3a0e97fbf84424acc15a2aaaa412cd",
+        "lasso_density_matched": "640a135edc404a719b89f63f7a18c841",
+        "lasso_random_verify": "282604ce6f10444c987a5467725e243a",
+        "lasso_vil": "23176b8936534db087adb57f69d2ce0f",
+        "bayes_vil": "8dc57c0ef55849bcb58048755d37c689",
+        "bayes_static_128": "5d4294c24cca4c4ea30197789531e194"
+      },
+      "41017": {
+        "lasso_static_128": "827702016b4e420d9fb075ff63a822be",
+        "lasso_density_matched": "38c3a79e64ee422c98f350b085e458c8",
+        "lasso_random_verify": "eac868427cb84f049205d8adc96c3089",
+        "lasso_vil": "6f00dd04410546f7bc996881db4d0910",
+        "bayes_vil": "808b1ac3e0cb4573aa1ad6ef22d58ec1",
+        "bayes_static_128": "12e08b5240bf417c98aafd77c3c29afe"
+      },
+      "41018": {
+        "lasso_static_128": "934af2fda1b64be79202201a15dab49e",
+        "lasso_density_matched": "490a0835f6fc40989c0020d41ec8dba3",
+        "lasso_random_verify": "4b46b41475ec445e9f4207bc8f3cc3c4",
+        "lasso_vil": "94b0d0d3bb4f40f9a177f92ef74028f9",
+        "bayes_vil": "36969d2cbb9241ebadd8db766c6f7f1a",
+        "bayes_static_128": "46f4a5227697492eb3d7a64e386fb188"
+      },
+      "41019": {
+        "lasso_static_128": "92b0b4d8324a4ad0b8358facc79e0a3d",
+        "lasso_density_matched": "742e75bdfd16440ba802ca3803e458c2",
+        "lasso_random_verify": "ac5a8dceb223427eb63e4d5f9e58adbc",
+        "lasso_vil": "622838d0167c47ada557d8324d5b3d5d",
+        "bayes_vil": "8a736f0c6fcd4eb38ed389704f238a63",
+        "bayes_static_128": "15b09554b25941e5aaa12c2e4853e2ad"
+      },
+      "41020": {
+        "lasso_static_128": "e04b071f25524c69ab52dcd4ccf829a1",
+        "lasso_density_matched": "46e35e73ae914867860b7d4fc83ca3eb",
+        "lasso_random_verify": "6b9c8fba8e894237b2935dca5cd851a1",
+        "lasso_vil": "da0bd8d1d24148df97f73158b41072a1",
+        "bayes_vil": "dea5a42012644de7b5a8eb611eb4198c",
+        "bayes_static_128": "32e2732076c04b8cbbd2a32af8b1dd85"
+      }
+    },
+    "bridge": {
+      "31001": {
+        "lasso_static_128": "b704e2c775ee435f86b949d95851e2f4",
+        "lasso_density_matched": "31b8e543a07e466eb6b138a22598f24c",
+        "lasso_random_verify": "d990aecd5ed74a0695c07a60393840a7",
+        "lasso_vil": "cbe65a11ef15405a8ff169566f14850b",
+        "bayes_vil": "23868578a9ac417585c464ffebdf3f35",
+        "bayes_static_128": "cd944fabfe8a410b92b10c7bdbc0e289"
+      },
+      "31002": {
+        "lasso_static_128": "37ba6a72210b4d9c9355bc90312fe6de",
+        "lasso_density_matched": "dbd52f3e2b4c4dde8607116b310203fb",
+        "lasso_random_verify": "2a13e86651cc460ebc2e4e2a4163ba76",
+        "lasso_vil": "b1d9b5cf5bf3422e997bcc6970c4ebf1",
+        "bayes_vil": "2a3f0530ecac45c3b2618ab7c8bc75ee",
+        "bayes_static_128": "a7ac73c2232b493db07c6019e9cd90f5"
+      },
+      "31003": {
+        "lasso_static_128": "bbf55dcfccbd4c43b72c3bf7aa52d598",
+        "lasso_density_matched": "172f6f1dc649414fb071fda716b73b1b",
+        "lasso_random_verify": "fe143aa7e8dc4f57846c72277e5670c4",
+        "lasso_vil": "e974e74ec9d24a13a405c008ec66cbb9",
+        "bayes_vil": "936064821fc8433096f21ebbb952619e",
+        "bayes_static_128": "abcaee99d21d481d9dc012654b133dbe"
+      },
+      "31004": {
+        "lasso_static_128": "94a96bacb5dc4eddb0b5caa17d932783",
+        "lasso_density_matched": "0f902fcce1bb48b3bf8f6e9908645a68",
+        "lasso_random_verify": "2e10ed16a3c545a08f3bbe925a8f9eb6",
+        "lasso_vil": "06eae3888c41480fbfe1b3f62cce1b8c",
+        "bayes_vil": "68473cbdd723435a9556dd5489d3a089",
+        "bayes_static_128": "8ca3a23373a549089099379f41990856"
+      },
+      "31005": {
+        "lasso_static_128": "818c038d288a4c8a8cb3a035314c8b01",
+        "lasso_density_matched": "526078093b9746e58dd9b7330dd7f380",
+        "lasso_random_verify": "769aa9fe9964435d8cc5f5e09384aeb6",
+        "lasso_vil": "e34d585afb904008a84405e816b7b0e2",
+        "bayes_vil": "6414749c8c7a4356a93ec267808b46da",
+        "bayes_static_128": "3e44d43c38324316b5c4d715ec7a65db"
+      }
+    },
+    "dev": {
+      "49001": {
+        "lasso_static_128": "b18a5acdd80c40a89b3e88b82f63bad2",
+        "lasso_density_matched": "81c5f1d09a0d4326bc5c9e7175d0ad9c",
+        "lasso_random_verify": "baa35ea921954067863709f44367ffcc",
+        "lasso_vil": "afca865b102d4620a4da8618c9da7c4f",
+        "bayes_vil": "9d524017301c412ab463c2b4bfd93e19",
+        "bayes_static_128": "0fb24a0d234b46f6ac034cc8314bbdd4"
+      },
+      "49002": {
+        "lasso_static_128": "54895c7e9b55466f926de70ffe6a4b93",
+        "lasso_density_matched": "763d7dd72d4a4fe6be4f67dee2a8e0a7",
+        "lasso_random_verify": "f3a02ee9a00b45109871fc899c65d21f",
+        "lasso_vil": "897dc7eb427f4856861f2a0303d6cc1c",
+        "bayes_vil": "7e75d1072700427a9aa28b390741a9b8",
+        "bayes_static_128": "b761f666279c4ed5b91aa9bd25041eae"
+      },
+      "49003": {
+        "lasso_static_128": "59147a28cb9a4940bc7972cb51311e53",
+        "lasso_density_matched": "394685a74b9b44ed88f0640d3aa97a27",
+        "lasso_random_verify": "0cd8b469415f413eac423b9bd560919b",
+        "lasso_vil": "c20251fdb3b840958fb99634d58c2fc0",
+        "bayes_vil": "f1de754d7ab942a6843856cfc671f4cf",
+        "bayes_static_128": "a4bf8c2186ab4081ab54cd92c9ddbe2d"
+      },
+      "49004": {
+        "lasso_static_128": "247883f7ca134181a07e9aa1c4851446",
+        "lasso_density_matched": "9104414da0654c3f9f753312259f1231",
+        "lasso_random_verify": "b6c0d54e37ca4e2a865792431b4c3bd8",
+        "lasso_vil": "3f1a2cc2c4674e0494b55b56f3f23611",
+        "bayes_vil": "373dfa95c95f44cd9229a33124fbd70a",
+        "bayes_static_128": "5949b92834ed45b1807107a6c5b45210"
+      },
+      "49005": {
+        "lasso_static_128": "6bc09ceb29604ed8aeeaa3981fff1563",
+        "lasso_density_matched": "9ddde7bac3fd4ed4801af71b5a092c5c",
+        "lasso_random_verify": "daf72467e6a240798d29912e6d09e110",
+        "lasso_vil": "9874651095334e71bdfb6ee612ae03e8",
+        "bayes_vil": "c59d5785817a40cb99fdbd5ce72c43bb",
+        "bayes_static_128": "0ee168fc367345928aa478cb19ad2b0e"
+      },
+      "49006": {
+        "lasso_static_128": "35cac4c966884da19b65f9e507819ad7",
+        "lasso_density_matched": "b0bf815c6cac43f3a6381e1f32b1b5ec",
+        "lasso_random_verify": "3906b59219e446b1810aad5a2a997300",
+        "lasso_vil": "2d089402032441339a561c95031531ad",
+        "bayes_vil": "1cb066ccb56340f6bb51417c4b315bfd",
+        "bayes_static_128": "9dc456e10dfb4bf48362b021f011d576"
+      }
+    }
+  },
+  "seed_status": {
+    "confirmatory": {
+      "41001": {
+        "decisions_sealed_sha256": "e7ccbc0454c226a344176ff2af0ceee35fb0cf4ccef42f9fb78717a349eedeff",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:27:58Z",
+        "seed_wall_seconds": 130.74991911199686
+      },
+      "41002": {
+        "decisions_sealed_sha256": "692103a1577a83dc601b10b2b99a939a4e3c931ccf2494dd14dff647b0b1404c",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:27:51Z",
+        "seed_wall_seconds": 126.79192402500121
+      },
+      "41003": {
+        "decisions_sealed_sha256": "849c76abccf1d8a7bf19228edf28b526782ee86a2f203895c06c029112343393",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:27:33Z",
+        "seed_wall_seconds": 106.73252547399898
+      },
+      "41004": {
+        "decisions_sealed_sha256": "1167439f89426a1768c1e3cfa32aed8dfad752a35b9fab3f4e565141c0887096",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:28:00Z",
+        "seed_wall_seconds": 132.1612105589993
+      },
+      "41005": {
+        "decisions_sealed_sha256": "25767c19b0a6ed7851302b9d9781ea89c5579fae472c87a9c363ea11422034a2",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:30:05Z",
+        "seed_wall_seconds": 126.38910453299832
+      },
+      "41006": {
+        "decisions_sealed_sha256": "7bf9a155582d4cfee543c611e687221c00204075bd76a9cfb29e062cd4e74bdb",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:29:58Z",
+        "seed_wall_seconds": 127.11099537100017
+      },
+      "41007": {
+        "decisions_sealed_sha256": "3f6749899595dd77737f1b5be458f7a81c8a0532a84d13f358af6a0b0e892c87",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:29:27Z",
+        "seed_wall_seconds": 113.53669219800213
+      },
+      "41008": {
+        "decisions_sealed_sha256": "8812ec4f05f9bf431f57a5e2c758890ad02f0cd48830a9f6fb0bf2f77c87c902",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:30:06Z",
+        "seed_wall_seconds": 126.4270474210025
+      },
+      "41009": {
+        "decisions_sealed_sha256": "0988a59cda97e5523b0d0b01b7140ab9c789483439628bfc1ac89f7d6459a4a0",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:31:57Z",
+        "seed_wall_seconds": 112.68773442200109
+      },
+      "41010": {
+        "decisions_sealed_sha256": "6fdb2292f348098194c8d5fb9290af77bfece905f4d7f795f9bc80d2ba98e7e9",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:32:02Z",
+        "seed_wall_seconds": 123.60444261899829
+      },
+      "41011": {
+        "decisions_sealed_sha256": "d8834a9a3b7c104a568b515e1890f53677ea2395d72343c17eb8aa3b60d25a01",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:31:08Z",
+        "seed_wall_seconds": 100.51495389400225
+      },
+      "41012": {
+        "decisions_sealed_sha256": "53bb7308ae34c949f900d43f86a32373934a98d26c5861eb1a4b4cf2c8314778",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:32:09Z",
+        "seed_wall_seconds": 122.97216968200155
+      },
+      "41013": {
+        "decisions_sealed_sha256": "1e280640e0231f6243de7c45b78a38bc0b5af307bfb34a42b5b933b77429535f",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:33:55Z",
+        "seed_wall_seconds": 117.78685215500082
+      },
+      "41014": {
+        "decisions_sealed_sha256": "545a5a02f57e1034682691fb0077f0fa679ea14176fa688aab8bf271187882de",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:34:11Z",
+        "seed_wall_seconds": 128.82969374099775
+      },
+      "41015": {
+        "decisions_sealed_sha256": "dbbe277fbd3c15a02a37755bcc7aec932b50cefdd2023fb64b8737862407c919",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:32:38Z",
+        "seed_wall_seconds": 89.78503247900153
+      },
+      "41016": {
+        "decisions_sealed_sha256": "cfa71de2ee6cd622e9b623a5e5c95306670fc96449047d434f161d2f93b969df",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:34:13Z",
+        "seed_wall_seconds": 123.91242893299932
+      },
+      "41017": {
+        "decisions_sealed_sha256": "23d77bf28d85b1f1334ed98fa9699d9dc1d923b3757555668f736954eb26d25e",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:36:02Z",
+        "seed_wall_seconds": 126.44350532599856
+      },
+      "41018": {
+        "decisions_sealed_sha256": "5a9d3e23b270efa6b003ccef107deb9e826cbf538c68995a8ebef0b68a93e73b",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:36:11Z",
+        "seed_wall_seconds": 119.9473791929995
+      },
+      "41019": {
+        "decisions_sealed_sha256": "3c58f05f80f29feb844f27f58297ef909e22d8245784eeb81a9e664b4142ca8a",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:34:30Z",
+        "seed_wall_seconds": 112.28831321500184
+      },
+      "41020": {
+        "decisions_sealed_sha256": "c7ecece6dcfed99c64d9de6ab1a95267e6a6446ddbe4481dc3737a24ffa60a6b",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:36:08Z",
+        "seed_wall_seconds": 115.00974448000125
+      }
+    },
+    "bridge": {
+      "31001": {
+        "decisions_sealed_sha256": "14c2759a692d01e697e43bbcd7437808a0ecb446615192e717c119a20a5fa81f",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:28:11Z",
+        "seed_wall_seconds": 129.6000933949981
+      },
+      "31002": {
+        "decisions_sealed_sha256": "594a5b1533043e1838c2526fae4a2db20d63d4835feaf32034b203dacb933ca3",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:30:13Z",
+        "seed_wall_seconds": 121.94680139499906
+      },
+      "31003": {
+        "decisions_sealed_sha256": "f7294c8ec62a9d4742a1b996ffe213fc810a0911bea73b963335c46e8e0a4e59",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:32:09Z",
+        "seed_wall_seconds": 115.79324518099747
+      },
+      "31004": {
+        "decisions_sealed_sha256": "c08d54c2ea4b93ebd5a17ba78c12a1682184a771d66ab788a2100726ac6c9027",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:34:10Z",
+        "seed_wall_seconds": 120.64659431700056
+      },
+      "31005": {
+        "decisions_sealed_sha256": "695f5e0efadb8f02d5aa5ab1dc71f905cd2c5d811d3aaeba0a65944ca51b36aa",
+        "git_sha": "9e2f365fe309f15dfa43485adb8fc5887fb318d2",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:36:10Z",
+        "seed_wall_seconds": 120.09734088700134
+      }
+    },
+    "dev": {
+      "49001": {
+        "decisions_sealed_sha256": "73f1f294be35947f05fe86fba95694714392be5069f6e653ff7ea5ce95a5528f",
+        "git_sha": "50bdd99fd97590952e46d257250bf030e9667fa8",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:19:18Z",
+        "seed_wall_seconds": 131.47847437499877
+      },
+      "49002": {
+        "decisions_sealed_sha256": "ceccec4d753e0ed534a283c02cf479094990a9943815de13b784497a836269c4",
+        "git_sha": "50bdd99fd97590952e46d257250bf030e9667fa8",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:19:17Z",
+        "seed_wall_seconds": 129.726603436
+      },
+      "49003": {
+        "decisions_sealed_sha256": "db7da96c20bd47fb4b6b6eeb19749dd9017e21000d29d887ea70a874413aaf07",
+        "git_sha": "50bdd99fd97590952e46d257250bf030e9667fa8",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:19:33Z",
+        "seed_wall_seconds": 134.27240961600182
+      },
+      "49004": {
+        "decisions_sealed_sha256": "4a14f49225a1989a6c11e8b6519577073651edfe3da87e9f321613b09e3fad0a",
+        "git_sha": "50bdd99fd97590952e46d257250bf030e9667fa8",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:19:35Z",
+        "seed_wall_seconds": 134.1057243489995
+      },
+      "49005": {
+        "decisions_sealed_sha256": "df11e8f349fe01a9d09ed82c2f6a6a0eae8ecef613f8cf755bd16e0204f46697",
+        "git_sha": "50bdd99fd97590952e46d257250bf030e9667fa8",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:20:50Z",
+        "seed_wall_seconds": 91.28354669499822
+      },
+      "49006": {
+        "decisions_sealed_sha256": "91d4aaf31c87e60a413244c186ea0f85e917c7a47d40455f51bc5b5d98273182",
+        "git_sha": "50bdd99fd97590952e46d257250bf030e9667fa8",
+        "git_dirty": false,
+        "completed_utc": "2026-10-18T23:20:55Z",
+        "seed_wall_seconds": 97.77928967600019
+      }
+    }
+  }
+}
