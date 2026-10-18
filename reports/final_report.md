@@ -1,8 +1,8 @@
 # Bayesian Causal Circuit Discovery — Go/No-Go Pilot Report
 
-**Date (UTC):** 2026-10-18T22:33:38Z  
+**Date (UTC):** 2026-10-18T22:34:47Z  
 **Protocol:** BCCD-PILOT-1.0 (protocol doc SHA-256 `fe2a3d4f77aaa69f2684267c54980119524e99c8f9a04db456f4d325f9d57986`; config SHA-256 `c2102e71fc7e1cfe2b922103bb5e4c35f643dc2e6b5b1a6a48132453782890ec`)  
-**Git revision / uv lock:** `f1efd9912521e4a86f89898511b5096e1cdeea85` (dirty=True) / `f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759`  
+**Report generated at git revision / uv lock:** `38f35ef303d9ec632e7ec40d1162e1bb12dc8238` (worktree dirty only by the regenerated report files: True) / `f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759` — experiment runs used the clean revisions listed below  
 **Host / GPU / driver / torch:** Linux-7.0.0-15-generic-x86_64-with-glibc2.43 / NVIDIA RTX A4000, 595.71.05, 16376 MiB, 4 MiB / torch 2.8.0+cu126 (CUDA build 12.6)  
 **Overall verdict:** **NO_GO** (Gate A FAIL, Gate B FAIL, Gate C FAIL)  
 **MLflow tracking:** remote `http://127.0.0.1:5001` via SSH tunnel; parent runs {"gate_a_parent": "d6ebe797a95d48c0ba72674736cdfb36", "gate_b_parent": "221e31a4735542b6bdf8320d6a947b7f", "gate_c_parent": "c8c20c5ea1804702a85b57b49552c364", "gate_c_prepare_parent": "69acae6453904987aa681553f90bf9fc", "gate_a_dev_parent": "3c2a5918fca143269f369ee682219ab2"}
