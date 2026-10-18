@@ -56,21 +56,61 @@ def proxyspex_c(cfg: dict) -> dict:
     return {"seeds": out}
 
 
-def run_diagnostics(cfg: dict) -> int:
+def discovery_vs_blind_R(cfg: dict) -> dict:
+    """Exploratory: for every sealed Gate C circuit, measure R on the seed's own 32 discovery prompts
+    (real GPT-2 interventions) and compare with blind R. Separates surrogate error from
+    discovery-to-blind prompt/template transfer. Never feeds back into any decision."""
+    import pandas as pd
+    import torch
+
+    from . import gate_c as G
+    from .masks import retain_mask
+
+    if not torch.cuda.is_available():
+        return {"status": "BLOCKED", "reason": "no GPU"}
+    model, _ = G.load_model("cuda")
+    ps, _ = G.build_splits(model, cfg, "cuda")
+    cand = json.loads((G.FROZEN / "candidate_heads.json").read_text())
+    n = cfg["gate_c"]["discovery"]["n_prompts_per_mask"]
+    rows = []
+    for si, seed in enumerate(cfg["seeds"]["gate_c_discovery"]):
+        dps = G.to_promptset(f"disc-{seed}", ps["discovery"].items[si * n : (si + 1) * n], "cuda")
+        runner = G.make_runner(model, cand["heads"], dps, cfg["_impl"])
+        den = float(np.mean(np.abs(runner.effects(np.ones((1, 48), np.uint8))[0])))
+        f = pd.read_csv(PROJECT_ROOT / "runs" / "gate_c" / f"seed-{seed}" / "faithfulness.csv")
+        for _, r in f.iterrows():
+            C = json.loads(r.circuit)
+            num = float(np.mean(np.abs(runner.effects(retain_mask(48, C)[None])[0])))
+            rows.append({"seed": seed, "method": r.method, "budget": int(r.budget), "k": int(r.k), "R_blind": float(r.R),
+                         "R_discovery_prompts": num / den, "pred_R": float(r.pred_R)})
+    df = pd.DataFrame(rows)
+    df.to_csv(OUT / "gate_c_discovery_vs_blind_R.csv", index=False)
+    summ = df.groupby(["method", "budget"])[["pred_R", "R_discovery_prompts", "R_blind"]].mean().reset_index()
+    return {"summary": summ.to_dict(orient="records"),
+            "corr_disc_blind": float(np.corrcoef(df.R_discovery_prompts, df.R_blind)[0, 1])}
+
+
+def run_diagnostics(cfg: dict, which: str = "all") -> int:
     from . import tracking
     from .cli import _finish_parent, _gate_parent
 
     prov = provenance(cfg)
-    pid = _gate_parent("bccd/aggregate", "diagnostics", prov, True, "parent_run_id")
+    pid = _gate_parent("bccd/aggregate", "diagnostics" if which == "all" else f"diagnostics-{which}", prov, True, "parent_run_id")
     t0 = time.time()
-    res = {"proxyspex_A1": proxyspex_a1(cfg)}
-    try:
-        res["proxyspex_C"] = proxyspex_c(cfg)
-    except Exception as e:  # diagnostic only; record failure faithfully
-        res["proxyspex_C"] = {"status": "FAILED", "error": repr(e)}
-    res["seconds"] = time.time() - t0
-    write_json(OUT / "proxyspex.json", res)
-    _finish_parent(pid, "FINISHED", {"proxyspex.json": res}, metrics={"proxyspex_A1_top2_correct": res["proxyspex_A1"]["n_top2_correct"]})
-    print(json.dumps({"A1_top2_correct": f"{res['proxyspex_A1']['n_top2_correct']}/{res['proxyspex_A1']['n']}"}))
+    if which in ("all", "proxyspex"):
+        res = {"proxyspex_A1": proxyspex_a1(cfg)}
+        try:
+            res["proxyspex_C"] = proxyspex_c(cfg)
+        except Exception as e:  # diagnostic only; record failure faithfully
+            res["proxyspex_C"] = {"status": "FAILED", "error": repr(e)}
+        res["seconds"] = time.time() - t0
+        write_json(OUT / "proxyspex.json", res)
+        _finish_parent(pid, "FINISHED", {"proxyspex.json": res}, metrics={"proxyspex_A1_top2_correct": res["proxyspex_A1"]["n_top2_correct"]})
+        print(json.dumps({"A1_top2_correct": f"{res['proxyspex_A1']['n_top2_correct']}/{res['proxyspex_A1']['n']}"}))
+    if which in ("all", "transfer"):
+        tr = discovery_vs_blind_R(cfg)
+        write_json(OUT / "gate_c_transfer.json", tr)
+        _finish_parent(pid, "FINISHED", {"gate_c_transfer.json": tr})
+        print(json.dumps({"corr_disc_blind": tr.get("corr_disc_blind")}))
     _ = tracking
     return 0

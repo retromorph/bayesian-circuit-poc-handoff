@@ -1,0 +1,124 @@
+{
+  "protocol": "BCCD-PILOT-1.0",
+  "generated_utc": "2026-10-18T22:14:57Z",
+  "overall_verdict": "NO_GO",
+  "overall_rule": "GO iff Gate A, B and C all PASS",
+  "gates": {
+    "A": {
+      "verdict": "FAIL",
+      "criteria": {
+        "A-1": {
+          "status": "PASS",
+          "threshold": ">=16/20 A1 worlds: top-2 predicted nonadditivity pairs = planted pairs (B=128)",
+          "observed": "20/20 A1 worlds with top-2 nonadditivity pairs = planted pairs"
+        },
+        "A-2": {
+          "status": "PASS",
+          "threshold": ">=16/20 A1 worlds recover >=3/4 exact size-3 minimal circuits; 0 invalid P>=0.95 claims",
+          "observed": "20/20 worlds recover >=3/4 minimal circuits; invalid high-confidence claims at B=128: 0 (all checkpoints: 0)"
+        },
+        "A-3": {
+          "status": "PASS",
+          "threshold": "A0 Bayes MAE <= 1.10 x first-order Lasso (zero-error fallback: normalised MAE <= 0.01)",
+          "observed": "A0 MAE bayes=0.00093 lasso_1st=0.00018 ratio=5.162; normalised 0.00143 vs 0.00028; rule: zero-error fallback (normalised MAE <= 0.01)"
+        },
+        "A-4": {
+          "status": "FAIL",
+          "threshold": "pooled A0-A2 90% predictive coverage in [0.85, 0.95]",
+          "observed": "pooled A0-A2 coverage 1.0000; per regime A0=1.000, A1=1.000, A2=1.000, A3=0.857"
+        },
+        "A-5": {
+          "status": "PASS",
+          "threshold": "A3 coverage in [0.85,0.95] OR misfit flags >=16/20 with <=12/60 A0-A2 false positives",
+          "observed": "A3 coverage 0.8568; detector flags A3 20/20, false positives 0/60 (t=0.01622)"
+        }
+      }
+    },
+    "B": {
+      "verdict": "FAIL",
+      "criteria": {
+        "B-1": {
+          "status": "FAIL",
+          "threshold": ">=8/10 valid models: >=3/4 planted size-2 circuits + a blind-faithful proposal by B=128",
+          "observed": "1/10 models recovered >=3/4 planted size-2 circuits with a blind-faithful proposal by B=128"
+        },
+        "B-2": {
+          "status": "FAIL",
+          "threshold": "median masks-to-recovery <= 0.75 x best non-Bayesian median (censored at 160)",
+          "observed": "median event time bayes_decision=160.0 vs best non-Bayes lasso_1st=160.0 (ratio 1.000); censored counts {'bayes_decision': 9, 'bayes_static': 8, 'bayes_uncertainty': 7, 'gbdt': 9, 'lasso_1st': 10, 'lasso_pair': 9}"
+        },
+        "B-3": {
+          "status": "FAIL",
+          "threshold": "median masks-to-recovery <= 0.80 x bayes_static median",
+          "observed": "median bayes_decision=160.0 vs bayes_static=160.0 (ratio 1.000)"
+        },
+        "B-4": {
+          "status": "FAIL",
+          "threshold": "0 invalid high-confidence (P>=0.95) circuit claims",
+          "observed": "78 invalid of 84 high-confidence (P>=0.95) claims across all checkpoints/models"
+        }
+      }
+    },
+    "C": {
+      "verdict": "FAIL",
+      "criteria": {
+        "C-1": {
+          "status": "FAIL",
+          "threshold": "S_Bayes(128) <= 0.85 x best non-Bayes S(128) pooled AND >=15% gain in >=4/5 seeds",
+          "observed": "S_bayes(128)=0.5108, best non-Bayes lasso_pair S(128)=0.3848, ratio=1.327 (need <=0.85); seeds with >=15% gain: 0/5"
+        },
+        "C-2": {
+          "status": "FAIL",
+          "threshold": "S_Bayes(128) <= best non-Bayes S(256)",
+          "observed": "S_bayes(128)=0.5108 vs best non-Bayes S(256)=0.3628 (lasso_pair)"
+        },
+        "C-3": {
+          "status": "FAIL",
+          "threshold": "90% predictive coverage of blind mean intervention effects in [0.85, 0.95]",
+          "observed": "coverage 0.809 (mean width 2.584; CRPS 0.5579); by #ablated: 2:0.88/w=2.02, 10:0.72/w=2.41, 24:0.79/w=2.91, 43:0.86/w=3.00"
+        },
+        "C-4": {
+          "status": "FAIL",
+          "threshold": "paired hierarchical bootstrap 90% CI lower bound > 0 vs dev-preselected baseline",
+          "observed": "reference=lasso_pair (dev-preselected); paired 90% CI of S_ref-S_bayes = [-0.1701, -0.0758]"
+        },
+        "C-5": {
+          "status": "FAIL",
+          "threshold": "end-to-end elapsed at B=128 <= 2 x strongest non-Bayesian baseline",
+          "observed": "end-to-end wall at B=128 (incl. 1.5s screening): bayes_decision 14.4s vs lasso_pair 6.5s (ratio 2.20)"
+        }
+      }
+    }
+  },
+  "candidate_method": "bayes_decision",
+  "mlflow_parent_runs": {
+    "gate_a_parent": "d6ebe797a95d48c0ba72674736cdfb36",
+    "gate_b_parent": "221e31a4735542b6bdf8320d6a947b7f",
+    "gate_c_parent": "c8c20c5ea1804702a85b57b49552c364",
+    "gate_c_prepare_parent": "69acae6453904987aa681553f90bf9fc",
+    "gate_a_dev_parent": "3c2a5918fca143269f369ee682219ab2"
+  },
+  "recomputed_from_artifacts": true,
+  "consistency_with_runtime_summaries": {
+    "A": {
+      "A-1": true,
+      "A-2": true,
+      "A-3": true,
+      "A-4": true,
+      "A-5": true
+    },
+    "B": {
+      "B-1": true,
+      "B-2": true,
+      "B-3": true,
+      "B-4": true
+    },
+    "C": {
+      "C-1": true,
+      "C-2": true,
+      "C-3": true,
+      "C-4": true,
+      "C-5": true
+    }
+  }
+}

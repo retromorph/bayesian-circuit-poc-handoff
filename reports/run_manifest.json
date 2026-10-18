@@ -1,0 +1,1362 @@
+{
+  "provenance": {
+    "utc": "2026-10-18T22:14:57Z",
+    "protocol_version": "BCCD-PILOT-1.0",
+    "config_sha256": "c2102e71fc7e1cfe2b922103bb5e4c35f643dc2e6b5b1a6a48132453782890ec",
+    "impl_config_sha256": "177e80fcf1f24483ffa081c972b9417c28fe6246c2476adf60261c7cf47b785a",
+    "protocol_doc_sha256": "fe2a3d4f77aaa69f2684267c54980119524e99c8f9a04db456f4d325f9d57986",
+    "git_sha": "3ebde28f7fe62e5684063a1cd1c7d1b9dc73ae31",
+    "git_dirty": false,
+    "git_status": "",
+    "uv_lock_sha256": "f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759",
+    "python": "3.11.13",
+    "platform": "Linux-7.0.0-15-generic-x86_64-with-glibc2.43",
+    "hostname_hash": "d4c9dc311c29",
+    "cpu_count": 8,
+    "uv_version": "uv 0.7.12",
+    "numpy_version": "2.2.6",
+    "scipy_version": "1.17.1",
+    "sklearn_version": "1.9.1",
+    "lightgbm_version": "4.7.0",
+    "shapiq_version": null,
+    "mlflow_version": "3.17.1",
+    "torch_version": "2.8.0+cu126",
+    "transformer_lens_version": null,
+    "transformers_version": "4.57.6",
+    "pandas_version": "3.0.6",
+    "torch_cuda_build": "12.6",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA RTX A4000",
+    "gpu_total_mib": 15976,
+    "nvidia_smi": "NVIDIA RTX A4000, 595.71.05, 16376 MiB, 4 MiB",
+    "ram_total_gib": 31.3,
+    "disk_free_gib": 108.5
+  },
+  "mlflow_tracking": "http://127.0.0.1:5001 (remote loopback; ssh -N -L 127.0.0.1:5001:127.0.0.1:5001 <host>)",
+  "mlflow_parent_runs": {
+    "gate_a_parent": "d6ebe797a95d48c0ba72674736cdfb36",
+    "gate_b_parent": "221e31a4735542b6bdf8320d6a947b7f",
+    "gate_c_parent": "c8c20c5ea1804702a85b57b49552c364",
+    "gate_c_prepare_parent": "69acae6453904987aa681553f90bf9fc",
+    "gate_a_dev_parent": "3c2a5918fca143269f369ee682219ab2"
+  },
+  "status_files": {
+    "diagnostics.status.json": {
+      "parent_run_id": "fdb531ee26884cbf9c00dacefe554dea",
+      "updated_utc": "2026-10-18T22:13:38Z"
+    },
+    "gate-a.status.json": {
+      "state": "complete",
+      "started_utc": "2026-10-18T21:33:27Z",
+      "pid": 6425,
+      "updated_utc": "2026-10-18T21:43:06Z",
+      "parent_run_id": "d6ebe797a95d48c0ba72674736cdfb36",
+      "exit_code": 0,
+      "completed_utc": "2026-10-18T21:43:06Z",
+      "verdict": "FAIL"
+    },
+    "gate-b.status.json": {
+      "state": "complete",
+      "pid": 6842,
+      "updated_utc": "2026-10-18T21:56:58Z",
+      "parent_run_id": "221e31a4735542b6bdf8320d6a947b7f",
+      "exit_code": 0,
+      "verdict": "FAIL"
+    },
+    "gate-c-smoke.status.json": {
+      "state": "complete",
+      "pid": 7118,
+      "updated_utc": "2026-10-18T22:01:33Z",
+      "parent_run_id": "d84ad8c0f5694171835fbc03a5e42968",
+      "exit_code": 0,
+      "verdict": "EXPLORATORY"
+    },
+    "gate-c.status.json": {
+      "state": "complete",
+      "pid": 7203,
+      "updated_utc": "2026-10-18T22:12:59Z",
+      "parent_run_id": "c8c20c5ea1804702a85b57b49552c364",
+      "exit_code": 0,
+      "verdict": "FAIL"
+    },
+    "prepare-a.status.json": {
+      "parent_run_id": "3c2a5918fca143269f369ee682219ab2",
+      "updated_utc": "2026-10-18T21:29:49Z"
+    },
+    "prepare-c.status.json": {
+      "parent_run_id": "69acae6453904987aa681553f90bf9fc",
+      "updated_utc": "2026-10-18T21:58:44Z"
+    }
+  },
+  "gate_a": {
+    "misfit_threshold": {
+      "threshold": 0.016224898824084153,
+      "rule": "geometric midpoint",
+      "dev_control_max": 0.0026257347819119,
+      "dev_A3_min": 0.10025663812858,
+      "dev_control_values": [
+        0.0021640779090654,
+        0.0026257347819119,
+        0.0018857485557539,
+        0.0024391318544671,
+        0.0005108461314889,
+        0.0005777040231204,
+        0.0009444473427628,
+        0.0006811229490984,
+        0.0010160468534414,
+        0.0013507081913247,
+        0.001282565342861,
+        0.0014825423054072
+      ],
+      "dev_A3_values": [
+        0.10025663812858,
+        0.1072573815069813,
+        0.1166207496501358,
+        0.1581049114799173
+      ],
+      "n_dev_control": 12,
+      "n_dev_A3": 4,
+      "protocol": "BCCD-PILOT-1.0",
+      "frozen_utc": "2026-10-18T21:32:34Z",
+      "git_sha": "c818d733d333408556287d7e0e25767bc52333e3",
+      "impl_config_sha256": "7e48e9b5eadb4d72bdf02d43a9c0c854382e469c0f3781fe016074deac0c04c5"
+    },
+    "world_mlflow_runs": {
+      "A0-1001": {
+        "bayes_decision": "9c52fc250dad40aeb4ed8c35cfa6b66f",
+        "bayes_static": "f6a368cf2d1f4e0aa735336c800869bc",
+        "bayes_uncertainty": "8fbc2d8f303e4be788b9ab104cda9dc7",
+        "gbdt": "6d6adb253b404ac5b31df880805a7905",
+        "lasso_1st": "ec1c4cbe84144be2be964f2bb3010f71",
+        "lasso_pair": "fa8ee2e6a4b743239adddd82ae5a3374"
+      },
+      "A0-1002": {
+        "bayes_decision": "2a8e8f8eb2ff442fac529cf3b7dc3249",
+        "bayes_static": "8704d959829b422f8218181da62cff0e",
+        "bayes_uncertainty": "96f04f249e9740349054a7782457a23e",
+        "gbdt": "7b7f900218c940dfacf685c34755ac5b",
+        "lasso_1st": "e56a03d142d4429e9fc4bc007e9b6941",
+        "lasso_pair": "7ac3aef9bf0d467c8a8bd2e71f0ff06c"
+      },
+      "A0-1003": {
+        "bayes_decision": "9531fd344d01425ca70fe776cf666633",
+        "bayes_static": "5c8b37956485458abfe80e2abca6b704",
+        "bayes_uncertainty": "74a9a8f5f6de49b3838a5a64477bf543",
+        "gbdt": "6532e5350caa41f5941da1b9c46c39d8",
+        "lasso_1st": "1d3a5b9dc0c04240b8ec4fd6bad666cb",
+        "lasso_pair": "d3ec84865b8340dea9a44302cf1fdbb6"
+      },
+      "A0-1004": {
+        "bayes_decision": "3c9cdbb538994f29ba96457c75df937d",
+        "bayes_static": "f144b9adde0c456986da587b7dd74f26",
+        "bayes_uncertainty": "27264f292a77422d8ed8e47a6eddbe21",
+        "gbdt": "a9296e41754f4c39941f805ff06bb310",
+        "lasso_1st": "c32b08d8c06943368db86965139261dc",
+        "lasso_pair": "889246c249ca47578221fd9a9f3165cd"
+      },
+      "A0-1005": {
+        "bayes_decision": "68bc73bcf9c649c2b00e088fff2062fe",
+        "bayes_static": "9e1db5c4ba2d45edbd7c5fc6187813fc",
+        "bayes_uncertainty": "72cae41bd78e41e4aa5d993aeeae463a",
+        "gbdt": "e77f61ac68e14c109a2b76bd7999de0f",
+        "lasso_1st": "a1e90755000240c2957030a607300a7a",
+        "lasso_pair": "2345c720d44a4061a292ddf921497275"
+      },
+      "A0-1006": {
+        "bayes_decision": "23585752abc244338143940d2bae998e",
+        "bayes_static": "c17daf3b1e5a471f89da8f0533b61943",
+        "bayes_uncertainty": "58fbf3373a514f0b9fd1fa5a0151667c",
+        "gbdt": "36bcda08a047444c8c520d09da0fbc62",
+        "lasso_1st": "0a9b83641d274272915688f59e763324",
+        "lasso_pair": "6fc2d371930d474280db70dcb872299b"
+      },
+      "A0-1007": {
+        "bayes_decision": "bcd0abba9c5240e1a251123714bfd0b1",
+        "bayes_static": "e83de8df205b419ca1e40bbf13596567",
+        "bayes_uncertainty": "ec89eff358ac495095c74a493f2110e3",
+        "gbdt": "086aa3bb1c0a4260af2295a620c2cd82",
+        "lasso_1st": "2dfd14f0f3ca451998105f779392636c",
+        "lasso_pair": "e9407ae3609243a69f9ae22ad06062ad"
+      },
+      "A0-1008": {
+        "bayes_decision": "6d349180bf974e76b0d90487e333430d",
+        "bayes_static": "9166d379baae4bf8983023ca496ba904",
+        "bayes_uncertainty": "558812a4cf0645bbbad1ed2b1bd0c22e",
+        "gbdt": "d0c8903f20da4b709cf2c81259370b9b",
+        "lasso_1st": "02f80126a93b4735ac966c50d9686757",
+        "lasso_pair": "a3eb5835c8474a22a03130bc65f4b95e"
+      },
+      "A0-1009": {
+        "bayes_decision": "a4ffae5231e94d99967fc6ee73469c9e",
+        "bayes_static": "d9ef543bcf8440249cf5f00921f0d4ac",
+        "bayes_uncertainty": "9ab8405322d445bc9e276019557dea38",
+        "gbdt": "0fde9aebd43a4767a219bd096b8fc33a",
+        "lasso_1st": "67f6c93f14954c06ad22da2ebb9f1049",
+        "lasso_pair": "8abcaa049ebe4c148ff93d5d62aa9fb7"
+      },
+      "A0-1010": {
+        "bayes_decision": "41a74a26227a4acb9636e5164a111306",
+        "bayes_static": "a44ffde360fc434a9cb3519775be2e59",
+        "bayes_uncertainty": "4452befaa1fb4e8c80b82b5a34ccb9fa",
+        "gbdt": "afad7b6899d2440bb4b57a69ad49c60e",
+        "lasso_1st": "a433f812e3134475a113d26f10d137a3",
+        "lasso_pair": "8e1aeb13fb5a4f109a64b2e6f2169c11"
+      },
+      "A0-1011": {
+        "bayes_decision": "b524b9a47de84e2b84e7c175d0b010b0",
+        "bayes_static": "74cdc8af1106460bab4ee9ad6415d698",
+        "bayes_uncertainty": "253fa80f27fe44d5ac91334b167e91e8",
+        "gbdt": "2716b831698c457e8606975d7080da38",
+        "lasso_1st": "9724e3787b89479f8b4c362001e71b01",
+        "lasso_pair": "5f5cb5c2b2fb42368fd8bbe597189b29"
+      },
+      "A0-1012": {
+        "bayes_decision": "d0bd7957949146408c33643cb0ae8df5",
+        "bayes_static": "7f947fd6202d4fcc83d1f9b57ef61cf0",
+        "bayes_uncertainty": "1a92f016e4f04209977751e0fd3839fa",
+        "gbdt": "a58e38f5191a435baf41c634c299a1b4",
+        "lasso_1st": "aef8ce734b4b4169865a0e0439694e1d",
+        "lasso_pair": "23d45021631b403cb1f26b6bb2ba99fa"
+      },
+      "A0-1013": {
+        "bayes_decision": "980966d1144a464ab08c98f8255e122b",
+        "bayes_static": "73bb7861645c40b3b20f8cc358f97b19",
+        "bayes_uncertainty": "16d3bdb93e1545e399ea25cb95343d4d",
+        "gbdt": "f4dc80931a3148549050540d82b1ef19",
+        "lasso_1st": "90c02eb3221f42caa3a80f004b3d0e64",
+        "lasso_pair": "50168ab4943d4d60b3ed9673801e378a"
+      },
+      "A0-1014": {
+        "bayes_decision": "38dc19d20ccd4c47a231fb8a21567e8f",
+        "bayes_static": "0d4fb4965dd9493ead1d3f6cfe9fe1f5",
+        "bayes_uncertainty": "9b95cbe939c642aea5b67e85e240843e",
+        "gbdt": "4221775782394b6cb3213d893beb1fb8",
+        "lasso_1st": "beb1455db7aa4daabef1e3247a98efe0",
+        "lasso_pair": "18524ac22de8463482c8c04794e5132c"
+      },
+      "A0-1015": {
+        "bayes_decision": "6fed480d21f546a6afca6991f5c6f281",
+        "bayes_static": "97eadbe3771d4e82ab20356ff9421d8c",
+        "bayes_uncertainty": "9b05a814c4c6463ea0dae5ec26904932",
+        "gbdt": "209feb0b61c9404ab944768a35360704",
+        "lasso_1st": "abe35a6fb8bb4d6d9d2c9c539258ae26",
+        "lasso_pair": "34fddbed9dda4d518155c6eeff224397"
+      },
+      "A0-1016": {
+        "bayes_decision": "002ac8935053462aa13b81b65b8b3170",
+        "bayes_static": "561b89aaead2421390ec21b77b3e5882",
+        "bayes_uncertainty": "f3d91b5200514b059b772aef2138f5bc",
+        "gbdt": "e982f734ce1e4ff39124cb12496c369f",
+        "lasso_1st": "762f90d311c84fe2b3a611212be14e0f",
+        "lasso_pair": "9908aa740a0e40448ef29714e904707c"
+      },
+      "A0-1017": {
+        "bayes_decision": "6d45480169234e5197e7a1258f5eb091",
+        "bayes_static": "e42d6cd23b6d4c17b35ee58f321a46dd",
+        "bayes_uncertainty": "ba94c945cf1140d79a396a1b5bedb57a",
+        "gbdt": "efeea7238e564145b9ada038b66e4be5",
+        "lasso_1st": "932b0aa6943f4fb0b50075d992239851",
+        "lasso_pair": "d935075238fb4b208a9f414f47b2d15a"
+      },
+      "A0-1018": {
+        "bayes_decision": "a5a742a867c84daf847f34ee10083c3b",
+        "bayes_static": "f058b4e7929c48278d104e46f32032af",
+        "bayes_uncertainty": "601450f6a39a4b068cac8ec75d119d5a",
+        "gbdt": "17de4b5c87654e698e38378f84e778f0",
+        "lasso_1st": "108e6e2be6194bab85644158e889dd10",
+        "lasso_pair": "418b37b9551d4563a23da07114c85ca9"
+      },
+      "A0-1019": {
+        "bayes_decision": "1482f23ddafc492cbb0f6293d3201c64",
+        "bayes_static": "5dc7e61f4f6f487ab63db07a50476fc2",
+        "bayes_uncertainty": "d50604f09adf47d68e1baea1815f5055",
+        "gbdt": "a23fdce0bff24b4b8877e7f21109f8f2",
+        "lasso_1st": "dc965282c7464c44bdf6650eb81238a1",
+        "lasso_pair": "b0a51fc23fea4a958b2210536b19a87d"
+      },
+      "A0-1020": {
+        "bayes_decision": "02d3b371a68d42baae262c9c9bb8cdd3",
+        "bayes_static": "3166e602723b467ea8bdf87cead21826",
+        "bayes_uncertainty": "dd7e3ac048824df9b76941ef62892945",
+        "gbdt": "3c63c82598b64c79a4e762b08f24f643",
+        "lasso_1st": "8191a930241c46e6921075c5bf83365f",
+        "lasso_pair": "16864879c719442aada74c0dc53f0b80"
+      },
+      "A1-2001": {
+        "bayes_decision": "91a8ac94d6fd468994e1e8ef512dd300",
+        "bayes_static": "89e380d462fa4152be43215e03d0dd75",
+        "bayes_uncertainty": "e85117ce60d64668a8c5ae36ac1e0162",
+        "gbdt": "218530d6dcf340b296cd67ef332c0100",
+        "lasso_1st": "f6d8d77811674e5ea86ef7b82cb1e142",
+        "lasso_pair": "ab589034ef0f424dadf17c25849b2e90"
+      },
+      "A1-2002": {
+        "bayes_decision": "6bab2590e1c7462db5866c86dbfe8adb",
+        "bayes_static": "5885255750054f66b92922919ba73f95",
+        "bayes_uncertainty": "aaa616dc097f455f9dcc7f45edb563f2",
+        "gbdt": "b9ccfcfac58b40bcbd88adb9005e0482",
+        "lasso_1st": "f92a750d39f74076ab425f2de66b7a41",
+        "lasso_pair": "9ac29ecb58fe4e00838eb462707b6191"
+      },
+      "A1-2003": {
+        "bayes_decision": "7dc685dc3502491cbcb72d6515c58b43",
+        "bayes_static": "fbe6b2a9f07942b2ba1f3ad76c6fc891",
+        "bayes_uncertainty": "17dfe6d0c01e44b4bdbcbf5d02526e3b",
+        "gbdt": "62cfd37ad42e4304b63eaed6d4075ef0",
+        "lasso_1st": "ac6727ff61c14bf1a18d47a58b91ef7d",
+        "lasso_pair": "5d7d56aa46254714afc6adc7c9af6727"
+      },
+      "A1-2004": {
+        "bayes_decision": "2457a380d1694a3a9ff3002856586bc9",
+        "bayes_static": "eea47cf9371e4f479bfe3e39f9f0d08e",
+        "bayes_uncertainty": "4d6aca352c38457b90fa568db33918b3",
+        "gbdt": "e239fd858bce4da5aefea4b96383a39b",
+        "lasso_1st": "a75e9830d794440db22f7000e8fd58b4",
+        "lasso_pair": "4848e38632454c869f8f02c8e8901426"
+      },
+      "A1-2005": {
+        "bayes_decision": "73eb2f999f314dc096a29a28796874b9",
+        "bayes_static": "3f04e2f42f5e40e3adf31f6e27919da1",
+        "bayes_uncertainty": "56c09e7341f24e3ba3e7039bfe7c07eb",
+        "gbdt": "543d12d05af348509e9214375cf3d55d",
+        "lasso_1st": "41e16215848e4249993251534cd48bd9",
+        "lasso_pair": "f83187d78e414435922e1902e5adffd9"
+      },
+      "A1-2006": {
+        "bayes_decision": "07c8c33804dc4bc8b69758afb839fb50",
+        "bayes_static": "82488efa0ac04c919f99158e236135d3",
+        "bayes_uncertainty": "1568449ade114bcca751a60020419153",
+        "gbdt": "a372208da4b94fd997106e9fd318bd03",
+        "lasso_1st": "f02f0a37a0974877af3bf608f4b91c3a",
+        "lasso_pair": "6f7f44cea0f0460bbb7d4963d00b9dba"
+      },
+      "A1-2007": {
+        "bayes_decision": "13be1a5297b74ebc9b75193ef823b645",
+        "bayes_static": "5f3ed106e1354b7db59b20e62cb7e925",
+        "bayes_uncertainty": "8095297e9dab4e5b9cd6a3593e0b19d4",
+        "gbdt": "8333a3226b394508ae8cd12e46fb0dd9",
+        "lasso_1st": "8ddee9bd4c94453289527ece497fe48c",
+        "lasso_pair": "0ac208e6f0e944e89c5603e7d241aa57"
+      },
+      "A1-2008": {
+        "bayes_decision": "d6a06f455d2d4ceb922129b4cf1f171d",
+        "bayes_static": "ae465ef1a6cc479bb1ca3fcb5719a99b",
+        "bayes_uncertainty": "9cda07e44bc94be29652ff3fc51e80be",
+        "gbdt": "0db71cb235ab42f581c44ea553ad02db",
+        "lasso_1st": "5b36d465a20b47cc84f14e2251192803",
+        "lasso_pair": "0776ec30f8d84ee9a14e8b6bf3ef99c3"
+      },
+      "A1-2009": {
+        "bayes_decision": "408e445c39d24be2bc880251f1813180",
+        "bayes_static": "af3e6a6176e4418fa068ba90b5a742d1",
+        "bayes_uncertainty": "0409d7466fbe474a9e593a2439270da4",
+        "gbdt": "3cb9f62045884a4da2debd12596ed7db",
+        "lasso_1st": "66b6d53085c64a75886b969f067a7e70",
+        "lasso_pair": "0525fb12fabb4e9da2f94cbc13756684"
+      },
+      "A1-2010": {
+        "bayes_decision": "4914bd5cde4c4036b796b4d5ccdb0cbf",
+        "bayes_static": "cc915b54cc1f44358944c2b31047655b",
+        "bayes_uncertainty": "40a4e641acbf44019da38d8b8ef2b6cb",
+        "gbdt": "ce5c1d14f0594eb0a536cf6bf275c7b6",
+        "lasso_1st": "c5199c209ca74921a0335bc11066fb5d",
+        "lasso_pair": "23afb23c4cdd4190b8f1c5649815d8bc"
+      },
+      "A1-2011": {
+        "bayes_decision": "29f53b355c4b439493c696e0becff193",
+        "bayes_static": "e9ebc517144c42d996d445d7163b2e32",
+        "bayes_uncertainty": "82ed2d7fe96a41bdab051ef0eff4f652",
+        "gbdt": "23321bb8f5644a60b1fa0a72ae8dd44d",
+        "lasso_1st": "29e13c253bb64a3793ef16c311efe39a",
+        "lasso_pair": "6f8bc5cb62204165ba555fca46cf501b"
+      },
+      "A1-2012": {
+        "bayes_decision": "63d20119cee24cc996c5a05e30d7240f",
+        "bayes_static": "e62031d2ee9f4c58b869334dd377d617",
+        "bayes_uncertainty": "e6dd93f39ac9432793c55f3fd5a22984",
+        "gbdt": "9f11a98a0de54656a12a0bb013ba01a4",
+        "lasso_1st": "937e6ae163f14f329d7e5f185c0510ed",
+        "lasso_pair": "ca179c6571f2488f89634192dc960af6"
+      },
+      "A1-2013": {
+        "bayes_decision": "a71998d3102d4051bf5a395ded13d27c",
+        "bayes_static": "ee3d817764bf41c7875c5f2a8d24971b",
+        "bayes_uncertainty": "9c9bf9be4775462483be33ea579edbc7",
+        "gbdt": "7e6ca5f592de43b692a06a32ee9aa9cc",
+        "lasso_1st": "6109a561cfb3400192dcaaeb4de716ef",
+        "lasso_pair": "25076d2555e6434d8313995fb4461cf1"
+      },
+      "A1-2014": {
+        "bayes_decision": "c88adfe5c2ba4e36bb1e2f5d753e4016",
+        "bayes_static": "1a2895d5e0c0474e8b68db31e0a33dd8",
+        "bayes_uncertainty": "f6f625ec196f447aa1108c95b195e60d",
+        "gbdt": "a3e23d07ed7d4a4ea3fd112dfabcdef3",
+        "lasso_1st": "aaa189800e284e5288728ee14540a8fd",
+        "lasso_pair": "0162779ad46142318860f8bd30f81c98"
+      },
+      "A1-2015": {
+        "bayes_decision": "91061dbe1afd40e1af826e07a9eeb026",
+        "bayes_static": "b9599e23b1bd4b6c93284898451f8ca8",
+        "bayes_uncertainty": "95874734ba9a4fbbbda6a98ca4466f6a",
+        "gbdt": "a561c6455854409187c55faf5792c011",
+        "lasso_1st": "6cc7dfb69cd5482da630ad4481ff6afa",
+        "lasso_pair": "34981458a29347e398af8bbf2c8848ca"
+      },
+      "A1-2016": {
+        "bayes_decision": "c08c3f540a6e4bb092c98328bba92706",
+        "bayes_static": "554f97ee7c9d48d0a9a4531975692d80",
+        "bayes_uncertainty": "4e14a9096ac64d77aa37870f08b3019f",
+        "gbdt": "5ae2659f3f9245888f27d01985405645",
+        "lasso_1st": "a674f0c4b37040a3b2e148d75376a979",
+        "lasso_pair": "6ad3df30d9784e548fa3c466574ef763"
+      },
+      "A1-2017": {
+        "bayes_decision": "aa597789af094739b3d4ee8129f2332c",
+        "bayes_static": "75dca21c548345998664dedbed594881",
+        "bayes_uncertainty": "7923ca8101994147b2d0e4fad5c3db8b",
+        "gbdt": "a552a1c921c047a297bb6547c108e618",
+        "lasso_1st": "3af2ff01847446a5a74fd8a6d7d6e543",
+        "lasso_pair": "074e0d668a8546b5a15cbe844c5a2b60"
+      },
+      "A1-2018": {
+        "bayes_decision": "2cfa64e05ab641d0b7cb82ca4597c049",
+        "bayes_static": "fb4853f1373a4a63822bca32a4de3efd",
+        "bayes_uncertainty": "d76a74c7576a40babecea7e99ada142d",
+        "gbdt": "6dc3067ea09445c9afb3a7a9f854fdd3",
+        "lasso_1st": "588bc3b8b18f45ffbb8bb011e4ee9deb",
+        "lasso_pair": "dfa3dd0e40284ac990ef8b2e297d21fd"
+      },
+      "A1-2019": {
+        "bayes_decision": "bd1055fe83be45599acb79ea09133ff3",
+        "bayes_static": "52d23ab739d34dc999016e2012fa9c13",
+        "bayes_uncertainty": "f81402e2646b4733a20866fcb0555ee6",
+        "gbdt": "15cdba3b3fa8462d9b919df861b462a6",
+        "lasso_1st": "df98a51f5dbf442da74652b5769e4cca",
+        "lasso_pair": "a218f74fc0f4450eb9837e44e6afd2ad"
+      },
+      "A1-2020": {
+        "bayes_decision": "a94b03ab61cc4c019bb148b844a26da4",
+        "bayes_static": "db0d9c4061eb46a8a13b28b1eedef075",
+        "bayes_uncertainty": "9dd99eeefc1b4ff1be4910e00bc0d0c6",
+        "gbdt": "adb8710f16904662a5b383bb56ba543d",
+        "lasso_1st": "f1876fc72a3b45b28616cb5316b3c175",
+        "lasso_pair": "6b6cddf8ab57413caaf30e61009a2a6a"
+      },
+      "A2-3001": {
+        "bayes_decision": "06d4f4de9c694a9082ac17f41e9ae5a3",
+        "bayes_static": "6dcf4ff655064945bde6e36a70936e2f",
+        "bayes_uncertainty": "e9ddeb9af4fe46c29eb836008c169357",
+        "gbdt": "17944c0c240947c48d72a8890e3e095f",
+        "lasso_1st": "ebff7233e82440dfa4cc60daa0b2a7c0",
+        "lasso_pair": "85d6ef3740c04ba48d8c8981339b0492"
+      },
+      "A2-3002": {
+        "bayes_decision": "159ac9ecff45471a91ed31ceeb5ff06c",
+        "bayes_static": "fa03213be34142a78eef71fe29ac83af",
+        "bayes_uncertainty": "7aff963bedb2488bbd25072c05629a4a",
+        "gbdt": "abf33f0b547349f48dd7d9df16388e01",
+        "lasso_1st": "befed9694ec243daada409eb8885394c",
+        "lasso_pair": "f541289ca96e43c59e4eff13eaf93a41"
+      },
+      "A2-3003": {
+        "bayes_decision": "53d5c6e999d0423aa6b6110c725a0e02",
+        "bayes_static": "6008b2938b4a49b2a0011f2ffafe1c2a",
+        "bayes_uncertainty": "ad3d854c100941b6a6e86e37395481be",
+        "gbdt": "96c797f3f6a445eb93726f8b41e7903e",
+        "lasso_1st": "6b5955e256724fa289245e3615cc80cb",
+        "lasso_pair": "0dfaff1abc55469fabb0c21b71530a67"
+      },
+      "A2-3004": {
+        "bayes_decision": "54925c99e282470787dddd60cfe3fef1",
+        "bayes_static": "0c07e6f6a44a482b8eb21f3f8cb9a64d",
+        "bayes_uncertainty": "4cbc047cf26f409e8a1c8246d4bd6da5",
+        "gbdt": "e839ab0254cf43b5a64505377c498faf",
+        "lasso_1st": "2b37d821f2684e10b02c57238ded14c4",
+        "lasso_pair": "6516ab78a8784b30a89c2400d41af8ff"
+      },
+      "A2-3005": {
+        "bayes_decision": "26bfb6c6d15a4b3194bb0141c7793eea",
+        "bayes_static": "4ff8d7f16024449990f7905186ddd7e9",
+        "bayes_uncertainty": "2fa89009f44a46afb926aecbfc333e4e",
+        "gbdt": "2c9f540faa0f4c66942ea5f6dca04196",
+        "lasso_1st": "2dac2dba8b9c4ad69aea16d980b65dea",
+        "lasso_pair": "ef5c64cd657a44bfa9252f79a4d28403"
+      },
+      "A2-3006": {
+        "bayes_decision": "66221501aecc44428d4a9d8b6844afff",
+        "bayes_static": "a4d272add7ee41098fa9319a7caa10fa",
+        "bayes_uncertainty": "0b280f67a6164c159bcd584501013740",
+        "gbdt": "2ce4424ab335484b8d1152586479a317",
+        "lasso_1st": "de3343fc5731467db88ad9a4676f7c55",
+        "lasso_pair": "c392beee33874ddf8458ed9c27038002"
+      },
+      "A2-3007": {
+        "bayes_decision": "8ca38f0ef6eb45019e8da47918e87d2c",
+        "bayes_static": "ebf9e286f0ca4c81b7c6dfc5d37407d1",
+        "bayes_uncertainty": "d878d421f97246e596d88d5e8e5315f8",
+        "gbdt": "038778f6d1594c40ac4c1af3a9d4fe52",
+        "lasso_1st": "feb8a68ffaaf4de0a21ed289019607fc",
+        "lasso_pair": "3c8178afdaf54cc2811657d8b40d45d0"
+      },
+      "A2-3008": {
+        "bayes_decision": "f4d48045c27b4c7ea142c606ddd287fa",
+        "bayes_static": "ef71e0e12c5447809d6ab237c1d40483",
+        "bayes_uncertainty": "49ece3be27ea4a3aa4536f6bdafb295e",
+        "gbdt": "9a5213e0a6af43aeb30399637a37e2b2",
+        "lasso_1st": "2f4683f0c52c439e92776258746f08db",
+        "lasso_pair": "3a754875d8f24e128473554d619f93d0"
+      },
+      "A2-3009": {
+        "bayes_decision": "ab1a6b340fbc4722b1d52577012d0f80",
+        "bayes_static": "0e6d9650cab643ef962074255ab80df3",
+        "bayes_uncertainty": "214956d334e34b57bf61142253df0463",
+        "gbdt": "bf786ce9db354c6eba4d5c273e0a6ea2",
+        "lasso_1st": "984b21a800de4d24b14ac1b6b4745547",
+        "lasso_pair": "4ce464caea104fbb8fe45201bfae531a"
+      },
+      "A2-3010": {
+        "bayes_decision": "cf082869e15d491f9d91f63a5e3789d7",
+        "bayes_static": "b7d8cdb5c12e4deba4f92cf615168054",
+        "bayes_uncertainty": "84f52eec13bf4ade8b7e0fc52a721364",
+        "gbdt": "bd59590945b346eaa64fa845c58d5385",
+        "lasso_1st": "f02aa9f5dba14ec189ec177606df1ba9",
+        "lasso_pair": "e9395c31c4804024aeaa045ee615c427"
+      },
+      "A2-3011": {
+        "bayes_decision": "520936e1091a4bd3a2055084af0c5902",
+        "bayes_static": "f083e82fdeca4eddb7329b8a64990418",
+        "bayes_uncertainty": "34056b59cdfc4efab7c68b1a3a6fba29",
+        "gbdt": "87a0fa91ce084a479a9fd200c5212f22",
+        "lasso_1st": "60b1380d8e6d463d8af68f3227617244",
+        "lasso_pair": "98fa2a11c33642c7952942686725d55c"
+      },
+      "A2-3012": {
+        "bayes_decision": "7cc32a87b89740f698f2e69b74912742",
+        "bayes_static": "9f60d7050ef043bd9ad31c91d9857285",
+        "bayes_uncertainty": "5eb7b65316ac4a699f013f9267a746b2",
+        "gbdt": "ceb149e08ea442238ad9f581f383a8c8",
+        "lasso_1st": "4aa9162a2e12430da2bbc4a086282f77",
+        "lasso_pair": "19676f20c7e04de78bd792772650c5b8"
+      },
+      "A2-3013": {
+        "bayes_decision": "930cd640e0044026a612ba7eac45b18b",
+        "bayes_static": "97ee50a1c83d4bb6a16e3d5c9a319126",
+        "bayes_uncertainty": "60aa873dfc494446985bbc178be5c177",
+        "gbdt": "f48ebe62bce64b86a5e9aac188f16021",
+        "lasso_1st": "37f5d7b3ebaa441d83371876f9a0fd78",
+        "lasso_pair": "1c18d0f493cd4086a710a4a5509ae844"
+      },
+      "A2-3014": {
+        "bayes_decision": "44a89088ec6d4e8da8fc1909208e3b0c",
+        "bayes_static": "e32dbb2cfc1b4f4ba55f6c4ec663bf30",
+        "bayes_uncertainty": "c4ffbb2abdc84a58b077e031f6350eb3",
+        "gbdt": "9c647c90ecaa499db37653f2ee731313",
+        "lasso_1st": "5fd1ed155d5b4298ab2b116bef49e2c0",
+        "lasso_pair": "8275e783f6f04d4ca7adbd88fd629aa4"
+      },
+      "A2-3015": {
+        "bayes_decision": "7d7b8bf298c04b70a8a43eed2845d7a3",
+        "bayes_static": "6162760138924d41ac4664e308661778",
+        "bayes_uncertainty": "100734e8c0e6467796a97e2007927776",
+        "gbdt": "7e102fbf8d154fdb98e1251ab84c5cf9",
+        "lasso_1st": "62d41e482e454bf8b6a7d9d1a9e0b99a",
+        "lasso_pair": "09008ae70e584a9d9cd1fd875d284d99"
+      },
+      "A2-3016": {
+        "bayes_decision": "a7d19f927dc3471980ab6693c08e07ed",
+        "bayes_static": "1c72e28816a141888c6af9f88cdf6f33",
+        "bayes_uncertainty": "a32efe087524457f94c52bdb77045635",
+        "gbdt": "df6f3038420e40559f4d846ecce0726f",
+        "lasso_1st": "4980769fa0e64758a31a27390cb697f6",
+        "lasso_pair": "821fe9b5f3194bc49df7fa7a97ba9363"
+      },
+      "A2-3017": {
+        "bayes_decision": "b4591d992f7c458090b8f9bba0cf05ed",
+        "bayes_static": "30c6ec0ec3ee46f39e1114b601312553",
+        "bayes_uncertainty": "c0395f07083a47bab64b0a51f2e1aaa0",
+        "gbdt": "a916b8ed466e4981adacffc97acd216c",
+        "lasso_1st": "a1f31a3b4cde411bb0cd81bd1586a8e2",
+        "lasso_pair": "507b90033c534c51aa86337b0426269d"
+      },
+      "A2-3018": {
+        "bayes_decision": "833a3a5f4eff45c59de8e51bcdab6509",
+        "bayes_static": "68ded2b40869423284df6d29b179367d",
+        "bayes_uncertainty": "b470edd75f88421eb9862b512bb94bd5",
+        "gbdt": "d99ff815a0094f9297bef9ffd0963709",
+        "lasso_1st": "cc53c0e708da497f98fe06e68509de07",
+        "lasso_pair": "72909a2128cd4f8d9030d79600719497"
+      },
+      "A2-3019": {
+        "bayes_decision": "88f3a43852414ad495508bbc735dc87b",
+        "bayes_static": "d769b7abc2b34d4b85b8d65384dff12d",
+        "bayes_uncertainty": "12cea7d117114c929e5500ab9bb424dd",
+        "gbdt": "f842551bddf64cf89e74b8f09c41d914",
+        "lasso_1st": "c4496248e56c4f60b19d4068ac7192fd",
+        "lasso_pair": "575fb799177743d9b614dbe0506bb386"
+      },
+      "A2-3020": {
+        "bayes_decision": "5958be95681341ee93954504787b816d",
+        "bayes_static": "922d02ebbd29423eb822b9a9f1a93a33",
+        "bayes_uncertainty": "cf68df916d984c45a3745326d0027c8c",
+        "gbdt": "966da4e854df40dcaac41027f43b9604",
+        "lasso_1st": "6c39a67b4da84802ad1a4ed8c64026c9",
+        "lasso_pair": "efd23407bddf46faa04556352eb0d94e"
+      },
+      "A3-4001": {
+        "bayes_decision": "ffbfd89aecfc4f08992be312757a81bd",
+        "bayes_static": "f06c0de195d547f0ada7e80527782b31",
+        "bayes_uncertainty": "928aba84cc2f4fd2adfad74ad2c2b0e1",
+        "gbdt": "f92c7af8569a46e1b25127a92968c960",
+        "lasso_1st": "064312db86464b16a2a6bb07f914854a",
+        "lasso_pair": "bd4cf814095e4abd9242af50df2a3439"
+      },
+      "A3-4002": {
+        "bayes_decision": "18a91db1ffb147a58fef3b27d71c3b1b",
+        "bayes_static": "bffeda37d5b44e0abc94fe1e15029759",
+        "bayes_uncertainty": "b950bb51eccf43be83f85a5c9bde5cc8",
+        "gbdt": "ebbb4b179d6b458fae42cf7b447ed795",
+        "lasso_1st": "db494a055af940f9bbdb0c7b4fc3b7f4",
+        "lasso_pair": "8ce6c939a8624efea3ef333090232c33"
+      },
+      "A3-4003": {
+        "bayes_decision": "ab43f0c842d54c8780796d60ff3b26f9",
+        "bayes_static": "1c9983e0b9354ece9f1cf9e0b25f04d8",
+        "bayes_uncertainty": "909ae10674184086a5a4c48fe3e33fb9",
+        "gbdt": "e01f624efc9e4b938e8c58b628d7c19d",
+        "lasso_1st": "01fd85a467ed44e39a0a746d227533c8",
+        "lasso_pair": "dd3e5b9915d34dea962ef65b6d80ce31"
+      },
+      "A3-4004": {
+        "bayes_decision": "e7658c27d4b94941a057dd55c5b27c2d",
+        "bayes_static": "93146778e4df463f8172bce3db491c9d",
+        "bayes_uncertainty": "565a92869ee2480ab5db682531a8d76a",
+        "gbdt": "5d8cb83de7fb4c7b8b9fbd657b6a949f",
+        "lasso_1st": "dbf54823f86741119ea625da82144426",
+        "lasso_pair": "1ad896af6fd74d38832fc79e7668505c"
+      },
+      "A3-4005": {
+        "bayes_decision": "97d7909ab7a9495e8e046ad3013d67e7",
+        "bayes_static": "6541e195439c4425897ad7f50a64f707",
+        "bayes_uncertainty": "b560415760af4948abb2a52e3f48e726",
+        "gbdt": "97109e47b0d441e1a547d015925a0f0c",
+        "lasso_1st": "641b92d1cc7c4b2ea4f8359dc24caea4",
+        "lasso_pair": "68afb4644e014a42b7f08c5641b08399"
+      },
+      "A3-4006": {
+        "bayes_decision": "ef6a05c2836441f89067f6338b51cdb1",
+        "bayes_static": "96a36872231c42268fdffced501c9897",
+        "bayes_uncertainty": "a79461930c294d44a4bf2b04f4fd4a67",
+        "gbdt": "f648fb1ae99e4a6a8ad4954d197983a3",
+        "lasso_1st": "e7cd7e64e57940c68fcdf2f9c4c2cf9e",
+        "lasso_pair": "db0e916e7db84ff9a39a0e18a91a89b8"
+      },
+      "A3-4007": {
+        "bayes_decision": "44dd8d8960854092a097c1f8ec3a2120",
+        "bayes_static": "e90cee0547d34daf840b1ff39dd8a389",
+        "bayes_uncertainty": "edc1271a26da4c56b75aa1b41bf0170c",
+        "gbdt": "b7c821e21fb84e78958920de036f9602",
+        "lasso_1st": "127375e4486b4db8b3d2ad56839f980c",
+        "lasso_pair": "c90d163d8d51479b8b04d4cf8d2b6020"
+      },
+      "A3-4008": {
+        "bayes_decision": "74ddaeeb12a54fe1b10a24d413475b33",
+        "bayes_static": "372b6c03335a462698eca5fa6fa18d74",
+        "bayes_uncertainty": "a226011c059e4a7d83e55ff7ed63f6d2",
+        "gbdt": "d8d440535c76447bb6973f79dba087e6",
+        "lasso_1st": "78f25b47c5de4d0ebfbf4e7bd45d0e35",
+        "lasso_pair": "0be1786868b04b4da7f5eacc5da0b433"
+      },
+      "A3-4009": {
+        "bayes_decision": "22a84322a6a84eb1b16efe3ee37205c6",
+        "bayes_static": "ea3f70ad4bc94f3d8df6d4682f9ccdb6",
+        "bayes_uncertainty": "2939b6d6f901430b8d6bae0b27c77c10",
+        "gbdt": "ffd6e9f86d8c4614adf3cfb4cb8cd048",
+        "lasso_1st": "e5366e13a59c449cb5d13c0403c96046",
+        "lasso_pair": "26bfbfe830bd4accaf209892435304d3"
+      },
+      "A3-4010": {
+        "bayes_decision": "f1c6a9812efb48a691690b72e3726268",
+        "bayes_static": "3b0610d469564b23b6e4560d9640cee4",
+        "bayes_uncertainty": "915cde77ac7e43639b28a5cb2e9f3eda",
+        "gbdt": "c1fcdac42c4e466a96e0fad4102a1886",
+        "lasso_1st": "b4a842f232804b5b8a9dc8c84d08f43b",
+        "lasso_pair": "153495c8d3e34522a6e493a9a2fed5c1"
+      },
+      "A3-4011": {
+        "bayes_decision": "ae7d53519c854de0ab5e4fc5ab95c03a",
+        "bayes_static": "c2b48552bdc444f488678325357f8e72",
+        "bayes_uncertainty": "f9e204c8eaaf4d40aff99be5a5c18e54",
+        "gbdt": "bfd323b8877e46a1a52e7b207a6aada8",
+        "lasso_1st": "b08d02c05b7b46e2b66885c7fe4efe63",
+        "lasso_pair": "ebff9796a6bc4566b4993d40290caffb"
+      },
+      "A3-4012": {
+        "bayes_decision": "cd8402a0177a446ca78cec9ef0e4a893",
+        "bayes_static": "4d01909685674c369f9622c5716eb6e5",
+        "bayes_uncertainty": "19a4c6aaae2e4efebb88d0965866d700",
+        "gbdt": "86b2d3f02eb84687b47bb61496e58691",
+        "lasso_1st": "dca92b7aec134babbbe60399b0925f50",
+        "lasso_pair": "8e00ac09464b444da5bbed926ced8e63"
+      },
+      "A3-4013": {
+        "bayes_decision": "3a5f18f2a64140d390f57e456d50c4a3",
+        "bayes_static": "244de569ca35453e934ab1e064626d6f",
+        "bayes_uncertainty": "a90f8ad0d502461e9689fa137967598d",
+        "gbdt": "0a03c6d0c2c44e0cb43104933d445602",
+        "lasso_1st": "3c9958e6b5f84a47bc3e631bbafd2b0c",
+        "lasso_pair": "3073ea76d1c449b582725ae9dd132729"
+      },
+      "A3-4014": {
+        "bayes_decision": "92164bab57f2452f996f8590b4b6c842",
+        "bayes_static": "ee53fc87bdfc49d4a76d554210deb307",
+        "bayes_uncertainty": "d1b629cfa2ce4cda871ce72bd77bcc11",
+        "gbdt": "b7567264b2f44e768ff3d170df8b7ea1",
+        "lasso_1st": "9158e32eee4b404ca4cf5f8b3e4bec1f",
+        "lasso_pair": "92e5d56446014248a4e6b76daa61a9ee"
+      },
+      "A3-4015": {
+        "bayes_decision": "cc81b303fa5943b7bd18867b3d1f39ed",
+        "bayes_static": "1b8a3bf2bf9e4a1db398665e91b103fd",
+        "bayes_uncertainty": "2eac47253d224a1f8c6c271165957431",
+        "gbdt": "1b2b00c17811497eaa09532a7d6b53e0",
+        "lasso_1st": "28bcb80e4f334845be145d0f00dbceeb",
+        "lasso_pair": "3bf16136dd794316a0794b8c49179647"
+      },
+      "A3-4016": {
+        "bayes_decision": "042a353185fc49cb861e59a79dcb06a1",
+        "bayes_static": "57d98dd56686496aaaaaf92d5fd887aa",
+        "bayes_uncertainty": "49405d3a7f2645fb850f6d366fc50d31",
+        "gbdt": "e0e7023401fc41ad975a1aec8ee7cc0e",
+        "lasso_1st": "4fcf37a5369f4b8da32fdceab903ee17",
+        "lasso_pair": "0684df8a4d1d4745be2f73ef779f84a0"
+      },
+      "A3-4017": {
+        "bayes_decision": "c2ba3039391b4a5e857307d2dfe5b8b6",
+        "bayes_static": "5a06cc0cef174abbb437330b4f23f6db",
+        "bayes_uncertainty": "8379075628a0403492e1987d1087bfd0",
+        "gbdt": "1ba2e303770c44fbba65c6b42a692886",
+        "lasso_1st": "ea5ff11e425c4224be40b30e545204fd",
+        "lasso_pair": "3560b64aba9c4c1bb1267220637a71f5"
+      },
+      "A3-4018": {
+        "bayes_decision": "9f6ffb6b29384cbdb59e74521a5da2fa",
+        "bayes_static": "fe46b693191145f281205da09c877a3d",
+        "bayes_uncertainty": "b5fe6aca32d74487834ed96758c5063b",
+        "gbdt": "9c3d79b9b46e4117904c381098206f52",
+        "lasso_1st": "db38a41b019a486f8bf96441f41071b9",
+        "lasso_pair": "2b8ca45b8a314b9ba65858d8aed7ed60"
+      },
+      "A3-4019": {
+        "bayes_decision": "56767ebf4cea49dcad1e007ec8460850",
+        "bayes_static": "6f0ec8a4655743ee807c11339405e97e",
+        "bayes_uncertainty": "9382c19b5f34493692d419fb7f2b0606",
+        "gbdt": "aa5457974a084f7dbea38c140ceb0c7b",
+        "lasso_1st": "197b195faeca4661bcb8b71469feca7a",
+        "lasso_pair": "7ea87b38a08149b19155c2469ecb0aec"
+      },
+      "A3-4020": {
+        "bayes_decision": "f28983a7b9984ffa970346b50c456132",
+        "bayes_static": "b81ab6a461e24fd990056aa2626cac93",
+        "bayes_uncertainty": "87495e3f37ba439390df03e27e0f2c75",
+        "gbdt": "282d08c7f12b436dbf2cf7ebf85e7396",
+        "lasso_1st": "e68067f4af3843918b01c2726cc83c7d",
+        "lasso_pair": "19172ad9605b487c97f3dd32d2a4c318"
+      }
+    },
+    "threshold_file_sha256": "ec495efcc61ffeaf59a6ec4577d94a81f8e5e758b82d69aa16a5ab042229a353"
+  },
+  "gate_b": {
+    "construction": {
+      "n_attempts": 10,
+      "n_valid": 10,
+      "valid_seeds": [
+        20000,
+        20001,
+        20002,
+        20003,
+        20004,
+        20005,
+        20006,
+        20007,
+        20008,
+        20009
+      ],
+      "status": "ok"
+    },
+    "model_status": {
+      "model-20000": {
+        "status": "complete",
+        "seed": 20000,
+        "seconds": 77.79805850982666,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20000",
+        "blind_masks_sha256": "1d1f8f7faae18ab83625433e905fe25a17b71117bfd980ac23c89ef224ffa54e",
+        "warm_masks_sha256": "4f2a74cb485f1b97624cc26612ea5c8f1903e5f74c3e835a2171357e04da8ab5",
+        "blind_inputs_sha256": "d171cb0f12025639104b6e3db70f5d44eac3bf39dced175a92890d7abd483563",
+        "model_sha256": "378d307510b8d299be1e58b71aad27179bd1a44326cda2444179f7da186e1afa",
+        "discovery_inputs_sha256": "26f902c901521120e7b33b9fe235ffb77cc3692dd130e89fce76badbbca07fb5"
+      },
+      "model-20001": {
+        "status": "complete",
+        "seed": 20001,
+        "seconds": 77.54044580459595,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20001",
+        "blind_masks_sha256": "a40b2aa54831e01ed2b00464538c340ab9be5e099f37d9f73a802d03c8a398ad",
+        "warm_masks_sha256": "c9a93e4a4f4ebdd34d7fbf7c9d2a91a0349ec258620b4544b9505ff164a7b812",
+        "blind_inputs_sha256": "ca6a07843f88c394c976064f344635342a65c6b12b2572b2ff41b84436f41777",
+        "model_sha256": "488c46905115f6384ee3348edf9dbabe78b03f110020eaab82096e05812e1b52",
+        "discovery_inputs_sha256": "8727618756086545d476b5ac9b608c85c479ff4f3378df1d4df133228239a70a"
+      },
+      "model-20002": {
+        "status": "complete",
+        "seed": 20002,
+        "seconds": 81.83999824523926,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20002",
+        "blind_masks_sha256": "346d3e08e4c7d12fab6a1242c69c5a31e35f9b3896506f7aae53b3f7709288a9",
+        "warm_masks_sha256": "1bd4db97ecf6ac180279fbeb0669e3303975ac061edbdfe820bea842652a86a0",
+        "blind_inputs_sha256": "04411204df157fa03c67be9ca67f59b14315bc80cb37d240cf67c5a4a28c3dea",
+        "model_sha256": "a57fbc3519d9fe072e3da9b496c642811f85689754f0e2858af459b85642b1aa",
+        "discovery_inputs_sha256": "89ea281e310a27188befe0cfdd0e381c15eebe8dc2665aa500d9c299b044cfe7"
+      },
+      "model-20003": {
+        "status": "complete",
+        "seed": 20003,
+        "seconds": 66.97384023666382,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20003",
+        "blind_masks_sha256": "d928d5fb716af7110458d5e73a05415f5d87c06eeb61b5324441abbaeb6c99ba",
+        "warm_masks_sha256": "ffd18962645f1285038615f7d248bf40ec95a8fbf7a15ad15630589d72716d56",
+        "blind_inputs_sha256": "8093ae15760adc4a326fe9a243e4b62b7b00a403646142ddd5fc04fc345218de",
+        "model_sha256": "a70d57e24f4f0ac14930cfa96bbd9b2d8d56e784282fc1bef7780a95f8f74a03",
+        "discovery_inputs_sha256": "068665ba1ddf422764a32d898d1555d909dfabe2080185791f0c3488350ab9f1"
+      },
+      "model-20004": {
+        "status": "complete",
+        "seed": 20004,
+        "seconds": 71.19632196426392,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20004",
+        "blind_masks_sha256": "0f445cf7cc849890a9ff739860504e3dce7ef98fa564d188667d34b6d3cef344",
+        "warm_masks_sha256": "aad799ffc4893dced5c750d04720c189de1a98e2af643318453c3543261a4225",
+        "blind_inputs_sha256": "206d1aec0d437d5024580612412659ae010c5e8aa38c654e4e44b748f587b07c",
+        "model_sha256": "f0edfa282805e4c5d7d4fd0e46075e4b9960e3f06392257dc9646afc2951b5ff",
+        "discovery_inputs_sha256": "9e0667b1bb25ca22a8d7f4ec066df34ecde39cfbdc6e4876293c7719705846d0"
+      },
+      "model-20005": {
+        "status": "complete",
+        "seed": 20005,
+        "seconds": 63.13299489021301,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20005",
+        "blind_masks_sha256": "0b455cc177e9095eef2350f4baf9c51c863b1770d4509ac721c178b308d2e875",
+        "warm_masks_sha256": "37686325aaaef56b6d17ca7d43ca6495997416827c1b14351fe96af47a12e034",
+        "blind_inputs_sha256": "bd779ce20396158610581284b852ce24fc311a38a9228507740db7b42ff62ecb",
+        "model_sha256": "5f4f466b805d723842a55b6bfc78d2e73244081fa687206f00dff5b90993a849",
+        "discovery_inputs_sha256": "ea086ff84bf029793c8a5a870d2a32d0e4c0f820fdfefa1fd00bb98d323a5fb5"
+      },
+      "model-20006": {
+        "status": "complete",
+        "seed": 20006,
+        "seconds": 71.80674576759338,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20006",
+        "blind_masks_sha256": "8370446332cb1eb274a7940016f9bf9b75a8b928fdbbe001aa4e8c35641aee46",
+        "warm_masks_sha256": "f5c93222bf0087ce8642b6bc216cfaac2c2bc47bda1fef77536464df7b3409df",
+        "blind_inputs_sha256": "2b8e5f74f5be57a134f91754e92b25f13b7d01e385445d5c1b784d8a53f8fd3b",
+        "model_sha256": "63cab35fc09c5b63f67b6290b1450b43c281384d29d0d0f1ea26b84ecb1f198b",
+        "discovery_inputs_sha256": "053fb588b460330693c79c0f2af67332a2e768bc211d9507fc4a00424eee04d4"
+      },
+      "model-20007": {
+        "status": "complete",
+        "seed": 20007,
+        "seconds": 80.29732418060303,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20007",
+        "blind_masks_sha256": "2dce37cb5e8d662e165f7f472efd648a81afb55f079ff2f2ee6372f1e9467704",
+        "warm_masks_sha256": "8608e0b89e9c69fd81179f00d87806162d0a4d27097926255fbede0488f6619e",
+        "blind_inputs_sha256": "561b42afc60c6e352c20f86c0c2382f9c81780590e5e117b20ea445819e91ca6",
+        "model_sha256": "f41c7a4abae013cae2b2d702e54b238242f63817a439c6cb8330d7eb5eb58e7d",
+        "discovery_inputs_sha256": "d152968be156e9b57a54a16c759bb2f96a3e503de667fa0373cbef7ea1dc6e0c"
+      },
+      "model-20008": {
+        "status": "complete",
+        "seed": 20008,
+        "seconds": 78.00044202804565,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20008",
+        "blind_masks_sha256": "0fd913db7649840d89eac84b1d7fa67725cf0e60ba252d4864e14e942f56d30c",
+        "warm_masks_sha256": "2ca0eebc0e14b7914968ee8c25cce0f87933d2617d53bc86c300018938282e68",
+        "blind_inputs_sha256": "22a3e7e4077e062db9748cf166e28a653fa1dba30f4abc9d02b0269dfeb01769",
+        "model_sha256": "56987330dcba5f1a4d0ad420b8e81e0656bdd5c79c3815bfa5a2217bdb5af876",
+        "discovery_inputs_sha256": "aa8bbd22fbcc8930e61c1d3983bc81de6b36b7666b24ddb2aaf0392ba81acaba"
+      },
+      "model-20009": {
+        "status": "complete",
+        "seed": 20009,
+        "seconds": 72.07181406021118,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_b/model-20009",
+        "blind_masks_sha256": "aae3de74f87fde7fd000ae088342d41dfb56bef5859f7cc130563f3657a056f1",
+        "warm_masks_sha256": "b4d096d91e5d29ddb8802b4c611e3417a20013a653affbc798fe102d5407dd4c",
+        "blind_inputs_sha256": "2fa73f38c039a603fb497d14620e47d19907708833479536cce3441b79d83f8f",
+        "model_sha256": "6af2ac27c272af9840f971c3062b58326d9de8311f0c51f36c2cc68d0ee0079d",
+        "discovery_inputs_sha256": "67351e6d24e0eb21e153b3bf0738037199fdc7da1d9aeeb3015af252e3250702"
+      }
+    }
+  },
+  "gate_c": {
+    "frozen": {
+      "model": {
+        "model_id": "gpt2",
+        "hf_revision": {
+          "repo": "gpt2",
+          "revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e"
+        },
+        "weights_sha256": "2c06fd4a245ae3908f7f7e30fcb8ad8085011f9a49d15037320c32eef3fb2933",
+        "license": "MIT (openai-community/gpt2)",
+        "loader": "transformer_lens.HookedTransformer.from_pretrained_no_processing",
+        "dtype": "float32"
+      },
+      "splits_meta": {
+        "mib_revision": "e5f3468f3af4c0883be35cd3bced8c711c95d286",
+        "mib_train_sha256": "2ee41861d725eee2b71da3846872d5e5ea29d9d8c9aa3a8954f8430584b2f243",
+        "exclusions_train": {
+          "multi_token_name": 0,
+          "counterfactual_length_mismatch": 0,
+          "eligible": 10000,
+          "total": 10000
+        },
+        "mib_dev_sha256": "721d6e7a26962c9cc3008029c7327522cb72b9b03e1fa7a9c2da51ab86372c72",
+        "exclusions_dev": {
+          "multi_token_name": 0,
+          "counterfactual_length_mismatch": 0,
+          "eligible": 10000,
+          "total": 10000
+        },
+        "mib_test_sha256": "030354654ea1b0b0147eb07f427be0f1ac71beed63a784a76d1581f52e722ebc",
+        "exclusions_test": {
+          "multi_token_name": 0,
+          "counterfactual_length_mismatch": 0,
+          "eligible": 1000,
+          "total": 1000
+        },
+        "blind_templates": [
+          "Before {name_A} and {name_B} left the {place}, {name_C} decided to give a {object} to",
+          "Once {name_A} and {name_B} arrived at the {place}, {name_C} gave a {object} to",
+          "The {place} {name_A} and {name_B} went to had a {object}. {name_C} gave it to",
+          "Then, {name_A} and {name_B} had a lot of fun at the {place}. {name_C} gave a {object} to",
+          "Then, {name_A} and {name_B} went to the {place}. {name_C} gave a {object} to",
+          "Then, {name_A} and {name_B} were working at the {place}. {name_C} decided to give a {object} to",
+          "When {name_A} and {name_B} got a {object} at the {place}, {name_C} decided to give it to",
+          "When {name_A} and {name_B} were about to leave the {place}, {name_C} gave a {object} to",
+          "While {name_A} and {name_B} relaxed, {name_C} gave a {object} to"
+        ],
+        "blind_template_overlap_with_discovery": [],
+        "split_sha256": {
+          "screening": "f03bd66931c746afe30a18152bd6cd8e8f3faa32b12e9c37d58bad1337fed63d",
+          "discovery": "09077bfbd2d5e61b004eb73d2d8a65d10f61b1ac259076b3499e95dfb14093b1",
+          "dev_discovery": "9e0b259698beaf8786685f6573d1ba2b5e55397723ff5e8adcde2a16eb35add7",
+          "dev_eval": "dc928a0b270ba0cc082f68edc9da48748ad9d66a67556f0dbc553c96f596b7dc",
+          "blind": "acb27ff256865c03a0ad4b17d386040433b288d6856c894927646aa3f3bd2f98"
+        },
+        "split_sizes": {
+          "screening": 64,
+          "discovery": 160,
+          "dev_discovery": 32,
+          "dev_eval": 64,
+          "blind": 128
+        }
+      },
+      "candidate_set_sha256": "25568c18339c66783e79835a109cc86ea900d9ad8c89496f40f1770e55c5ac81",
+      "candidate_heads": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          11,
+          10
+        ]
+      ],
+      "eap_top": [
+        1,
+        3,
+        4,
+        5,
+        36,
+        42,
+        51,
+        65,
+        69,
+        72,
+        78,
+        81,
+        85,
+        87,
+        93,
+        98,
+        99,
+        102,
+        106,
+        111,
+        112,
+        114,
+        115,
+        117,
+        120,
+        121,
+        126,
+        127,
+        130,
+        134,
+        138,
+        142
+      ],
+      "random": [
+        2,
+        13,
+        19,
+        26,
+        40,
+        48,
+        49,
+        53,
+        56,
+        63,
+        71,
+        75,
+        84,
+        94,
+        109,
+        113
+      ],
+      "screening_cost": {
+        "wall_seconds": 1.5017492860006314,
+        "forward_evals": 448,
+        "backward_evals": 320,
+        "ig_steps": 5,
+        "corruption": "abc_counterfactual",
+        "n_prompts": 64,
+        "peak_vram_mb": 1790.54296875
+      },
+      "validity": {
+        "mean_abs_all48_effect_screening": 4.556713104248047,
+        "mean_clean_logit_diff_screening": 3.7597885131835938,
+        "threshold": 0.5,
+        "valid": true
+      },
+      "blind_masks_sha256": "8dbd2341ae53e952ecb06460b3156994e25003cf06c953ea45d6ded2dda3738f",
+      "dev_reference": "lasso_pair",
+      "files_sha256": {
+        "blind_masks.npy": "09d13a8f9074aa3c7297b1921fa383f8f5bcadcb94195aca88c51465e2c45acd",
+        "candidate_heads.json": "71c61ae0b921e3bd3d29938273f992a55178607b9847c1ad5a216c0e0cc2ba30",
+        "dev_reference.json": "96a4eb8fcfb55235385baf3467587b41d9c9e916b4fc1b7d030b8e13e8035e6f",
+        "splits.json": "6bdee60411d242d1c979c531334fc0a15ae2ce39d802ea1fe4dbdb49447d18f3"
+      },
+      "provenance": {
+        "utc": "2026-10-18T21:58:38Z",
+        "protocol_version": "BCCD-PILOT-1.0",
+        "config_sha256": "c2102e71fc7e1cfe2b922103bb5e4c35f643dc2e6b5b1a6a48132453782890ec",
+        "impl_config_sha256": "177e80fcf1f24483ffa081c972b9417c28fe6246c2476adf60261c7cf47b785a",
+        "protocol_doc_sha256": "fe2a3d4f77aaa69f2684267c54980119524e99c8f9a04db456f4d325f9d57986",
+        "git_sha": "6b43b7f37a19c2d1729f21b4d1ebc7c72fe5076b",
+        "git_dirty": false,
+        "git_status": "",
+        "uv_lock_sha256": "f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759",
+        "python": "3.11.13",
+        "platform": "Linux-7.0.0-15-generic-x86_64-with-glibc2.43",
+        "hostname_hash": "d4c9dc311c29",
+        "cpu_count": 8,
+        "uv_version": "uv 0.7.12",
+        "numpy_version": "2.2.6",
+        "scipy_version": "1.17.1",
+        "sklearn_version": "1.9.1",
+        "lightgbm_version": "4.7.0",
+        "shapiq_version": null,
+        "mlflow_version": "3.17.1",
+        "torch_version": "2.8.0+cu126",
+        "transformer_lens_version": null,
+        "transformers_version": "4.57.6",
+        "pandas_version": "3.0.6",
+        "torch_cuda_build": "12.6",
+        "cuda_available": true,
+        "gpu_name": "NVIDIA RTX A4000",
+        "gpu_total_mib": 15976,
+        "nvidia_smi": "NVIDIA RTX A4000, 595.71.05, 16376 MiB, 4 MiB",
+        "ram_total_gib": 31.3,
+        "disk_free_gib": 108.5
+      },
+      "frozen_utc": "2026-10-18T21:59:16Z"
+    },
+    "seed_status": {
+      "seed-31001": {
+        "status": "complete",
+        "seed": 31001,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_c/seed-31001",
+        "decisions_sealed_sha256": "1d2f278522ee8ffbfa16088a8d821480e18195b76865916f275f5cd15da7feb5",
+        "mlflow_runs": {
+          "lasso_1st": "d70edfb9dcfa44f7a9eb27ca1c727e2a",
+          "lasso_pair": "41ca8a5caab7409a93ddcfa96b42e554",
+          "gbdt": "f74aa5e8b6c8406c97aeb169d2498014",
+          "bayes_static": "fb10afc4022e472e81c64fafeab85cdb",
+          "bayes_uncertainty": "7eb5f1836f3e4f6f94f1c0d18474311d",
+          "bayes_decision": "6f8d4e2f566745eeae3eca449a2075b4"
+        },
+        "discovery_prompts_sha256": "79638a7ff00609495686b6e4338af49d9c72b795f21b1d2ca452954cdfe68d6f"
+      },
+      "seed-31002": {
+        "status": "complete",
+        "seed": 31002,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_c/seed-31002",
+        "decisions_sealed_sha256": "b6430392d663eb0f48ba74fc7b757f36768e8c466da4f606d2e5bfb7c6c68b1a",
+        "mlflow_runs": {
+          "lasso_1st": "0e965a93c1bd40cfb4a6b9b849f24d8b",
+          "lasso_pair": "c0ef8a725557455485650a1199f35a7e",
+          "gbdt": "76318b3ce08c47fc8a2e32dddfd5b1e2",
+          "bayes_static": "aa4fbb91980a4537a1feb48e4fb0c329",
+          "bayes_uncertainty": "24d17811428c4b7287b7f5ce65422781",
+          "bayes_decision": "9ac0eef9ccad498783bbaa5aa363d997"
+        },
+        "discovery_prompts_sha256": "2c9557d42d0ef5184c71b0f90fd9d19f68a65541e219db8e2e8aa8bf3e36b1d8"
+      },
+      "seed-31003": {
+        "status": "complete",
+        "seed": 31003,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_c/seed-31003",
+        "decisions_sealed_sha256": "b011a69e68a41a32899fdd927cea527c0f651369a718fbb045c6dcf2f8953921",
+        "mlflow_runs": {
+          "lasso_1st": "515f00e2ff0a4caeb520473726e99318",
+          "lasso_pair": "e79ac4a56c374f16a303f21fdc1bf73e",
+          "gbdt": "507a5628303e40438d1560504c461fcc",
+          "bayes_static": "090c840a5d364ad8be3d98cb086b0809",
+          "bayes_uncertainty": "fd10f4cf3fc9465490c029cf47071ff1",
+          "bayes_decision": "b5f3f7e141a94418b854bae8b79c096a"
+        },
+        "discovery_prompts_sha256": "2c5efb9a5c76ce1937f29f2e5839c045aa85e04782392457a0d3d638ef42b82e"
+      },
+      "seed-31004": {
+        "status": "complete",
+        "seed": 31004,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_c/seed-31004",
+        "decisions_sealed_sha256": "9deb55f2f50e86ede3b078e0bacaae75ddf868801d96c1027d6047758c5f0f71",
+        "mlflow_runs": {
+          "lasso_1st": "1ae17f7c06424253abc9c2b47034fe94",
+          "lasso_pair": "c0a8a216c246431c95a228acb5e850ed",
+          "gbdt": "7ec8287488c14f289c6727dcf3a49ec5",
+          "bayes_static": "8ee79e0fdca345ffa59f38cbeaf8bf45",
+          "bayes_uncertainty": "26658e0d50634f43822d5bc35d496a94",
+          "bayes_decision": "02d8f965b2e64c199b07e8019545bde5"
+        },
+        "discovery_prompts_sha256": "7c52742f88d54c5fbb9c1733a2aad6dbe77a5acf1fe60440340761ddb7a11ccd"
+      },
+      "seed-31005": {
+        "status": "complete",
+        "seed": 31005,
+        "dir": "/root/work/bayesian-circuit-poc/runs/gate_c/seed-31005",
+        "decisions_sealed_sha256": "2f24f5f0fd68e123f5fa4e75e8fa703db5469ccd1115b73ce90ba0df0471879b",
+        "mlflow_runs": {
+          "lasso_1st": "8605db91656246378a67741dc1174c06",
+          "lasso_pair": "83e545b919354a5885dd7eb1c0cdc2dd",
+          "gbdt": "1064196dbc4a4326953fc11a13ff0332",
+          "bayes_static": "af3b15eaab3346fd9408f0b039caaf60",
+          "bayes_uncertainty": "d74f69523dce493fae92d1f9f6dd7d1e",
+          "bayes_decision": "c3d0d13363424f94b1cb54ebd43bd825"
+        },
+        "discovery_prompts_sha256": "94616e2ee0a71a138f7f173bebb5cb60122b2eb4b2540a3d6ca314f5cc42bc77"
+      }
+    }
+  },
+  "external": {
+    "mib_ioi_dataset": "mib-bench/ioi@e5f3468f3af4c0883be35cd3bced8c711c95d286",
+    "shapiq": null,
+    "transformer_lens": null,
+    "third_party_git_repos": "none vendored or cloned"
+  },
+  "artifact_sha256": {
+    "reports/tables/costs_gate_c.csv": "91f35507b8544447fb00b1620730333174c4a2de1fb9ecbf9c5632cc22ce3534",
+    "reports/tables/gate_a_A1_by_budget.csv": "46b7bd1d4f9cd17964ffbe5b8b79ddbedf430276ea122004e49b677fc4b04ac2",
+    "reports/tables/gate_a_summary_B128.csv": "04b6769b4dc0dbd204281fff3994adde64df6340b3582a8cbd574f893dbf140e",
+    "reports/tables/gate_a_worlds.csv": "0fe2a0f46a11c8669b21e44f45b73a655168661acb5cb928c9fc0263a6bd3074",
+    "reports/tables/gate_b_construction.csv": "a20670d4ba9bf011f9d38b0347e47cb923da5eb2519dabe8672277c7bddfa3b1",
+    "reports/tables/gate_b_instances.csv": "26d56cc2f3d1bcbf4d4460d1a212b6a0522e33a70c7af043098540f064b1b9d0",
+    "reports/tables/gate_c_faithfulness.csv": "91e3194d031a143345469c744ac498dd049c6c9e9a3aaeabd241e4e160d5932b",
+    "reports/tables/gate_c_prediction.csv": "544d117b067df56489c23d9bc025e83fcb598543c027c7f3146ac89f3fb04f30",
+    "reports/tables/gates.csv": "6c938fb610fe477a8bf639712a82bf3c993de038a43c86b95d1a16c16c75b96f"
+  }
+}

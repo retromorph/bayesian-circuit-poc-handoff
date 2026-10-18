@@ -193,8 +193,10 @@ def build_gate_c(cfg: dict, tables: Path, figs: Path) -> dict:
     for m in METHODS:
         g = pooled[pooled.method == m]
         ax[0].errorbar(g.budget, g["mean"], yerr=g["std"], fmt="-o", color=COLORS[m], label=m, ms=3, capsize=2)
-    ax[0].set(xscale="log", xlabel="mask budget B", ylabel="S (mean blind R over k)", title="Gate C: S vs budget")
+    ax[0].set_xscale("log", base=2)
+    ax[0].set(xlabel="mask budget B", ylabel="S (mean blind R over k)", title="Gate C: S vs budget (mean ± sd over 5 seeds)")
     ax[0].set_xticks([64, 128, 256], ["64", "128", "256"])
+    ax[0].xaxis.set_minor_locator(__import__("matplotlib").ticker.NullLocator())
     ax[0].legend(fontsize=6)
     fk = data["faith"][data["faith"].budget == 128].groupby(["method", "k"]).R.mean().reset_index()
     for m in METHODS:
