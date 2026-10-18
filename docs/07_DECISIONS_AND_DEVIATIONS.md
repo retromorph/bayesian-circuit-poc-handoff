@@ -134,3 +134,54 @@ smoke test). They do not change any gate threshold, seed list, split identity or
   outputs in `runs/diagnostics/replication.json` (see final report).
 - **Statistical classification:** provenance defect; no change to any data, rule or result.
 - **Impact on verdict:** none.
+## BCCD-VIL-1.0 (verification-in-the-loop follow-up) — decisions and deviations
+
+The BCCD-PILOT-1.0 entries above are unchanged. The follow-up protocol is `docs/08_VERIFICATION_PROTOCOL.md`, with
+methods in `docs/09_VERIFICATION_METHODS.md` and configs `configs/preregistration_verification_v1.yaml` and
+`configs/verification_implementation_v1.yaml`. All entries below were written **before any confirmatory BCCD-VIL-1.0
+seed was run**.
+
+### 2026-10-18T23:24Z — D-VIL-0: truncated research brief; agent-specified design elements
+
+- **Affected:** methods M2 (partly), M3–M5, every acceptance threshold, seed counts, decision table.
+- **What:** the brief arrived truncated mid-way through method M2. The executing agent specified the remaining design
+  before any confirmatory data existed. Choices: M3 = Lasso refit-and-repropose verification loop; M4 = spike-and-slab
+  posterior with expected-improvement proposals; M5 = Bayesian non-verified reference. H1 thresholds V-1…V-3 reuse the
+  pilot's 15% hurdle, with an intersection–union bootstrap against every non-verifying method and ≥ 15/20 seed wins.
+  H2 uses a ≥ 10% hurdle with bootstrap and ≥ 13/20 seed wins. 20 fresh confirmatory seeds; the 5 pilot seeds are a
+  secondary bridge.
+- **Classification:** preregistered design (agent-authored). **Impact:** defines the confirmatory analysis.
+
+### 2026-10-18T23:24Z — D-VIL-1: M2 shortlist source (development-phase bug fix)
+
+- **Affected:** `lasso_random_verify` (M2) only.
+- **What happened:** in the first development run (seeds 49001–49006), M2's diverse 16-circuit shortlist was built from
+  the candidate set that keeps only each search's best circuit plus its top-6 alternatives. For k = 8 (sometimes 16)
+  the random-start searches converge on the same basin, so fewer than 16 distinct circuits survived the diversity rule,
+  and the safeguard `_top_up` padded the shortlist with 4–10 *uniformly random* circuits per seed. M2 then sometimes
+  spent verifications on random circuits, which contradicts its definition ("diverse shortlist of plausible circuits")
+  and would have made it an artificially weak control.
+- **Fix:** the shortlist is now drawn from every circuit the surrogate scored during the k-specific searches. These are
+  all plausible, with surrogate-scored R̂, and the same diversity rule applies. M3/M4 are unchanged; they had zero
+  top-up events.
+- **When:** after development outcomes, before any confirmatory run. M2 was re-run on the development seeds
+  (`runs/verification_v1/dev_rerun-m2fix/`) to confirm zero top-ups. The original development outputs are kept.
+- **Classification:** development fix. **Impact on verdict:** none by construction (M2 is a secondary control).
+
+### 2026-10-18T23:24Z — D-VIL-2: development-dependent setting resolved by the preregistered rule
+
+- **Rule** (prereg `decision.development_dependent_setting`): `vil.rounds ∈ {8, 4}`, chosen by lower mean development S
+  of `lasso_vil`; ties (< 0.005) go to 8.
+- **Observed (MIB dev evaluation prompts, 6 dev seeds):** rounds = 8 gives 0.3739 and rounds = 4 gives 0.3932, so the
+  rule selects **8** (the default already in the config). For reference, bayes_vil scored 0.3877 (8) vs 0.3822 (4);
+  it does not enter the rule.
+- **Classification:** preregistered development selection. No other setting was changed after development.
+
+### 2026-10-18T23:24Z — D-VIL-INF: operations
+
+- The pilot's MLflow server is reused on the GPU host (`127.0.0.1:5001`, loopback, tmux `bccd-mlflow`), with new
+  experiments `bccd/verification-v1`, `-dev` and `-bridge`. No firewall or host-level changes were made.
+- Seeds run as 4 parallel shard processes on the single A4000, each with its own model copy. Determinism is per
+  (seed, method), and the sharding assignment cannot affect any decision.
+- Code is synced to the host with rsync (including `.git`). Confirmatory runs refuse a dirty worktree and a changed
+  freeze record.

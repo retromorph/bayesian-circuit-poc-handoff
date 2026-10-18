@@ -7,7 +7,7 @@ vil:
   n_warm: 32
   n_discovery: 104
   n_verify: 24
-  rounds: 8                  # development-dependent (prereg decision.development_dependent_setting): 8 or 4
+  rounds: 8                  # development-dependent setting resolved by the prereg rule: 8 (dev S 0.3739 vs 0.3932 for 4; D-VIL-2)
   max_swap_iters: 12         # shared greedy-elimination + swap search, unchanged from BCCD-PILOT-1.0
   n_alternatives: 6
   n_random_starts: 6         # candidate generator for lasso_vil / bayes_vil: random-start swap searches per k
