@@ -26,6 +26,7 @@ class HeadAblationRunner:
         score_fn: ScoreFn,
         score_pos: torch.Tensor,
         microbatch: int = 512,
+        final_resid: bool = False,
     ):
         self.model = model
         self.heads = [(int(layer), int(h)) for layer, h in candidate_heads]
@@ -33,6 +34,7 @@ class HeadAblationRunner:
         self.score_fn = score_fn
         self.score_pos = score_pos
         self.microbatch = microbatch
+        self.final_resid = final_resid  # score_fn receives ln_final output instead of logits
         self.device = tokens.device
         self.n_layers = model.cfg.n_layers
         self.n_heads = model.cfg.n_heads
@@ -63,8 +65,16 @@ class HeadAblationRunner:
                 return z * kl[:, None, :, None]
 
             hooks.append((f"blocks.{layer}.attn.hook_z", hook))
-        logits = self.model.run_with_hooks(toks, fwd_hooks=hooks) if hooks else self.model(toks)
         self.n_forward += toks.shape[0]
+        if self.final_resid:
+            store: dict = {}
+
+            def cap(x, hook):
+                store["r"] = x
+
+            self.model.run_with_hooks(toks, fwd_hooks=hooks + [("ln_final.hook_normalized", cap)], return_type=None)
+            return self.score_fn(store["r"], pos, ids)
+        logits = self.model.run_with_hooks(toks, fwd_hooks=hooks) if hooks else self.model(toks)
         return self.score_fn(logits, pos, ids)
 
     @torch.inference_mode()
@@ -99,5 +109,19 @@ def last_token_margin(correct: torch.Tensor, wrong: torch.Tensor) -> ScoreFn:
         rows = torch.arange(logits.shape[0], device=logits.device)
         lg = logits[rows, pos]  # (B, V)
         return lg[rows, correct[ids]] - lg[rows, wrong[ids]]
+
+    return fn
+
+
+def resid_logit_diff(model, correct: torch.Tensor, wrong: torch.Tensor) -> ScoreFn:
+    """IOI score from the final normalized residual: logit[correct] - logit[wrong] at pos,
+    computed exactly as (resid @ W_U + b_U) restricted to the two answer tokens."""
+    W_U, b_U = model.W_U, model.b_U
+
+    def fn(resid: torch.Tensor, pos: torch.Tensor, ids: torch.Tensor) -> torch.Tensor:
+        rows = torch.arange(resid.shape[0], device=resid.device)
+        r = resid[rows, pos]  # (B, d)
+        c, w = correct[ids], wrong[ids]
+        return (r * (W_U[:, c].T - W_U[:, w].T)).sum(-1) + (b_U[c] - b_U[w])
 
     return fn
