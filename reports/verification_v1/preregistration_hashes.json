@@ -1,0 +1,65 @@
+{
+  "protocol": "BCCD-VIL-1.0",
+  "frozen_utc": "2026-10-18T23:24:43Z",
+  "source_git_sha": "a553a70bbc04247c7d43913832beda844cebd1d4",
+  "hashes": {
+    "preregistration_yaml": "1bf810167211ac329321242a39f896b1804531c189032eb815b2431a8d3fa881",
+    "implementation_yaml": "565d085be4fad2527f7fe590bb8b73092f148d0774e0f8c37b66c6563f4793d3",
+    "08_VERIFICATION_PROTOCOL.md": "3c938257e568db67d7f037c1bedb73837f43dbf0e9772060c75538a81aeadf42",
+    "09_VERIFICATION_METHODS.md": "845aacbc485701a5bb203268c7e31af2d4531d04355715fd23a3feb74e559a00",
+    "uv_lock": "f05cad05dc522932c1a36df061d6970970852bb48f1162bd2769de8284a6a759"
+  },
+  "vil_frozen_manifest_sha256": "f0a0ed333480c4224383567063809e2bf2d16567c20fbfbd97a50c8037333152",
+  "vil_splits_sha256": "be67343800198ca3e0452130fc7b7c61fa8dea9b95bdfaf7cc1814bd526e2eaa",
+  "pilot_frozen_files_sha256": {
+    "blind_masks.npy": "09d13a8f9074aa3c7297b1921fa383f8f5bcadcb94195aca88c51465e2c45acd",
+    "candidate_heads.json": "71c61ae0b921e3bd3d29938273f992a55178607b9847c1ad5a216c0e0cc2ba30",
+    "dev_reference.json": "96a4eb8fcfb55235385baf3467587b41d9c9e916b4fc1b7d030b8e13e8035e6f",
+    "splits.json": "6bdee60411d242d1c979c531334fc0a15ae2ce39d802ea1fe4dbdb49447d18f3"
+  },
+  "confirmatory_seeds": [
+    41001,
+    41002,
+    41003,
+    41004,
+    41005,
+    41006,
+    41007,
+    41008,
+    41009,
+    41010,
+    41011,
+    41012,
+    41013,
+    41014,
+    41015,
+    41016,
+    41017,
+    41018,
+    41019,
+    41020
+  ],
+  "implementation_vil": {
+    "p": 48,
+    "ks": [
+      8,
+      16,
+      24
+    ],
+    "budget": 128,
+    "n_warm": 32,
+    "n_discovery": 104,
+    "n_verify": 24,
+    "rounds": 8,
+    "max_swap_iters": 12,
+    "n_alternatives": 6,
+    "n_random_starts": 6,
+    "rs_max_iters": 30,
+    "shortlist_starts": 16,
+    "shortlist_size": 16,
+    "shortlist_min_symdiff": 4,
+    "n_thompson": 4,
+    "search_particles": 64
+  },
+  "statement": "Recorded before any confirmatory BCCD-VIL-1.0 seed was run or any confirmatory outcome inspected."
+}
