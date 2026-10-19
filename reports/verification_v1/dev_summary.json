@@ -1,0 +1,22 @@
+{
+  "protocol": "BCCD-VIL-1.0",
+  "generated_utc": "2026-10-18T23:21:30Z",
+  "development": {
+    "S_mean": {
+      "bayes_static_128": 0.43121896780194957,
+      "bayes_vil": 0.3877330196216507,
+      "lasso_density_matched": 0.4257859560638255,
+      "lasso_random_verify": 0.41275978808443226,
+      "lasso_static_128": 0.4468527914024352,
+      "lasso_vil": 0.37393848343856034
+    },
+    "schedule_selection": {
+      "rounds8_lasso_vil": 0.37393848343856034,
+      "rounds4_lasso_vil": 0.39322416088372925,
+      "rounds4_bayes_vil": 0.382240048364548,
+      "rounds8_bayes_vil": 0.3877330196216507,
+      "rule_choice": 8
+    },
+    "n_seeds": 6
+  }
+}

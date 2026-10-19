@@ -1,0 +1,131 @@
+# PRE-REGISTRATION: BCCD-VIL-1.0 (Verification-in-the-Loop for causal circuit discovery)
+# Machine-readable source of truth for budgets, seeds, splits, methods and acceptance criteria.
+# Prose semantics: docs/08_VERIFICATION_PROTOCOL.md (protocol) and docs/09_VERIFICATION_METHODS.md (methods).
+# Hashes of this file, the implementation config, both docs, uv.lock and the source revision are recorded in
+# reports/verification_v1/preregistration_hashes.json BEFORE any confirmatory seed is run.
+# Do not modify after confirmatory execution starts; corrections go to docs/07_DECISIONS_AND_DEVIATIONS.md.
+protocol:
+  id: BCCD-VIL-1.0
+  parent_protocol: BCCD-PILOT-1.0          # previous reports/protocol are not modified
+  drafted_utc: "2026-10-18T23:40Z"
+  scientific_status: preregistered_not_executed
+  protocol_doc: docs/08_VERIFICATION_PROTOCOL.md
+  methods_doc: docs/09_VERIFICATION_METHODS.md
+  threshold_mutation_after_confirmatory_outcomes: forbidden
+  mlflow_experiment_confirmatory: bccd/verification-v1
+  mlflow_experiment_development: bccd/verification-v1-dev
+  mlflow_experiment_bridge: bccd/verification-v1-bridge
+  outputs: [runs/verification_v1/, reports/verification_v1/]
+
+model:
+  model_id: gpt2                            # frozen GPT-2 Small, same weights as BCCD-PILOT-1.0 (weights SHA-256 logged)
+  loader: transformer_lens.HookedTransformer.from_pretrained_no_processing
+  dtype: float32
+task:
+  name: ioi
+  data: mib-bench/ioi@e5f3468f3af4c0883be35cd3bced8c711c95d286
+  score: correct_minus_incorrect_logit_at_final_position   # s(F(x)); computed exactly from ln_final residual
+
+candidate_pool:
+  source: runs/gate_c/frozen/candidate_heads.json         # BCCD-PILOT-1.0 Gate C pool (32 EAP-IG + 16 random heads)
+  candidate_set_sha256: 25568c18339c66783e79835a109cc86ea900d9ad8c89496f40f1770e55c5ac81
+  file_sha256: 71c61ae0b921e3bd3d29938273f992a55178607b9847c1ad5a216c0e0cc2ba30
+  n_heads: 48
+  new_screening: none                                       # no re-screening; pool reused as frozen
+
+intervention:
+  mask_one_means: ablated
+  mask_zero_means: preserved
+  hook: blocks.{layer}.attn.hook_z
+  ablation: zero_head_output_at_all_token_positions
+  outside_pool: untouched
+  effect: d(x,m) = s(F(x)) - s(F^do(m)(x))
+  retain: retain(C) ablates every pool head outside C
+  u: u(C) = mean_x |d(x, m_retain(C))|
+  R: R(C) = u(C) / u(empty)   # ratio of means; u(empty) = ablate all 48 pool heads, same prompts
+  primary_score: S_M = mean_{k in {8,16,24}} R(C_{M,k})   # lower is better
+  absolute_faithfulness_threshold_secondary: 0.10
+
+budget:
+  masks_per_method: 128                     # logical intervention masks for discovery AND circuit selection
+  prompts_per_mask: 32                      # one mask = one evaluation on the seed's fixed 32 discovery prompts
+  verifying_methods: {discovery_masks: 104, verification_masks: 24}
+  non_verifying_methods: {discovery_masks: 128, verification_masks: 0}
+  discovery_design: warm_start_32_balanced + static_balanced_72   # = first 104 masks of the pilot's static stream
+  non_verifying_extra_24: static_balanced (M0, M5) | density_matched_random_retain (M1)
+  warm_start_masks: 32
+  design_densities: [0.10, 0.30, 0.60, 0.90]
+  verification_query: retain(C) evaluated on the discovery prompts; debits the same budget
+  shared_physical_cache: allowed_within_seed  # logical cost charged per method regardless
+  reserved_masks: runs/gate_c/frozen/blind_masks.npy        # never queried by any method
+
+circuits:
+  sizes: [8, 16, 24]
+  verifications_per_size: 8
+
+splits:
+  candidate_pool_screening: pilot screening prompts (64, MIB train) -- not reused for anything else
+  discovery: fresh 32-prompt batches from MIB train, disjoint from every prompt used by BCCD-PILOT-1.0 and from each other
+  blind_eval: pilot frozen blind split (128 MIB test prompts, 9 template families disjoint from MIB train); hash-checked
+  dev_eval_n_prompts: 128                   # MIB dev, template-balanced, disjoint from the pilot dev_eval prompts
+  development_never_touches_blind: true
+
+seeds:
+  split_seed: 41777
+  confirmatory: [41001, 41002, 41003, 41004, 41005, 41006, 41007, 41008, 41009, 41010,
+                 41011, 41012, 41013, 41014, 41015, 41016, 41017, 41018, 41019, 41020]
+  development: [49001, 49002, 49003, 49004, 49005, 49006]
+  bridge: [31001, 31002, 31003, 31004, 31005]   # pilot Gate C seeds + pilot discovery batches; SECONDARY only
+
+methods:
+  M0: {key: lasso_static_128,      surrogate: pairwise_lasso, verification: none,   role: primary non-verified baseline}
+  M1: {key: lasso_density_matched, surrogate: pairwise_lasso, verification: none,   role: density-matched data control}
+  M2: {key: lasso_random_verify,   surrogate: pairwise_lasso, verification: random, role: random-verification control}
+  M3: {key: lasso_vil,             surrogate: pairwise_lasso, verification: active, role: H1 candidate (non-Bayesian VIL)}
+  M4: {key: bayes_vil,             surrogate: spike_slab,     verification: active, role: H2 candidate (Bayesian VIL)}
+  M5: {key: bayes_static_128,      surrogate: spike_slab,     verification: none,   role: Bayesian non-verified reference}
+  final_selection_verifying: argmin measured discovery-prompt u(C) among verified circuits of size k
+  final_selection_non_verifying: argmin surrogate-predicted R(C) via the shared circuit search
+
+criteria:
+  evaluation: blind R on the 128 frozen blind prompts; S per seed; pooled S = mean over the 20 confirmatory seeds
+  H1:
+    candidate: lasso_vil
+    comparators: [lasso_static_128, lasso_density_matched, bayes_static_128]   # all non-verifying methods
+    V-1: {rule: "pooled S(candidate) <= 0.85 * min_c pooled S(c)", max_ratio: 0.85}
+    V-2: {rule: "for EACH comparator c: paired hierarchical bootstrap 90% CI of S_c - S_candidate has lower bound > 0", confidence: 0.90}
+    V-3: {rule: "S(candidate) < min_c S(c) within seed in >= 15 of 20 confirmatory seeds", min_seeds: 15, total_seeds: 20}
+    V-4: {rule: "budget integrity: every method x seed used exactly 128 logical masks (verifying: 104 + 24); zero reserved/blind-mask queries; decisions sealed before evaluation"}
+    verdict: PASS iff V-1..V-4 all PASS; else FAIL (INCONCLUSIVE if V-4 fails or a seed is missing)
+  H2:
+    candidate: bayes_vil
+    reference: lasso_vil
+    H2-1: {rule: "pooled S(bayes_vil) <= 0.90 * pooled S(lasso_vil)", max_ratio: 0.90}
+    H2-2: {rule: "paired hierarchical bootstrap 90% CI of S_lasso_vil - S_bayes_vil has lower bound > 0", confidence: 0.90}
+    H2-3: {rule: "S(bayes_vil) < S(lasso_vil) in >= 13 of 20 confirmatory seeds", min_seeds: 13, total_seeds: 20}
+    verdict: PASS iff V-4 PASS and H2-1..H2-3 all PASS; else FAIL
+  bootstrap:
+    reps: 2000
+    rng_seed: 4242
+    structure: resample seeds; within each resampled seed resample blind template families, then prompts within family; paired (same draws for both methods)
+    statistic: mean over resampled seeds of S_ref - S_candidate
+  secondary_never_override_primary:
+    - M3 vs M2 (active revision vs random verification): pooled ratio, paired bootstrap CI, seed wins
+    - M4 vs each non-verifying comparator (H1 criteria applied to bayes_vil; reported, not adjudicated)
+    - count of selected circuits with blind R <= 0.10 (absolute faithfulness; never claimed unless met)
+    - optimism gap: blind R - predicted R (surrogate-selected) and blind R - measured discovery R (verified-selected)
+    - diagnostics: surrogate_at_104 and refit_128 circuits of verifying methods (blind-evaluated, not selectable)
+    - Bayesian circuit-level calibration: 90% posterior predictive coverage of measured verification outcomes; P(R<=0.10) claims
+    - compute: logical oracle seconds, CPU fit/search/acquisition seconds, end-to-end wall, peak VRAM
+    - bridge seeds (pilot seeds 31001-31005): lasso_static_128 must reproduce the pilot lasso_pair@128 circuits; all methods reported
+    - per-k R, per-seed S, prompt-family breakdown
+
+decision:
+  H1_PASS_H2_FAIL: GO for verification-in-the-loop circuit optimisation WITHOUT Bayesian inference
+  H1_PASS_H2_PASS: GO for Bayesian verification-in-the-loop
+  H1_FAIL: NO_GO for the VIL direction as preregistered (report secondary evidence; any rescue needs a new protocol)
+  INCONCLUSIVE: budget-integrity failure, missing confirmatory seeds, or invalid denominator (u(empty) on blind < 0.5)
+  development_dependent_setting: >-
+    vil.rounds in {8, 4} (8 rounds x 1 circuit per k, or 4 rounds x 2 per k) for lasso_vil AND bayes_vil, chosen on the
+    6 development seeds (MIB dev evaluation prompts only) as the value with lower mean development S of lasso_vil;
+    ties (|diff| < 0.005) -> 8. Fixed in configs/verification_implementation_v1.yaml before the freeze record.

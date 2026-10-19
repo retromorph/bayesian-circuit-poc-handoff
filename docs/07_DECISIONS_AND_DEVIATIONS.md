@@ -134,3 +134,95 @@ smoke test). They do not change any gate threshold, seed list, split identity or
   outputs in `runs/diagnostics/replication.json` (see final report).
 - **Statistical classification:** provenance defect; no change to any data, rule or result.
 - **Impact on verdict:** none.
+## BCCD-VIL-1.0 (verification-in-the-loop follow-up) — decisions and deviations
+
+The BCCD-PILOT-1.0 entries above are unchanged. The follow-up protocol is `docs/08_VERIFICATION_PROTOCOL.md`, with
+methods in `docs/09_VERIFICATION_METHODS.md` and configs `configs/preregistration_verification_v1.yaml` and
+`configs/verification_implementation_v1.yaml`. All entries below were written **before any confirmatory BCCD-VIL-1.0
+seed was run**.
+
+### 2026-10-18T23:24Z — D-VIL-0: truncated research brief; agent-specified design elements
+
+- **Affected:** methods M2 (partly), M3–M5, every acceptance threshold, seed counts, decision table.
+- **What:** the brief arrived truncated mid-way through method M2. The executing agent specified the remaining design
+  before any confirmatory data existed. Choices: M3 = Lasso refit-and-repropose verification loop; M4 = spike-and-slab
+  posterior with expected-improvement proposals; M5 = Bayesian non-verified reference. H1 thresholds V-1…V-3 reuse the
+  pilot's 15% hurdle, with an intersection–union bootstrap against every non-verifying method and ≥ 15/20 seed wins.
+  H2 uses a ≥ 10% hurdle with bootstrap and ≥ 13/20 seed wins. 20 fresh confirmatory seeds; the 5 pilot seeds are a
+  secondary bridge.
+- **Classification:** preregistered design (agent-authored). **Impact:** defines the confirmatory analysis.
+
+### 2026-10-18T23:24Z — D-VIL-1: M2 shortlist source (development-phase bug fix)
+
+- **Affected:** `lasso_random_verify` (M2) only.
+- **What happened:** in the first development run (seeds 49001–49006), M2's diverse 16-circuit shortlist was built from
+  the candidate set that keeps only each search's best circuit plus its top-6 alternatives. For k = 8 (sometimes 16)
+  the random-start searches converge on the same basin, so fewer than 16 distinct circuits survived the diversity rule,
+  and the safeguard `_top_up` padded the shortlist with 4–10 *uniformly random* circuits per seed. M2 then sometimes
+  spent verifications on random circuits, which contradicts its definition ("diverse shortlist of plausible circuits")
+  and would have made it an artificially weak control.
+- **Fix:** the shortlist is now drawn from every circuit the surrogate scored during the k-specific searches. These are
+  all plausible, with surrogate-scored R̂, and the same diversity rule applies. M3/M4 are unchanged; they had zero
+  top-up events.
+- **When:** after development outcomes, before any confirmatory run. M2 was re-run on the development seeds
+  (`runs/verification_v1/dev_rerun-m2fix/`) to confirm zero top-ups. The original development outputs are kept.
+- **Classification:** development fix. **Impact on verdict:** none by construction (M2 is a secondary control).
+
+### 2026-10-18T23:24Z — D-VIL-2: development-dependent setting resolved by the preregistered rule
+
+- **Rule** (prereg `decision.development_dependent_setting`): `vil.rounds ∈ {8, 4}`, chosen by lower mean development S
+  of `lasso_vil`; ties (< 0.005) go to 8.
+- **Observed (MIB dev evaluation prompts, 6 dev seeds):** rounds = 8 gives 0.3739 and rounds = 4 gives 0.3932, so the
+  rule selects **8** (the default already in the config). For reference, bayes_vil scored 0.3877 (8) vs 0.3822 (4);
+  it does not enter the rule.
+- **Classification:** preregistered development selection. No other setting was changed after development.
+
+### 2026-10-18T23:24Z — D-VIL-INF: operations
+
+- The pilot's MLflow server is reused on the GPU host (`127.0.0.1:5001`, loopback, tmux `bccd-mlflow`), with new
+  experiments `bccd/verification-v1`, `-dev` and `-bridge`. No firewall or host-level changes were made.
+- Seeds run as 4 parallel shard processes on the single A4000, each with its own model copy. Determinism is per
+  (seed, method), and the sharding assignment cannot affect any decision.
+- Code is synced to the host with rsync (including `.git`). Confirmatory runs refuse a dirty worktree and a changed
+  freeze record.
+
+### 2026-10-18T23:39Z — D-VIL-3: cosmetic `query_index` defect in the pilot oracle log (found after confirmatory runs)
+
+- **What:** `DiscoveryOracle.query` (pilot code, unchanged) writes `query_index = n_masks - len(masks) + i` after the
+  loop has already added earlier masks of the same batch to the seen-set. The logged index is therefore wrong (it can
+  even be negative). The pilot's logs carry the same defect.
+- **Impact:** none on any decision or criterion. Budget enforcement uses the seen-set size, which is correct; the
+  independent audit counts exactly 128 distinct masks per method × seed. Parquet rows are stored in true chronological
+  order. The audit also re-derived the discovery/verification split from ablation counts: verification = 24/32/40
+  ablated; design = 5/14/29/43.
+- **Action:** documented, not fixed, so the oracle code stays identical to what both protocols executed.
+
+### 2026-10-18T23:45Z — D-VIL-4: exploratory (post-verdict) run issues
+
+- **Context:** exploratory budget/allocation variants (`--set exploratory`, `bccd/verification-v1-exploratory`) were
+  launched only after the confirmatory H1/H2 verdicts were computed and committed (`b078735`).
+- **Issue 1:** the first launch started 8 GPU processes concurrently. Shard 0 of B128V48 hit CUDA OOM (8 × ~2 GB on
+  16 GB). Nothing was retried silently.
+- **Issue 2:** for 72 verifications, M2 requested 24 picks per k from its 16-circuit shortlist and crashed.
+- **Fix:** for exploratory budget variants, M2's shortlist size is set to twice the per-k picks, the preregistered
+  8-from-16 ratio. All partial V48/V72 outputs (both shards, including one still running with the old shortlist size)
+  were moved to `runs/verification_v1/_aborted_exploratory/` and their logs to `logs/aborted_exploratory/`. Both
+  variants were re-run from scratch, one process each.
+- **Classification:** exploratory only; no confirmatory or bridge artifact is affected.
+
+### 2026-10-18T23:48Z — D-VIL-4 addendum: exploratory re-sharding
+
+- To finish sooner, the single-process V48/V72 exploratory runs were stopped after seed 41001 and relaunched as 3
+  shards each. Seed 41001 was kept as complete; seeds without a completed `status.json` are re-run from scratch.
+  The stopped processes' MLflow parent runs in `bccd/verification-v1-exploratory` stay un-terminated (killed) and
+  contain no seed results beyond 41001. Exploratory only.
+
+### 2026-10-19T00:33Z — D-VIL-INF addendum: GPU host outage after all runs had finished
+
+- Around 00:00Z the GPU host went offline (SSH reset) and rebooted at 00:32Z. All runs had finished before the outage;
+  every artifact on disk was intact. The confirmatory, bridge, dev and exploratory per-seed `status.json` files,
+  sealed decisions and the MLflow SQLite store were all present.
+- The reboot stopped the BCCD MLflow server. It was restarted with `scripts/start_mlflow.sh` (127.0.0.1:5001 only).
+  The other project's MLflow server on port 5000 was not touched.
+- Three exploratory parent runs belonging to processes stopped during re-sharding (D-VIL-4 addendum) were still
+  `RUNNING` in MLflow and were set to `KILLED`. No confirmatory artifact or MLflow run was modified.
