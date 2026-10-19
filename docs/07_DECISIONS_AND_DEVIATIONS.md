@@ -216,3 +216,13 @@ seed was run**.
   shards each. Seed 41001 was kept as complete; seeds without a completed `status.json` are re-run from scratch.
   The stopped processes' MLflow parent runs in `bccd/verification-v1-exploratory` stay un-terminated (killed) and
   contain no seed results beyond 41001. Exploratory only.
+
+### 2026-10-19T00:33Z — D-VIL-INF addendum: GPU host outage after all runs had finished
+
+- Around 00:00Z the GPU host went offline (SSH reset) and rebooted at 00:32Z. All runs had finished before the outage;
+  every artifact on disk was intact. The confirmatory, bridge, dev and exploratory per-seed `status.json` files,
+  sealed decisions and the MLflow SQLite store were all present.
+- The reboot stopped the BCCD MLflow server. It was restarted with `scripts/start_mlflow.sh` (127.0.0.1:5001 only).
+  The other project's MLflow server on port 5000 was not touched.
+- Three exploratory parent runs belonging to processes stopped during re-sharding (D-VIL-4 addendum) were still
+  `RUNNING` in MLflow and were set to `KILLED`. No confirmatory artifact or MLflow run was modified.

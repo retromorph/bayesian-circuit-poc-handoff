@@ -274,6 +274,9 @@ best non-verified method was smaller on dev (12%) than on confirmatory (18%).
   counts. Partial outputs were moved to `runs/verification_v1/_aborted_exploratory/` and the runs were re-executed
   with fewer processes and the shortlist sized at twice the picks; V48/V72 were later re-sharded (addendum). No
   confirmatory run was affected.
+- **Host outage (operations only).** The GPU host went offline and rebooted after every run had finished. Artifacts
+  and the MLflow store were intact, the BCCD MLflow server was restarted, and three killed exploratory parent runs
+  were marked `KILLED` (D-VIL-INF addendum).
 - **Multiplicity.** H1 and H2 are separate preregistered hypotheses with fixed decision rules. Secondary comparisons
   are not multiplicity-adjusted.
 - **Scope.** One model (GPT-2 Small), one task (IOI) and a fixed 48-head pool chosen by the pilot's EAP-IG screening

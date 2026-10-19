@@ -193,6 +193,262 @@
       "seeds": [
         49004
       ]
+    },
+    "vil-exploratory-B128V48-shard0of1": {
+      "parent_run_id": "3c629fb79eff4438ba0c440b3e8b923b",
+      "state": "running",
+      "seeds": [
+        41001,
+        41002,
+        41003,
+        41004,
+        41005,
+        41006,
+        41007,
+        41008,
+        41009,
+        41010,
+        41011,
+        41012,
+        41013,
+        41014,
+        41015,
+        41016,
+        41017,
+        41018,
+        41019,
+        41020
+      ]
+    },
+    "vil-exploratory-B128V48-shard0of2": {
+      "parent_run_id": "0734d91a4d9042599c2f46c80fbbf4bc",
+      "state": "crashed",
+      "seeds": [
+        41001,
+        41003,
+        41005,
+        41007,
+        41009,
+        41011,
+        41013,
+        41015,
+        41017,
+        41019
+      ]
+    },
+    "vil-exploratory-B128V48-shard0of3": {
+      "parent_run_id": "4e8b85212e2a45ef942c857e7e11f77a",
+      "state": "complete",
+      "seeds": [
+        41001,
+        41004,
+        41007,
+        41010,
+        41013,
+        41016,
+        41019
+      ]
+    },
+    "vil-exploratory-B128V48-shard1of2": {
+      "parent_run_id": "47588c5e87e645bc9fad21d922f42805",
+      "state": "running",
+      "seeds": [
+        41002,
+        41004,
+        41006,
+        41008,
+        41010,
+        41012,
+        41014,
+        41016,
+        41018,
+        41020
+      ]
+    },
+    "vil-exploratory-B128V48-shard1of3": {
+      "parent_run_id": "6b5bad13aa2f41fb984ff9fe8f8dc5da",
+      "state": "complete",
+      "seeds": [
+        41002,
+        41005,
+        41008,
+        41011,
+        41014,
+        41017,
+        41020
+      ]
+    },
+    "vil-exploratory-B128V48-shard2of3": {
+      "parent_run_id": "420423f8ce91449097c7bf2beda12a85",
+      "state": "complete",
+      "seeds": [
+        41003,
+        41006,
+        41009,
+        41012,
+        41015,
+        41018
+      ]
+    },
+    "vil-exploratory-B128V72-shard0of1": {
+      "parent_run_id": "2a5d7b43696948e3b5134f60eeb44726",
+      "state": "running",
+      "seeds": [
+        41001,
+        41002,
+        41003,
+        41004,
+        41005,
+        41006,
+        41007,
+        41008,
+        41009,
+        41010,
+        41011,
+        41012,
+        41013,
+        41014,
+        41015,
+        41016,
+        41017,
+        41018,
+        41019,
+        41020
+      ]
+    },
+    "vil-exploratory-B128V72-shard0of2": {
+      "parent_run_id": "40d9a7b3f75d485d9cffbdb2f5147ea8",
+      "state": "crashed",
+      "seeds": [
+        41001,
+        41003,
+        41005,
+        41007,
+        41009,
+        41011,
+        41013,
+        41015,
+        41017,
+        41019
+      ]
+    },
+    "vil-exploratory-B128V72-shard0of3": {
+      "parent_run_id": "56e69a0b0a544bb3a598907a6a4f199f",
+      "state": "complete",
+      "seeds": [
+        41001,
+        41004,
+        41007,
+        41010,
+        41013,
+        41016,
+        41019
+      ]
+    },
+    "vil-exploratory-B128V72-shard1of2": {
+      "parent_run_id": "0024efc9654b4d13900e53bd35edd647",
+      "state": "crashed",
+      "seeds": [
+        41002,
+        41004,
+        41006,
+        41008,
+        41010,
+        41012,
+        41014,
+        41016,
+        41018,
+        41020
+      ]
+    },
+    "vil-exploratory-B128V72-shard1of3": {
+      "parent_run_id": "b3f70a0e2b2542058e67e10eb3daffe1",
+      "state": "complete",
+      "seeds": [
+        41002,
+        41005,
+        41008,
+        41011,
+        41014,
+        41017,
+        41020
+      ]
+    },
+    "vil-exploratory-B128V72-shard2of3": {
+      "parent_run_id": "5277ee80175d4eb8b9fcaa9cc55c55d8",
+      "state": "complete",
+      "seeds": [
+        41003,
+        41006,
+        41009,
+        41012,
+        41015,
+        41018
+      ]
+    },
+    "vil-exploratory-B256V0-shard0of2": {
+      "parent_run_id": "56d35457727b44edbddad883b8975c4f",
+      "state": "complete",
+      "seeds": [
+        41001,
+        41003,
+        41005,
+        41007,
+        41009,
+        41011,
+        41013,
+        41015,
+        41017,
+        41019
+      ]
+    },
+    "vil-exploratory-B256V0-shard1of2": {
+      "parent_run_id": "e9401a9f26654e6b971bf8fb9dd75f02",
+      "state": "complete",
+      "seeds": [
+        41002,
+        41004,
+        41006,
+        41008,
+        41010,
+        41012,
+        41014,
+        41016,
+        41018,
+        41020
+      ]
+    },
+    "vil-exploratory-B64V24-shard0of2": {
+      "parent_run_id": "0b2ee91ed3264777a3a99cfeb728e862",
+      "state": "complete",
+      "seeds": [
+        41001,
+        41003,
+        41005,
+        41007,
+        41009,
+        41011,
+        41013,
+        41015,
+        41017,
+        41019
+      ]
+    },
+    "vil-exploratory-B64V24-shard1of2": {
+      "parent_run_id": "d7d391f20af9491b9fe9db2b910da734",
+      "state": "complete",
+      "seeds": [
+        41002,
+        41004,
+        41006,
+        41008,
+        41010,
+        41012,
+        41014,
+        41016,
+        41018,
+        41020
+      ]
     }
   },
   "vil_frozen_manifest_sha256": "f0a0ed333480c4224383567063809e2bf2d16567c20fbfbd97a50c8037333152",
@@ -676,5 +932,6 @@
         "seed_wall_seconds": 97.77928967600019
       }
     }
-  }
+  },
+  "mlflow_aggregate_run": "641fb9c806ce451a9cb2c9d5d9cebbae"
 }

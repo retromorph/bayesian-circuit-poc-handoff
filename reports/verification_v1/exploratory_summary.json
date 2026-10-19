@@ -1,0 +1,205 @@
+{
+  "status": "EXPLORATORY (post-verdict; not preregistered; never overrides H1/H2)",
+  "configs": [
+    {
+      "config": "static Lasso, B=64",
+      "method": "lasso_static_128",
+      "budget": 64,
+      "n_verify": 0,
+      "n_seeds": 20,
+      "pooled_S": 0.4844771239628615,
+      "R_k8": 0.639785318939431,
+      "R_k16": 0.4691698892491492,
+      "R_k24": 0.34447616370000456,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "static Lasso, B=128 (M0)",
+      "method": "lasso_static_128",
+      "budget": 128,
+      "n_verify": 0,
+      "n_seeds": 20,
+      "pooled_S": 0.4378349311677425,
+      "R_k8": 0.5733982752992615,
+      "R_k16": 0.40935515518245535,
+      "R_k24": 0.33075136302151076,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "static Lasso, B=256",
+      "method": "lasso_static_128",
+      "budget": 256,
+      "n_verify": 0,
+      "n_seeds": 20,
+      "pooled_S": 0.3874589863345308,
+      "R_k8": 0.5245061976169955,
+      "R_k16": 0.356560023999033,
+      "R_k24": 0.281310737387564,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "Lasso VIL, B=64 (40+24)",
+      "method": "lasso_vil",
+      "budget": 64,
+      "n_verify": 24,
+      "n_seeds": 20,
+      "pooled_S": 0.3920146496784025,
+      "R_k8": 0.5338039944561059,
+      "R_k16": 0.36528829490421366,
+      "R_k24": 0.276951659674888,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "Lasso VIL, B=128 (104+24) (M3)",
+      "method": "lasso_vil",
+      "budget": 128,
+      "n_verify": 24,
+      "n_seeds": 20,
+      "pooled_S": 0.3424419179309031,
+      "R_k8": 0.4592609882331791,
+      "R_k16": 0.309412761330396,
+      "R_k24": 0.25865200422913426,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "Lasso VIL, B=128 (80+48)",
+      "method": "lasso_vil",
+      "budget": 128,
+      "n_verify": 48,
+      "n_seeds": 20,
+      "pooled_S": 0.3548631194778069,
+      "R_k8": 0.4653488470397985,
+      "R_k16": 0.32807195658424987,
+      "R_k24": 0.2711685548093723,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "Lasso VIL, B=128 (56+72)",
+      "method": "lasso_vil",
+      "budget": 128,
+      "n_verify": 72,
+      "n_seeds": 20,
+      "pooled_S": 0.34200662750584176,
+      "R_k8": 0.44498221797527393,
+      "R_k16": 0.32002776109173364,
+      "R_k24": 0.2610099034505178,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "random verify, B=128 (104+24) (M2)",
+      "method": "lasso_random_verify",
+      "budget": 128,
+      "n_verify": 24,
+      "n_seeds": 20,
+      "pooled_S": 0.37806939032306536,
+      "R_k8": 0.49694664800738153,
+      "R_k16": 0.35623624443907237,
+      "R_k24": 0.281025278522742,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "random verify, B=128 (80+48)",
+      "method": "lasso_random_verify",
+      "budget": 128,
+      "n_verify": 48,
+      "n_seeds": 20,
+      "pooled_S": 0.36986546772708423,
+      "R_k8": 0.49491715122489566,
+      "R_k16": 0.3445507817537289,
+      "R_k24": 0.2701284702026282,
+      "n_R_le_0.10": 0
+    },
+    {
+      "config": "random verify, B=128 (56+72)",
+      "method": "lasso_random_verify",
+      "budget": 128,
+      "n_verify": 72,
+      "n_seeds": 20,
+      "pooled_S": 0.393519785320383,
+      "R_k8": 0.5386695739358454,
+      "R_k16": 0.3589870510791192,
+      "R_k24": 0.2829027309461844,
+      "n_R_le_0.10": 0
+    }
+  ],
+  "pairs": [
+    {
+      "candidate": "Lasso VIL, B=64 (40+24)",
+      "reference": "static Lasso, B=128 (M0)",
+      "S_candidate": 0.39201465249061584,
+      "S_reference": 0.4378349184989929,
+      "ratio": 0.895348072052002,
+      "ci90_S_ref_minus_S_cand": [
+        0.019941854104399682,
+        0.07526537850499153
+      ],
+      "wins": 14,
+      "n_seeds": 20
+    },
+    {
+      "candidate": "Lasso VIL, B=128 (104+24) (M3)",
+      "reference": "static Lasso, B=256",
+      "S_candidate": 0.3424418866634369,
+      "S_reference": 0.38745900988578796,
+      "ratio": 0.8838145136833191,
+      "ci90_S_ref_minus_S_cand": [
+        0.023192683700472116,
+        0.06819271817803382
+      ],
+      "wins": 16,
+      "n_seeds": 20
+    },
+    {
+      "candidate": "static Lasso, B=256",
+      "reference": "static Lasso, B=128 (M0)",
+      "S_candidate": 0.38745900988578796,
+      "S_reference": 0.4378349184989929,
+      "ratio": 0.8849431276321411,
+      "ci90_S_ref_minus_S_cand": [
+        0.0167758259922266,
+        0.08823614269495009
+      ],
+      "wins": 13,
+      "n_seeds": 20
+    },
+    {
+      "candidate": "Lasso VIL, B=128 (80+48)",
+      "reference": "Lasso VIL, B=128 (104+24) (M3)",
+      "S_candidate": 0.35486316680908203,
+      "S_reference": 0.3424418866634369,
+      "ratio": 1.036272644996643,
+      "ci90_S_ref_minus_S_cand": [
+        -0.030472788959741592,
+        0.005079930275678633
+      ],
+      "wins": 7,
+      "n_seeds": 20
+    },
+    {
+      "candidate": "Lasso VIL, B=128 (56+72)",
+      "reference": "Lasso VIL, B=128 (104+24) (M3)",
+      "S_candidate": 0.3420066237449646,
+      "S_reference": 0.3424418866634369,
+      "ratio": 0.9987289309501648,
+      "ci90_S_ref_minus_S_cand": [
+        -0.02243146514520049,
+        0.022330660279840226
+      ],
+      "wins": 10,
+      "n_seeds": 20
+    },
+    {
+      "candidate": "Lasso VIL, B=128 (56+72)",
+      "reference": "random verify, B=128 (56+72)",
+      "S_candidate": 0.3420066237449646,
+      "S_reference": 0.3935197591781616,
+      "ratio": 0.8690964579582214,
+      "ci90_S_ref_minus_S_cand": [
+        0.02731010802090168,
+        0.07396157085895538
+      ],
+      "wins": 16,
+      "n_seeds": 20
+    }
+  ]
+}

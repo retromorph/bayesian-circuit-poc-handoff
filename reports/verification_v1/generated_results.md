@@ -1,4 +1,4 @@
-# BCCD-VIL-1.0 — generated results (2026-10-18T23:36:35Z)
+# BCCD-VIL-1.0 — generated results (2026-10-19T00:03:49Z)
 
 ## Development (exploratory; MIB dev evaluation prompts; never blind)
 
@@ -92,3 +92,31 @@ Mean costs per method and seed:
 | bayes_static_128 | 0.3674 |
 
 lasso_static_128 reproduces pilot lasso_pair@128 circuits: {31001: True, 31002: True, 31003: True, 31004: True, 31005: True}
+
+## EXPLORATORY (post-verdict): budget and allocation variants on the confirmatory seeds
+
+Run after the H1/H2 verdicts were computed and committed; not preregistered; never overrides the primary analysis.
+
+| config | method | budget | n_verify | n_seeds | pooled_S | R_k8 | R_k16 | R_k24 | n_R_le_0.10 |
+|---|---|---|---|---|---|---|---|---|---|
+| static Lasso, B=64 | lasso_static_128 | 64 | 0 | 20 | 0.4845 | 0.6398 | 0.4692 | 0.3445 | 0 |
+| static Lasso, B=128 (M0) | lasso_static_128 | 128 | 0 | 20 | 0.4378 | 0.5734 | 0.4094 | 0.3308 | 0 |
+| static Lasso, B=256 | lasso_static_128 | 256 | 0 | 20 | 0.3875 | 0.5245 | 0.3566 | 0.2813 | 0 |
+| Lasso VIL, B=64 (40+24) | lasso_vil | 64 | 24 | 20 | 0.392 | 0.5338 | 0.3653 | 0.277 | 0 |
+| Lasso VIL, B=128 (104+24) (M3) | lasso_vil | 128 | 24 | 20 | 0.3424 | 0.4593 | 0.3094 | 0.2587 | 0 |
+| Lasso VIL, B=128 (80+48) | lasso_vil | 128 | 48 | 20 | 0.3549 | 0.4653 | 0.3281 | 0.2712 | 0 |
+| Lasso VIL, B=128 (56+72) | lasso_vil | 128 | 72 | 20 | 0.342 | 0.445 | 0.32 | 0.261 | 0 |
+| random verify, B=128 (104+24) (M2) | lasso_random_verify | 128 | 24 | 20 | 0.3781 | 0.4969 | 0.3562 | 0.281 | 0 |
+| random verify, B=128 (80+48) | lasso_random_verify | 128 | 48 | 20 | 0.3699 | 0.4949 | 0.3446 | 0.2701 | 0 |
+| random verify, B=128 (56+72) | lasso_random_verify | 128 | 72 | 20 | 0.3935 | 0.5387 | 0.359 | 0.2829 | 0 |
+
+Paired comparisons (same seeds, blind prompts; 90% hierarchical bootstrap CI of S_ref - S_cand):
+
+- Lasso VIL, B=64 (40+24) vs static Lasso, B=128 (M0): S 0.3920 vs 0.4378 (ratio 0.895); CI [+0.0199, +0.0753]; wins 14/20
+- Lasso VIL, B=128 (104+24) (M3) vs static Lasso, B=256: S 0.3424 vs 0.3875 (ratio 0.884); CI [+0.0232, +0.0682]; wins 16/20
+- static Lasso, B=256 vs static Lasso, B=128 (M0): S 0.3875 vs 0.4378 (ratio 0.885); CI [+0.0168, +0.0882]; wins 13/20
+- Lasso VIL, B=128 (80+48) vs Lasso VIL, B=128 (104+24) (M3): S 0.3549 vs 0.3424 (ratio 1.036); CI [-0.0305, +0.0051]; wins 7/20
+- Lasso VIL, B=128 (56+72) vs Lasso VIL, B=128 (104+24) (M3): S 0.3420 vs 0.3424 (ratio 0.999); CI [-0.0224, +0.0223]; wins 10/20
+- Lasso VIL, B=128 (56+72) vs random verify, B=128 (56+72): S 0.3420 vs 0.3935 (ratio 0.869); CI [+0.0273, +0.0740]; wins 16/20
+
+![exploratory](figures/vil_exploratory_budget_allocation.png)
